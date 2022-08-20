@@ -1,5 +1,5 @@
 """
-ASGI config for AD_library_dashboardd project.
+ASGI config for ad_library_dashboard project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'AD_library_dashboardd.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ad_library_dashboard.settings')
 
 application = get_asgi_application()

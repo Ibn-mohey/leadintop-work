@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AD LIBRARY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <nav class="py-3 shadow-sm  fixed-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-6 py-3">
+                    <div class="form-group mb-0">
+                        <select class="form-control">
+                            <option disabled selected value="">Search Mode</option>
+                            <option value="Keywords">Keywords</option>
+                            <option value="Advertiser">Advertiser</option>
+                            <option value="Domain">Domain</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6 py-3">
+                    <div class="form-group mb-0">
+                        <select class="form-control">
+                            <option disabled selected value="Country">Country</option>
+                            <option value="Egypt">Egypt</option>
+                            <option value="Canada">Canada</option>
+                            <option value="United Status (US)">United Status (US)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-8 py-3">
+                    <div class="form-group mb-0" style="position: relative;">
+                        <input type="text" class="form-control" placeholder="Search" style="padding-left: 3rem;">
+                        <i class="fas fa-search"
+                            style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);font-size: 14px; color: #666;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <br /><br /><br /><br /><br />
+    <section class="results container border rounded p-2">
+        <span>~1,200 results</span>
+        <p class="mt-2">These results include ads that match your <b>keyword search</b> at <b>Egypt</b>.</p>
+        <div class="text-right">
+            <button type="button" id="filter" class="btn btn-light"><i class="fa fa-filter"></i> Filter</button>
+        </div>
+        <section class="popup d-none">
+            <div class="overlay rounded">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 top py-3 d-flex align-items-center justify-content-between shadow-sm">
+                            <span>filter</span>
+                            <i id="close" class="fa fa-times"></i>
+                        </div>
+                        <div class="col-12 middle py-3">
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option selected disabled value="">Platform</option>
+                                    <option value="facebook">facebook</option>
+                                    <option value="twitter">twitter</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option selected disabled value="">Media Type</option>
+                                    <option value="video">video</option>
+                                    <option value="image">image</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option selected disabled value="">Sort By</option>
+                                    <option value="newest">Newest</option>
+                                    <option value="duration longest">Duration Longest</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option selected disabled value="">Duration</option>
+                                    <option value="today">Today</option>
+                                    <option value="yesterday">Yesterday</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>From</label>
+                                <input type="date" id="txtDate1" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>To</label>
+                                <input type="date" id="txtDate2" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-12 bottom py-3 text-right">
+                            <button type="button" class="btn btn-light">clear all</button>
+                            <button type="button" class="btn btn-primary">apply filters</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <section class="ads py-4">
+        <div class="container">
+            <div class="row">
+                <div class="ad col-lg-4 col-md-6 col-sm-6 offset-sm-0 offset-1 col-10">
+                    <div class="mx-2 bg-white rounded border py-3 px-0">
+                        <div class="px-3">
+                            <span><i class="fa fa-check-circle"></i> Active</span>
+                        </div class="px-3">
+                        <div class="px-3">
+                            <span>Started running on Aug 16, 2022</span>
+                        </div>
+                        <div class="px-3">
+                            <span>Platforms</span> <i class="fab fa-facebook"></i> <i class="fab fa-instagram"></i>
+                        </div>
+                        <div class="px-3">
+                            <span>ID: 231321321412</span>
+                        </div>
+                        <hr class="my-2 mx-auto" style="width: 92%" />
+                        <div class="profile px-3">
+                            <img width="32" height="32" class="rounded-circle"
+                                src="media/298605744_2663001687166553_2581789905054249179_n.jpg">
+                            <span class="px-2">McQueen Car Perfume</span>
+                        </div>
+                        <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
+                            <i class="fab fa-facebook"></i> <span>@iloveperfumepuertorico</span>
+                            <small>25,540 likes • Beauty, cosmetic & personal care</small>
+                        </div>
+                        <div class="instagram rounded-bottom mb-2 pb-2 mx-3 px-2">
+                            <i class="fab fa-instagram"></i> <span>@iloveperfumepuertorico</span>
+                            <small>25,200 likes • Beauty & cosmetic</small>
+                        </div>
+                        <p class="px-3">
+                            ‼️BUY 4 TAKE 1 PROMO #carperfume
+                            MCQUEEN CAR PERFUME | HANGING DIFFUSER
+
+                            ONLY FOR 150.00 PHP/10ml bottle.. 🚕 🚕
+
+                            💗Trio BEST-SELLERS
+                            ≠==================≠
+                            🏯 Shangrila
+                            🎍 Fresh Bamboo
+                            🌊Sea Breeze
+
+                            🍪SWEET/CALMING SCENTS
+                            ≠========================≠
+
+                            ☕Coffee Bean
+                            🌸Lavander
+                            🥒Cucumber Melon
+                            🍃Eucalyptus
+                            🍋Lemon Squash
+
+                            #promo #aromatherapy #smellgoodfeelgood
+                            #mcqueencarperfume #carscents #honda #TOYOTA #hyundai #Mazda #Mitsubishi #suzuki #ford #Kia
+                        </p>
+                        <img class="w-100" src="media/298496618_1074026659883271_5195341750285685425_n.jpg"
+                            alt="AD image">
+                        <div class="footer mt-3 px-3">
+                            <div>
+                                <div>
+                                    <a href="#" style="text-decoration: none; color: #555;">
+                                        <span class="text-capitalize">Best t-shirts ever</span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="#" style="text-decoration: none; color: #555;">
+                                        <span class="text-lowercase">leadintop.com</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-light">Send Message</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ad col-lg-4 col-md-6 col-sm-6 offset-sm-0 offset-1 col-10">
+                    <div class="mx-2 bg-white rounded border py-3 px-0">
+                        <div class="px-3">
+                            <span><i class="fa fa-check-circle"></i> Active</span>
+                        </div class="px-3">
+                        <div class="px-3">
+                            <span>Started running on Aug 16, 2022</span>
+                        </div>
+                        <div class="px-3">
+                            <span>Platforms</span> <i class="fab fa-facebook"></i> <i class="fab fa-instagram"></i>
+                        </div>
+                        <div class="px-3">
+                            <span>ID: 231321321412</span>
+                        </div>
+                        <hr class="my-2 mx-auto" style="width: 92%" />
+                        <div class="profile px-3">
+                            <img width="32" height="32" class="rounded-circle"
+                                src="media/298605744_2663001687166553_2581789905054249179_n.jpg">
+                            <span class="px-2">McQueen Car Perfume</span>
+                        </div>
+                        <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
+                            <i class="fab fa-facebook"></i> <span>@iloveperfumepuertorico</span>
+                            <small>25,540 likes • Beauty, cosmetic & personal care</small>
+                        </div>
+                        <div class="instagram rounded-bottom mb-2 pb-2 mx-3 px-2">
+                            <i class="fab fa-instagram"></i> <span>@iloveperfumepuertorico</span>
+                            <small>25,200 likes • Beauty & cosmetic</small>
+                        </div>
+                        <p class="px-3">
+                            ‼️BUY 4 TAKE 1 PROMO #carperfume
+                            MCQUEEN CAR PERFUME | HANGING DIFFUSER
+
+                            ONLY FOR 150.00 PHP/10ml bottle.. 🚕 🚕
+
+                            💗Trio BEST-SELLERS
+                            ≠==================≠
+                            🏯 Shangrila
+                            🎍 Fresh Bamboo
+                            🌊Sea Breeze
+
+                            🍪SWEET/CALMING SCENTS
+                            ≠========================≠
+
+                            ☕Coffee Bean
+                            🌸Lavander
+                            🥒Cucumber Melon
+                            🍃Eucalyptus
+                            🍋Lemon Squash
+
+                            #promo #aromatherapy #smellgoodfeelgood
+                            #mcqueencarperfume #carscents #honda #TOYOTA #hyundai #Mazda #Mitsubishi #suzuki #ford #Kia
+                        </p>
+                        <video controls style="width:100%">
+                            <source src="media/297641839_1201083240460272_7933649554156909768_n.mp4" type="video/mp4">
+                        </video>
+                        <div class="footer mt-3 px-3">
+                            <div>
+                                <div>
+                                    <a href="#" style="text-decoration: none; color: #555;">
+                                        <span class="text-capitalize">Best t-shirts ever</span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="#" style="text-decoration: none; color: #555;">
+                                        <span class="text-lowercase">leadintop.com</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-light">Send Message</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ad col-lg-4 col-md-6 col-sm-6 offset-sm-0 offset-1 col-10">
+                    <div class="mx-2 bg-white rounded border py-3 px-0">
+                        <div class="px-3">
+                            <span><i class="fa fa-check-circle"></i> Active</span>
+                        </div class="px-3">
+                        <div class="px-3">
+                            <span>Started running on Aug 16, 2022</span>
+                        </div>
+                        <div class="px-3">
+                            <span>Platforms</span> <i class="fab fa-facebook"></i> <i class="fab fa-instagram"></i>
+                        </div>
+                        <div class="px-3">
+                            <span>ID: 231321321412</span>
+                        </div>
+                        <hr class="my-2 mx-auto" style="width: 92%" />
+                        <div class="profile px-3">
+                            <img width="32" height="32" class="rounded-circle"
+                                src="media/298605744_2663001687166553_2581789905054249179_n.jpg">
+                            <span class="px-2">McQueen Car Perfume</span>
+                        </div>
+                        <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
+                            <i class="fab fa-facebook"></i> <span>@iloveperfumepuertorico</span>
+                            <small>25,540 likes • Beauty, cosmetic & personal care</small>
+                        </div>
+                        <div class="instagram rounded-bottom mb-2 pb-2 mx-3 px-2">
+                            <i class="fab fa-instagram"></i> <span>@iloveperfumepuertorico</span>
+                            <small>25,200 likes • Beauty & cosmetic</small>
+                        </div>
+                        <p class="px-3">
+                            ‼️BUY 4 TAKE 1 PROMO #carperfume
+                            MCQUEEN CAR PERFUME | HANGING DIFFUSER
+
+                            ONLY FOR 150.00 PHP/10ml bottle.. 🚕 🚕
+
+                            💗Trio BEST-SELLERS
+                            ≠==================≠
+                            🏯 Shangrila
+                            🎍 Fresh Bamboo
+                            🌊Sea Breeze
+
+                            🍪SWEET/CALMING SCENTS
+                            ≠========================≠
+
+                            ☕Coffee Bean
+                            🌸Lavander
+                            🥒Cucumber Melon
+                            🍃Eucalyptus
+                            🍋Lemon Squash
+
+                            #promo #aromatherapy #smellgoodfeelgood
+                            #mcqueencarperfume #carscents #honda #TOYOTA #hyundai #Mazda #Mitsubishi #suzuki #ford #Kia
+                        </p>
+                        <div class="swiper mySwiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <img class="rounded-bottom"
+                                        src="media/298496618_1074026659883271_5195341750285685425_n.jpg" alt="AD image">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img class="rounded-bottom"
+                                        src="media/298496618_1074026659883271_5195341750285685425_n.jpg" alt="AD image">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img class="rounded-bottom"
+                                        src="media/298496618_1074026659883271_5195341750285685425_n.jpg" alt="AD image">
+                                </div>
+                            </div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+                        <div class="footer mt-3 px-3">
+                            <div>
+                                <div>
+                                    <a href="#" style="text-decoration: none; color: #555;">
+                                        <span class="text-capitalize">Best t-shirts ever</span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="#" style="text-decoration: none; color: #555;">
+                                        <span class="text-lowercase">leadintop.com</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-light">Send Message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
