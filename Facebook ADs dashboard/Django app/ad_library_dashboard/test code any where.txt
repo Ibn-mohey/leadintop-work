@@ -1,0 +1,39 @@
+pip3.7 install --user selenium==4.1.3 
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.ui import WebDriverWait
+import re
+from selenium import webdriver
+import urllib.request
+import urllib.error
+from selenium.webdriver.support import expected_conditions as EC
+import time
+from selenium import webdriver
+import time
+from selenium import webdriver
+from datetime import datetime
+import urllib.request
+from datetime import datetime
+import sqlite3
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument("--window-size=1920,1080")
+chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+# chrome_options.add_argument('--disable-dev-shm-usage')
+# chrome_options.add_argument(
+    # "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36")
+# chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+search_term = 'عطور'
+link = f'https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country={country}&q={search_term}&sort_data[direction]=desc&sort_data[mode]=relevancy_monthly_grouped&start_date[min]={start_date}&start_date[max]={end_date}&search_type=keyword_unordered&media_type=all&media_type={media_type}'
+time.sleep(2)
+
+driver = webdriver.Chrome(options=chrome_options)
+driver.get(link)
+elements = driver.find_elements(By.CSS_SELECTOR, value = 'div[class="_99s5"]')
+print(len(elements))
+print(driver.find_element(By.XPATH,'html').get_attribute('innerHTML'))

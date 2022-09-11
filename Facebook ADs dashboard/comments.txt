@@ -1,0 +1,50 @@
+conda activate C:/Users/asd_v/anaconda3
+
+
+
+django-admin startproject ad_library_dashboard
+python manage.py runserver
+python manage.py startapp ad 
+
+
+
+create ulrs in the app dir
+add url u want in app.urls 
+include app.urls in the main urls
+edit views to the HTML u want 
+
+# HTML codes 
+create templates folder withing the app dir
+
+
+#admin
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+admin
+admin@leadintop.com
+admin
+http://127.0.0.1:8000/admin/
+create user 
+
+#database
+
+app/modles.py
+
+
+# this your existing db 
+    'vo': { 
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(DIR, 'vo.sqlite'),
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    },
+	
+	
+python manage.py inspectdb --database=databasename > app/models.py
+
+## create user form
+
+python manage.py sqlclear users
