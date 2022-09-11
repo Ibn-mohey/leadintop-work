@@ -3,7 +3,7 @@ conda activate C:/Users/asd_v/anaconda3
 
 
 django-admin startproject ad_library_dashboard
-python manage.py runserver
+python manage.py runserver 192.168.1.2:8500
 python manage.py startapp ad 
 
 
