@@ -48,3 +48,9 @@ python manage.py inspectdb --database=databasename > app/models.py
 ## create user form
 
 python manage.py sqlclear users
+
+
+
+
+## profile pic 
+ep 8

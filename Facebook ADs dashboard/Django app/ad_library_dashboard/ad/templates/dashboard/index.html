@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+
 <html lang="en">
 
 
@@ -13,10 +14,38 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css" />
     <link rel="stylesheet" href="{%static 'blog/style.css' %}">
+    <link rel="stylesheet" href="{%static 'blog/nav.css' %}">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="{% url 'ad-home' %}">Main AD libirary</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link" href="{% url 'ad-home' %}">Home</a>
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+                        {% if user.is_authenticated %}
+                        <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a> 
+                        <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                        <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                        <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
 
     <main class="d-flex">
         <aside class="py-4 px-2">
@@ -223,28 +252,33 @@
                                 {{post.content}}
                             </p>
                             <!-- video place  -->
-                            <video controls style="width:100%">
+                            <video class="embed-responsive embed-responsive-16by9" controls="controls"  style="width:100%">
                                 <!-- "media/297641839_1201083240460272_7933649554156909768_n.mp4" -->
-                                <source src="media/297641839_1201083240460272_7933649554156909768_n.mp4"
+                                <source src="media/ads/297641839_1201083240460272_7933649554156909768_n.mp4"
+                                    type="video/mp4">
+                            </video>
+                            <video class="embed-responsive embed-responsive-16by9" controls="controls" style="width:100%">
+                                <!-- "media/297641839_1201083240460272_7933649554156909768_n.mp4" -->
+                                <source src="{{MEDIA_URL}/}ads/297641839_1201083240460272_7933649554156909768_n.mp4"
                                     type="video/mp4">
                             </video>
                             <div class="swiper mySwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <video controls style="width:100%">
-                                            <source src="media/297641839_1201083240460272_7933649554156909768_n.mp4"
+                                            <source src="{{MEDIA_URL}}ads/297641839_1201083240460272_7933649554156909768_n.mp4"
                                                 type="video/mp4">
                                         </video>
                                     </div>
                                     <div class="swiper-slide">
                                         <video controls style="width:100%">
-                                            <source src="media/297641839_1201083240460272_7933649554156909768_n.mp4"
+                                            <source src="{{MEDIA_URL }}ads/297641839_1201083240460272_7933649554156909768_n.mp4"
                                                 type="video/mp4">
                                         </video>
                                     </div>
                                     <div class="swiper-slide">
                                         <video controls style="width:100%">
-                                            <source src="media/297641839_1201083240460272_7933649554156909768_n.mp4"
+                                            <source src="{{MEDIA_URL }}ads/297641839_1201083240460272_7933649554156909768_n.mp4"
                                                 type="video/mp4">
                                         </video>
                                     </div>
