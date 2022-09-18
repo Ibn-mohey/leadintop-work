@@ -51,9 +51,36 @@ def get_ads_number():
     except:
         ADS_count = 0
     return int(ADS_count)
+#up date ads count
+# sqliteConnection = sqlite3.connect('FaceBoookADS.db')
+# cursor = sqliteConnection.cursor()
+# sqlite_select_query = f"""SELECT static_ID FROM ads where Ads_count = 0 """
+# cursor.execute(sqlite_select_query)
+# records = cursor.fetchall()
+# page_IDS = [i[0] for i in list(set(records))]
+# cursor.close()
+# for page_ID in page_IDS:
+#     open_page(page_ID)
+#     Ads_count = get_ads_number()
+#     conn = sqlite3.connect('FaceBoookADS.db')
+#     c = conn.cursor()
+#     c.execute('''UPDATE ads SET 
+#     Ads_count =?,
+#     cumulative_ads_count = cumulative_ads_count + ?
+#     where static_id = ?'''
+#     ,(
+#     Ads_count ,
+#     Ads_count,
+#     page_ID))
+#     conn.commit()
+#     conn.close()
+# driver.close()
+
+#up date id
+import sqlite3
 sqliteConnection = sqlite3.connect('FaceBoookADS.db')
 cursor = sqliteConnection.cursor()
-sqlite_select_query = f"""SELECT static_ID FROM ads where Ads_count = 0 """
+sqlite_select_query = f"""SELECT static_ID, instgram_ID,Facebook_ID FROM ads where instgram_ID = 'NO insta ID found' and Facebook_ID = 'NO Facebook ID found' """
 cursor.execute(sqlite_select_query)
 records = cursor.fetchall()
 page_IDS = [i[0] for i in list(set(records))]
@@ -73,4 +100,4 @@ for page_ID in page_IDS:
     page_ID))
     conn.commit()
     conn.close()
-driver.close()
+    

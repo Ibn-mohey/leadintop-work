@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 {% load static %}
-
+{% load helping_functions %}
 <html lang="en">
-
+{% csrf_token %}
 
 <head>
     <meta charset="UTF-8">
@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css" />
-    <link rel="stylesheet" href="{%static 'blog/style.css' %}">
-    <link rel="stylesheet" href="{%static 'blog/nav.css' %}">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{%static 'style.css' %}">
+    <link rel="stylesheet" href="{%static 'nav.css' %}">
+    <link href="https://vjs.zencdn.net/7.20.2/video-js.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -35,7 +35,7 @@
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav">
                         {% if user.is_authenticated %}
-                        <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a> 
+                        <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                         <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                         {% else %}
                         <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
@@ -50,14 +50,16 @@
     <main class="d-flex">
         <aside class="py-4 px-2">
             <strong>Get Your ADs</strong>
-            <form action="#" method="post">
+            <form method="post">
+                {% csrf_token %}
+
                 <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">Search mode:</span>
                     <div class="p-1 border my-1">
                         <label class="main pl-0 text-capitalize">Keywords
                         </label>
                         <div class="form-group mb-0 my-2" style="position: relative">
-                            <input type="text" class="form-control pl-4" name="" placeholder="enter keywords">
+                            <input type="text" class="form-control pl-4" name="keywords" placeholder="enter keywords">
                             <i class="fa fa-search"
                                 style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
                         </div>
@@ -66,7 +68,8 @@
                         <label class="main pl-0 text-capitalize">Advertisers
                         </label>
                         <div class="form-group mb-0 my-2" style="position: relative">
-                            <input type="text" class="form-control pl-4" name="" placeholder="enter advertisers">
+                            <input type="text" class="form-control pl-4" name="advertisers"
+                                placeholder="enter advertisers">
                             <i class="fa fa-search"
                                 style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
                         </div>
@@ -75,7 +78,7 @@
                         <label class="main pl-0 text-capitalize">Domains
                         </label>
                         <div class="form-group mb-0 my-2" style="position: relative">
-                            <input type="text" class="form-control pl-4" name="" placeholder="enter domain">
+                            <input type="text" class="form-control pl-4" name="domain" placeholder="enter domain">
                             <i class="fa fa-search"
                                 style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
                         </div>
@@ -85,7 +88,7 @@
                     <button class="btn btn-primary form-control" style="font-size: 14px; text-transform: capitalize;"
                         type="submit"><i style="font-size: 12px" class="fa fa-filter mr-1"></i> Apply filters</button>
                 </div>
-                <div class="form-group my-3">
+                <!-- <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">platform:</span>
                     <label class="form-check-label">
                         <input type="radio" class="form-check-input" name="platform" value="facebook" checked>
@@ -95,63 +98,66 @@
                         <input type="radio" class="form-check-input" name="platform" value="instagram">
                         instagram
                     </label>
-                </div>
+                </div> -->
+
                 <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">advertisers:</span>
-                    <label class="main">dr.squatch <small>(122)</small>
-                        <input type="checkbox" checked="checked">
-                        <span class="geekmark"></span>
-                    </label>
 
-                    <label class="main">perfumer lovers <small>(52)</small>
-                        <input type="checkbox">
+                    {%for key,value in advertisers.items%}
+                    <label class="main">{{key}} <small> ({{value}}) </small>
+                        <!-- checked="checked" -->
+                        <input type="checkbox" name="Advertiser" value="{{key}}">
                         <span class="geekmark"></span>
                     </label>
+                    {% endfor%}
 
-                    <label class="main">acacia <small>(26)</small>
-                        <input type="checkbox">
-                        <span class="geekmark"></span>
-                    </label>
+
                 </div>
+
                 <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">domains:</span>
-                    <label class="main">asdw.com <small>(122)</small>
-                        <input type="checkbox" checked="checked">
+                    {%for key,value in domains.items%}
+                    <label class="main">{{key}} <small> ({{value}}) </small>
+                        <input type="checkbox" name="domains" value="{{key}}">
                         <span class="geekmark"></span>
                     </label>
-
-                    <label class="main">love.net <small>(52)</small>
-                        <input type="checkbox">
-                        <span class="geekmark"></span>
-                    </label>
-
-                    <label class="main">qweo.org <small>(26)</small>
-                        <input type="checkbox">
-                        <span class="geekmark"></span>
-                    </label>
+                    {% endfor%}
                 </div>
                 <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">sort by:</span>
                     <!-- for ads -->
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="sort" value="">
+                        <input type="radio" class="form-check-input" name="sort_by" value="-started_date">
                         newest
                     </label>
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="sort" value="">
+                        <input type="radio" class="form-check-input" name="sort_by" value="-days_running">
                         running longest
                     </label>
                     <!-- for advertisers -->
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="sort" value="">
+                        <input type="radio" class="form-check-input" name="sort_by" value="likes_followers">
+                        max likes or followers
+                    </label>
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort_by" value="-page_likes">
                         likes count
                     </label>
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="sort" value="">
+                        <input type="radio" class="form-check-input" name="sort_by" value="-insta_followers">
+                        followers count
+                    </label>
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort_by" value="-ads_count">
                         ads count
                     </label>
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort_by" value="-hits">
+                        hits
+                    </label>
                 </div>
-                <div class="form-group my-3">
+                    <!-- country ?? -->
+                <!-- <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">country:</span>
                     <div class="form-group mb-0 my-2" style="position: relative">
                         <input type="text" class="form-control pl-4" name="" placeholder="select country">
@@ -176,26 +182,27 @@
                             <span class="geekmark"></span>
                         </label>
                     </div>
-                </div>
+                </div> -->
+
                 <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">CTA:</span>
-                    <select class="form-control" name="">
-                        <option value="learn more">learn more</option>
-                        <option value="buy now">buy now</option>
-                        <option value="get it now">get it now</option>
+                    <select class="form-control" name="action">
+                        <option selected="selected" value="All">All</option>
+                        {%for opt,v in Footer_actions.items%}
+                        <option value="{{opt}}">{{opt}}</option>
+                        {% endfor%}
                     </select>
                 </div>
+
                 <div class="form-group my-3">
-                    <span class="my-1 d-block mr-3">Days running:</span>
-                    <input type="number" min="1" value="1" name="" class="form-control">
-                    <!-- <input value="1" id="range" name="rangeInput" type="range" class="w-100" min="1" max="100" step="1"
-                        onchange="updateTextInput(this.value);" />
-                    <div id="rangeContent" class="rangeContent border shadow-sm">1</div> -->
+                    <span class="my-1 d-block mr-3">Days running more than:</span>
+                    <input type="number" min="1" name="days" class="form-control">
+
                 </div>
                 <div class="form-group my-3">
                     <div>
                         <span>From</span>
-                        <input type="date" id="txtDate1" class="form-control">
+                        <input type="date" id="txtDate1" name="started_date" class="form-control">
                     </div>
                 </div>
                 <div class="form-group mt-0 mb-3">
@@ -209,204 +216,122 @@
             <div class="container">
                 <div class="row">
                     <!-- # first one -->
-                    {% for post in ads %}
+                    {% for post,day in ads_data %}
+
                     <div
                         class="ad col-xl-4 col-lg-6 offset-lg-0 col-md-8 offset-md-2 col-sm-10 offset-sm-1 offset-1 col-10">
                         <div class="mx-2 bg-white rounded border py-3 px-0">
                             <i class="fa fa-star fav faved shadow"></i>
+
                             <div class="px-3">
-                                <span><i class="fa fa-check-circle"></i> Active</span>
+                                <span><i class="fa fa-check-circle"></i> Days Running: {{day}} </span>
                             </div>
                             <div class="px-3">
-                                <span>Started running on {{post.started_date}}</span>
+                                <span>Started running on: {{post.started_date}}</span>
                             </div>
                             <div class="px-3 plat">
-                                <span>Ads Count {{post.ads_count}}</span> <a href="#"><i
+                                <span>Page Ads Count: {{post.ads_count}}</span>
+                                <!-- <a href="#"><i
                                         class="fab fa-facebook"></i></a> <a href="#"><i
-                                        class="fab fa-instagram"></i></a>
+                                        class="fab fa-instagram"></i></a> -->
                             </div>
                             <div class="px-3">
-                                <span>{{post.ad_id}}</span>
+                               <a href="{{post.ad_id|ad_link}}" ><span>AD ID: {{post.ad_id}}</span>  </a>
+                            </div>
+                            <div class="px-3">
+                                <span> hits: {{post.hits}}</span>
                             </div>
                             <hr class="my-2 mx-auto" style="width: 92%" />
                             <div class="profile px-3">
-                                <img width="32" height="32" class="rounded-circle"
-                                    src="media/298605744_2663001687166553_2581789905054249179_n.jpg">
+                                <img id="currentPhoto" width="32" height="32" class="rounded-circle" src="{{post.profile_pic|profile_pic}}" onerror="this.onerror=null; this.src='/media/pics/default_image.png'"> 
+
                                 <span class="px-2">{{post.page_name}} <i
                                         class="fa fa-check-double follow"><small>follow</small></i></span>
                             </div>
-                            <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2"> <span>Static ID
-                                    {{post.static_id}}</span> </div>
-                            <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
-                                <i class="fab fa-facebook"></i> <a href="#">
+                            <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2"> 
+                                 <span>Static Facebook ID: {{post.static_id}}</span> <a href="{{post.static_id|page_ads_link}}"> See All Ads </a>  
+                                <br>
+                                <i class="fab fa-facebook"></i> <a href="https://www.facebook.com/{{post.static_id}}">
                                     <span>{{post.facebook_id}}</span></a>
                                 <small>{{post.page_likes}} likes</small>
                             </div>
                             <div class="instagram rounded-bottom mb-2 pb-2 mx-3 px-2">
-                                <i class="fab fa-instagram"></i> <a href="#">
+                                <i class="fab fa-instagram"></i> <a href="https://www.instagram.com/{{post.instgram_id|insta_link}}">
                                     <span>{{post.instgram_id}}</span></a>
                                 <small>{{post.insta_followers}} followers </small>
                             </div>
-
-                            <p class="px-3">
-                                {{post.content}}
+                            {% with text=post.content %}
+                            <p  class="px-3" >
+                                {{ text|truncatewords:50}}
                             </p>
+
+<!--                             
+                            {% if text|wordcount > 56 %}
+                            <p class="half-content" id="half-{{ post.pk }}">{{text|safe|linebreaks|truncatewords:50}}<a
+                                    data-id="{{ post.pk }}" href="javascript:void();" class="show-hide-btn"><br>Read
+                                    more</a></p>
+                            <p class="full-content" id="full-{{post.pk }}" style="display: none;">{{text|safe }}<a
+                                    data-id="{{ post.pk}}" href="javascript:void();" class="show-hide-btn">Read less</a>
+                            </p>
+                            {% else %}
+                            <p  class="px-3" >
+                                {{ text|safe|linebreaks }}
+                            </p>
+                            {% endif %}
+                            {% endwith %} -->
+
+                            
+
                             <!-- video place  -->
-                            <video class="embed-responsive embed-responsive-16by9" controls="controls"  style="width:100%">
+                            {% if post.videos|get_len_splits == 1 %}
+                            <video controls style="width:100%" preload="preload">
                                 <!-- "media/297641839_1201083240460272_7933649554156909768_n.mp4" -->
-                                <source src="media/ads/297641839_1201083240460272_7933649554156909768_n.mp4"
-                                    type="video/mp4">
+                                <!-- <source src="{% static 'media\ads-video\video.mp4'%}"
+                                    type="video/mp4">   -->
+                                <source src="{{post.videos|video_location}}"  type="video/mp4" onerror="this.onerror=null; this.src='{{post.videos}}'">
                             </video>
-                            <video class="embed-responsive embed-responsive-16by9" controls="controls" style="width:100%">
-                                <!-- "media/297641839_1201083240460272_7933649554156909768_n.mp4" -->
-                                <source src="{{MEDIA_URL}/}ads/297641839_1201083240460272_7933649554156909768_n.mp4"
-                                    type="video/mp4">
-                            </video>
+
+                            {%else%}
+
+
                             <div class="swiper mySwiper">
                                 <div class="swiper-wrapper">
+                                    {%for video in post.videos|get_all_splits %}
                                     <div class="swiper-slide">
                                         <video controls style="width:100%">
-                                            <source src="{{MEDIA_URL}}ads/297641839_1201083240460272_7933649554156909768_n.mp4"
-                                                type="video/mp4">
+                                            <!-- to doooo -->
+                                            <source src="{{video|video_location}}"  onerror="this.onerror=null; this.src='{{video}}'" type="video/mp4">
                                         </video>
                                     </div>
-                                    <div class="swiper-slide">
-                                        <video controls style="width:100%">
-                                            <source src="{{MEDIA_URL }}ads/297641839_1201083240460272_7933649554156909768_n.mp4"
-                                                type="video/mp4">
-                                        </video>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <video controls style="width:100%">
-                                            <source src="{{MEDIA_URL }}ads/297641839_1201083240460272_7933649554156909768_n.mp4"
-                                                type="video/mp4">
-                                        </video>
-                                    </div>
+                                    {%endfor %}
                                 </div>
                                 <div class="swiper-button-prev"></div>
                                 <div class="swiper-button-next"></div>
                             </div>
+                            {%endif%}
 
                             <div class="footer mt-3 px-3">
                                 <div>
+
                                     <div>
-                                        <a href="#" style="text-decoration: none; color: #555;">
-                                            <span class="text-capitalize">{{post.footer}}Best t-shirts ever</span>
+                                        <a href="{{post.links|last_link}}" style="text-decoration: none; color: #555;">
+                                            <span class="text-capitalize">{{post.footer_text}}</span>
                                         </a>
                                     </div>
                                     <div>
-                                        <a href="#" style="text-decoration: none; color: #555;">
-                                            <span class="text-lowercase">{{domain}}leadintop.com</span>
+                                        <a href="{{post.links|last_link}}" style="text-decoration: none; color: #555;">
+                                            <span class="text-lowercase">{{post.domain}}</span>
                                         </a>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-light">{{action}}Send Message</button>
+                                <button type="button" class="btn btn-light">{{post.footer_action}}</button>
                             </div>
                         </div>
                     </div>
+                    {% empty %}
+                    <h1> NO ads with this fillters like that </h1>
                     {% endfor %}
 
-                    <!-- #second One -->
-                    <!-- <div
-                        class="ad col-xl-4 col-lg-6 offset-lg-0 col-md-8 offset-md-2 col-sm-10 offset-sm-1 offset-1 col-10">
-                        <div class="mx-2 bg-white rounded border py-3 px-0">
-                            <i class="fa fa-star fav shadow"></i>
-                            <div class="px-3">
-                                <span><i class="fa fa-check-circle"></i> Active</span>
-                            </div>
-                            <div class="px-3">
-                                <span>Started running on Aug 16, 2022</span>
-                            </div>
-                            <div class="px-3 plat">
-                                <span>Platforms</span> <a href="#"><i class="fab fa-facebook"></i></a> <a href="#"><i
-                                        class="fab fa-instagram"></i></a>
-                            </div>
-                            <div class="px-3">
-                                <span>ID: 231321321412</span>
-                            </div>
-                            <hr class="my-2 mx-auto" style="width: 92%" />
-                            <div class="profile px-3">
-                                <img width="32" height="32" class="rounded-circle"
-                                    src="media/298605744_2663001687166553_2581789905054249179_n.jpg">
-                                <span class="px-2">McQueen Car Perfume <i
-                                        class="fa fa-check-double follow followed"><small>followed</small></i></span>
-                            </div>
-                            <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
-                                <i class="fab fa-facebook"></i> <a href="#">
-                                    <span>@iloveperfumepuertorico</span></a>
-                                <small>25,540 likes • Beauty, cosmetic & personal care</small>
-                            </div>
-                            <div class="instagram rounded-bottom mb-2 pb-2 mx-3 px-2">
-                                <i class="fab fa-instagram"></i> <a href="#">
-                                    <span>@iloveperfumepuertorico</span></a>
-                                <small>25,200 likes • Beauty & cosmetic</small>
-                            </div>
-                            <p class="px-3">
-                                ‼️BUY 4 TAKE 1 PROMO #carperfume
-                                MCQUEEN CAR PERFUME | HANGING DIFFUSER
-
-                                ONLY FOR 150.00 PHP/10ml bottle.. 🚕 🚕
-
-                                💗Trio BEST-SELLERS
-                                ≠==================≠
-                                🏯 Shangrila
-                                🎍 Fresh Bamboo
-                                🌊Sea Breeze
-
-                                🍪SWEET/CALMING SCENTS
-                                ≠========================≠
-
-                                ☕Coffee Bean
-                                🌸Lavander
-                                🥒Cucumber Melon
-                                🍃Eucalyptus
-                                🍋Lemon Squash
-
-                                #promo #aromatherapy #smellgoodfeelgood
-                                #mcqueencarperfume #carscents #honda #TOYOTA #hyundai #Mazda #Mitsubishi #suzuki #ford
-                                #Kia
-                            </p>
-                            <div class="swiper mySwiper">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <video controls style="width:100%">
-                                            <source src="media/297641839_1201083240460272_7933649554156909768_n.mp4"
-                                                type="video/mp4">
-                                        </video>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <video controls style="width:100%">
-                                            <source src="media/297641839_1201083240460272_7933649554156909768_n.mp4"
-                                                type="video/mp4">
-                                        </video>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <video controls style="width:100%">
-                                            <source src="media/297641839_1201083240460272_7933649554156909768_n.mp4"
-                                                type="video/mp4">
-                                        </video>
-                                    </div>
-                                </div>
-                                <div class="swiper-button-prev"></div>
-                                <div class="swiper-button-next"></div>
-                            </div>
-                            <div class="footer mt-3 px-3">
-                                <div>
-                                    <div>
-                                        <a href="#" style="text-decoration: none; color: #555;">
-                                            <span class="text-capitalize">Best t-shirts ever</span>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <a href="#" style="text-decoration: none; color: #555;">
-                                            <span class="text-lowercase">leadintop.com</span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-light">Send Message</button>
-                            </div>
-                        </div>
-                    </div> -->
 
                 </div>
             </div>
@@ -417,7 +342,18 @@
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="{%static 'script.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".show-hide-btn").click(function () {
+                var id = $(this).data("id");
+                $("#half-" + id).toggle();//hide/show..
+                $("#full-" + id).toggle();
+            })
+        })
+    </script>
 </body>
 
 </html>

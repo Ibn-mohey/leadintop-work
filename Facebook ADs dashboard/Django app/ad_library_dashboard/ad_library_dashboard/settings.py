@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-mh%#k%lg9v2qun_kf#=yv0)^9mrvvlxj8!xy$sa!h63#eugg^_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.2', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.1.2','192.168.1.100', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
+
+    #  'videouploaddisplay.apps.VideouploaddisplayConfig',
     
 ]
 
@@ -128,7 +131,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media') #uploaded files
-MEDIA_URL = '/media/' #location
+MEDIA_URL = 'media/' #location
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Default primary key field type

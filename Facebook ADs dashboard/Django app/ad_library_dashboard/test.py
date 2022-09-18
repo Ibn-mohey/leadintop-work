@@ -18,8 +18,11 @@ import urllib.request
 from datetime import datetime
 import sqlite3
 import requests
+import cv2
 
 
+
+pages_block_list = []
 
 
 # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -29,12 +32,12 @@ def save_log(log):
         my_data_file.write(f'{log}\n')
 #log in facebook
 
-def open_link(search_term,country= "EG",start_date = None,end_date=None,media_type='video'):
+def open_link(search_term,country= "ALL",start_date = None,end_date=None,media_type='video'):
     link = f'https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country={country}&q={search_term}&sort_data[direction]=desc&sort_data[mode]=relevancy_monthly_grouped&start_date[min]={start_date}&start_date[max]={end_date}&search_type=keyword_unordered&media_type=all&media_type={media_type}'
     driver.get(link)
     time.sleep(2)
     
-def open_page(page_id,country= "EG",start_date = None,end_date=None):
+def open_page(page_id,country= "ALL",start_date = None,end_date=None):
     link= f'https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country={country}&view_all_page_id={page_id}&sort_data[direction]=desc&sort_data[mode]=relevancy_monthly_grouped&search_type=page&media_type=video'
     driver.get(link)
     time.sleep(2)
@@ -110,12 +113,9 @@ def find_profile_pic(element):
         link = WebDriverWait(element, 10).until(EC.presence_of_element_located((By.XPATH,'.//img[@class="_8nqq img"]'))).get_attribute('src')
         name = re.findall('\d+_\d+_\d+_n',link)[0] + '.png'
         #download
-#         img_data = requests.get(link).content
-#         with open(name, 'wb') as handler:
-#             handler.write(img_data)
-        # get path
-        full_path = '' + name
-
+        img_data = requests.get(link).content
+        with open(f'./media/pics/{name}', 'wb') as handler:
+            handler.write(img_data)
         return link
     except:
         return  ""  #'84702798_579370612644419_4516628711310622720_n.png'
@@ -130,12 +130,20 @@ def find_links(element):
 def find_ad_videos(element):
     try:
         vids = WebDriverWait(element,10).until(EC.presence_of_all_elements_located((By.XPATH,'.//video')))
-        vids_links = [a.get_attribute('src') for a in vids ]
-        names = []
-        for video in vids_links:
+        videos_links = [a.get_attribute('src') for a in vids ]
+        vids_links = []
+        for video in videos_links:
             name = re.findall('\d+_\d+_\d+_n',video)[0] + '.mp4'
-#             urllib.request.urlretrieve(video, name)
-            names.append(name)
+            # urllib.request.urlretrieve(video, name)
+            data = cv2.VideoCapture(video)
+            frames = data.get(cv2.CAP_PROP_FRAME_COUNT)
+            fps = data.get(cv2.CAP_PROP_FPS)
+            seconds = round(frames / fps)
+            # video_time = datetime.timedelta(seconds=seconds)
+            if seconds < 40:
+                urllib.request.urlretrieve(video, f'./media/vids/{name}')
+                vids_links.append(video)
+                
 #         "\n".join(names)
         return "\n".join(vids_links)
     except:
@@ -231,7 +239,7 @@ def get_page_data(element):
 
 
 
-def start_save(search_term,country= "EG",start_date = None,end_date=None,media_type='video',limit = 'no limit'):
+def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_type='video',limit = 'no limit'):
     open_link(search_term,country,start_date,end_date,media_type)
     scroll_down(limit)
     count = 0
@@ -254,7 +262,7 @@ def start_save(search_term,country= "EG",start_date = None,end_date=None,media_t
         AD_ID = find_ID(element)
         save_log(AD_ID)
         Started_date = find_start_date(element)
-        profile_pic = find_profile_pic(element)
+        
         links = find_links(element)
         videos = find_ad_videos(element)
         content = find_content(element)
@@ -263,6 +271,7 @@ def start_save(search_term,country= "EG",start_date = None,end_date=None,media_t
         AD_occurance = find_ads_occurence(element)
 #         FB_ID, page_likes,Insta_ID,insta_followers, static_ID,ADS_count
         Facebook_ID, Page_likes,instgram_ID , insta_followers, static_ID  = get_page_data(element)
+        profile_pic = find_profile_pic(element) #save with static id ??
         page_IDS.append(static_ID)
         save_log(f'end time {time_now}\n')
         # if Ads_count == 0 or Ads_count == "0":
@@ -329,18 +338,7 @@ def start_save(search_term,country= "EG",start_date = None,end_date=None,media_t
     return page_IDS    
 
 
-terms = '''ريال
-عطور
-جمال
-better
-works\worked
-acne
-breakouts
-saggy
-baggy
-squint
-correct
-exfoliate
+terms = '''Dr. Squatch
 '''.split()
 
 for term in terms:
@@ -350,7 +348,14 @@ for term in terms:
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'input[name="pass"]'))).send_keys('lordASD4facebook@@' , Keys.ENTER)
     time.sleep(0.5)
     save_log(f"started the term: {term}")
-    page_IDS = start_save(term, limit=60)
+    page_IDS = start_save(term,limit=30)
+    sqliteConnection = sqlite3.connect('FaceBoookADS.db')
+    cursor = sqliteConnection.cursor()
+    for ID in pages_block_list:
+        sqlite_select_query = f"""DELETE FROM ads WHERE static_ID = {ID} """
+        cursor.execute(sqlite_select_query)
+    sqliteConnection.commit()
+    sqliteConnection.close()
     for page_ID in list(set(page_IDS)):
         open_page(page_ID)
         Ads_count = get_ads_number()

@@ -1,9 +1,10 @@
 conda activate C:/Users/asd_v/anaconda3
+python manage.py runserver 192.168.1.100:8500
 
 
 
 django-admin startproject ad_library_dashboard
-python manage.py runserver 192.168.1.2:8500
+python manage.py runserver 192.168.1.100:8500
 python manage.py startapp ad 
 
 
@@ -54,3 +55,5 @@ python manage.py sqlclear users
 
 ## profile pic 
 ep 8
+
+
