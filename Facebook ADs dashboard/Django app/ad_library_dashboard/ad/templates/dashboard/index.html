@@ -50,8 +50,8 @@
     <main class="d-flex">
         <aside class="py-4 px-2">
             <strong>Get Your ADs</strong>
-            <form method="post">
-                {% csrf_token %}
+            <form method="POST">
+                    {% csrf_token %}
 
                 <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">Search mode:</span>
@@ -336,7 +336,40 @@
                 </div>
             </div>
         </section>
+ 
+  
     </main>
+           
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+     
+  {% if pages.has_previous %}
+      <li class="page-item"> <a class="page-link" href="?page=1">&laquo First</a></li>
+  
+      <li class="page-item"><a class="page-link" href="?page={{ pages.previous_page_number }}">Previous</a></li>
+      
+  {% endif %}
+  <li class="page-item"> Page {{pages.number}} of {{pages.paginator.num_pages}} </li>
+  
+  <!--
+  <li class="page-item disabled"><a href="#" class="page-link">Page {{ venues.number }} of {{ venues.paginator.num_pages }}</a></li>
+  -->
+  
+  <!-- {% for i in nums %}
+      <li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+  
+  {% endfor %} -->
+  
+  
+  {% if pages.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ pages.next_page_number }}">Next</a></li>
+  
+      <li class="page-item"><a class="page-link" href="?page={{ pages.paginator.num_pages }}">Last &raquo</a></li>
+  
+  {% endif %}
+  
+   </ul>
+  </nav>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>

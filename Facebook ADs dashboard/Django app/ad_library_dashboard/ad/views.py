@@ -18,6 +18,9 @@ import itertools
 import sqlite3
 from itertools import compress
 from django.db.models.functions import Greatest
+from django.core.paginator import Paginator
+
+
 # get website data 
 sqliteConnection = sqlite3.connect('FaceBoookADS.db')
 cursor = sqliteConnection.cursor()
@@ -54,7 +57,7 @@ def home(request):
         
         # print()
         sort_by = req.get("sort_by", "-ads_count")
-        
+        ADS = Ads.objects.all().order_by('-ads_count')
         if sort_by == 'likes_followers':
             sort_by = '-latest_activity_at'
             ADS = Ads.objects.annotate(latest_activity_at=Greatest('page_likes', 'insta_followers')).order_by(sort_by)
@@ -63,7 +66,7 @@ def home(request):
         else:
             ADS = Ads.objects.all().order_by(sort_by)
         if req['keywords'] != '':
-            ADS = ADS.filter(search_term__icontains=req['keywords']).order_by(sort_by)
+            ADS = ADS.filter(Q(search_term__icontains=req['keywords']) | Q(content__icontains=req['keywords']) ).order_by(sort_by)
         if req['advertisers'] != '':
             ADS = ADS.filter(page_name__icontains=req['advertisers']).order_by(sort_by)
         if req['domain'] != '':
@@ -71,7 +74,7 @@ def home(request):
         if req['action'] != 'All':
             ADS = ADS.filter(footer_action__icontains=req['action']).order_by(sort_by)
         if req['started_date'] != '':
-            ADS = ADS.filter(started_date__gte=req['started_date']).order_by(sort_by)
+            ADS = ADS.filter(started_date__gte=req['started_date']).order_by('started_date')
         if req.getlist('Advertiser') != []:
             ADS = ADS.filter(reduce(operator.or_, (Q(page_name__icontains=x) for x in req.getlist('Advertiser')))).order_by(sort_by)
         if req.getlist('domains') != []:
@@ -90,14 +93,23 @@ def home(request):
     else:
         ADS = Ads.objects.all().order_by('-ads_count')
         days = [len(set(rec.days.split(','))) for rec in ADS]
+    P = Paginator(ADS, 20)
+    page = request.GET.get('page')
+    ADS_list =  P.get_page(page)
+    days_list =  P.get_page(page)
+    nums = "a" * ADS_list.paginator.num_pages
+    
     context = {'range':range(3),
-               'ads_data':zip(ADS,days),
+               'pages':ADS_list,
+               'ads_data':zip(ADS_list,days),
                'file_name' : 'video',
                'domains':domains,
                'advertisers':advertisers,
                'Footer_actions':Footer_actions,
+               'nums':nums,
         
     }
+    
     return render(request, 'dashboard/index.html',context)
 
 
