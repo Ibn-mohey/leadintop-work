@@ -339,7 +339,7 @@ def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_
 
 
 terms = '''Dr. Squatch
-'''.split()
+'''.split('\n')
 
 for term in terms:
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
