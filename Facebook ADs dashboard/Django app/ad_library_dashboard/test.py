@@ -338,8 +338,13 @@ def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_
     return page_IDS    
 
 
-terms = '''Dr. Squatch
-'''.split('\n')
+sqliteConnection = sqlite3.connect('FaceBoookADS.db')
+cursor = sqliteConnection.cursor()
+sqlite_select_query = f"""SELECT search_term FROM search_terms where active = True and search_type = 'keyword'"""
+cursor.execute(sqlite_select_query)
+records = cursor.fetchall()
+terms = [i[0] for i in list(set(records))]
+cursor.close()
 
 for term in terms:
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -348,7 +353,7 @@ for term in terms:
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'input[name="pass"]'))).send_keys('lordASD4facebook@@' , Keys.ENTER)
     time.sleep(0.5)
     save_log(f"started the term: {term}")
-    page_IDS = start_save(term,limit=30)
+    page_IDS = start_save(term,limit=2)
     sqliteConnection = sqlite3.connect('FaceBoookADS.db')
     cursor = sqliteConnection.cursor()
     for ID in pages_block_list:
@@ -382,6 +387,8 @@ cursor.execute(sqlite_select_query)
 records = cursor.fetchall()
 page_IDS = [i[0] for i in list(set(records))]
 cursor.close()
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+driver.get('https://www.facebook.com')
 for page_ID in page_IDS:
     open_page(page_ID)
     Ads_count = get_ads_number()
@@ -397,3 +404,4 @@ for page_ID in page_IDS:
     page_ID))
     conn.commit()
     conn.close()
+driver.close()

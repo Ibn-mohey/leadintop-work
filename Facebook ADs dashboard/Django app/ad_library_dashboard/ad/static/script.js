@@ -28,7 +28,7 @@ $(document).ready(function () {
   });
 
   $(function () {
-    let dtToday = new Date("YYYY-MM-DD");
+    let dtToday = new Date();
 
     let month = dtToday.getMonth() + 1;
     let day = dtToday.getDate();
@@ -38,8 +38,8 @@ $(document).ready(function () {
     if (day < 10) day = "0" + day.toString();
 
     let maxDate = year + "-" + month + "-" + day;
-    $("#txtDate1").attr("max", maxDate);
-    $("#txtDate2").attr("max", maxDate);
+    $("#txtDate").attr("max", maxDate);
+
   });
 
   let swiper = new Swiper(".mySwiper", {

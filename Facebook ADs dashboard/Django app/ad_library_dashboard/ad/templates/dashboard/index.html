@@ -51,7 +51,7 @@
         <aside class="py-4 px-2">
             <strong>Get Your ADs</strong>
             <form method="GET">
-                    <!-- {% csrf_token %} -->
+                <!-- {% csrf_token %} -->
 
                 <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">Search mode:</span>
@@ -116,12 +116,15 @@
 
                 <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">domains:</span>
-                    {%for key,value in domains.items%}
-                    <label class="main">{{key}} <small> ({{value}}) </small>
-                        <input type="checkbox" name="domains" value="{{key}}">
-                        <span class="geekmark"></span>
-                    </label>
-                    {% endfor%}
+                    <div style="max-height:200px;overflow-y:scroll;overflow-x:hidden; word-wrap: break-word;">
+
+                        {%for key,value in domains.items%}
+                        <label class="main">{{key}} <small> ({{value}}) </small>
+                            <input type="checkbox" name="domains" value="{{key}}">
+                            <span class="geekmark"></span>
+                        </label>
+                        {% endfor%}
+                    </div>
                 </div>
                 <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">sort by:</span>
@@ -156,7 +159,7 @@
                         hits
                     </label>
                 </div>
-                    <!-- country ?? -->
+                <!-- country ?? -->
                 <!-- <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">country:</span>
                     <div class="form-group mb-0 my-2" style="position: relative">
@@ -201,8 +204,8 @@
                 </div>
                 <div class="form-group my-3">
                     <div>
-                        <span>From</span>
-                        <input type="date" id="txtDate1" name="started_date" class="form-control">
+                        <span>started Date:</span>
+                        <input type="date" id="txtDate" name="started_date" class="form-control">
                     </div>
                 </div>
                 <div class="form-group mt-0 mb-3">
@@ -236,36 +239,40 @@
                                         class="fab fa-instagram"></i></a> -->
                             </div>
                             <div class="px-3">
-                               <a href="{{post.ad_id|ad_link}}" ><span>AD ID: {{post.ad_id}}</span>  </a>
+                                <a href="{{post.ad_id|ad_link}}"><span>AD ID: {{post.ad_id}}</span> </a>
                             </div>
                             <div class="px-3">
                                 <span> hits: {{post.hits}}</span>
                             </div>
                             <hr class="my-2 mx-auto" style="width: 92%" />
                             <div class="profile px-3">
-                                <img id="currentPhoto" width="32" height="32" class="rounded-circle" src="{{post.profile_pic|profile_pic}}" onerror="this.onerror=null; this.src='/media/pics/default_image.png'"> 
+                                <img id="currentPhoto" width="32" height="32" class="rounded-circle"
+                                    src="{{post.profile_pic|profile_pic}}"
+                                    onerror="this.onerror=null; this.src='/media/pics/default_image.png'">
 
                                 <span class="px-2">{{post.page_name}} <i
                                         class="fa fa-check-double follow"><small>follow</small></i></span>
                             </div>
-                            <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2"> 
-                                 <span>Static Facebook ID: {{post.static_id}}</span> <a href="{{post.static_id|page_ads_link}}"> See All Ads </a>  
+                            <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
+                                <span>Static Facebook ID: {{post.static_id}}</span> <a
+                                    href="{{post.static_id|page_ads_link}}"> See All Ads </a>
                                 <br>
                                 <i class="fab fa-facebook"></i> <a href="https://www.facebook.com/{{post.static_id}}">
                                     <span>{{post.facebook_id}}</span></a>
                                 <small>{{post.page_likes}} likes</small>
                             </div>
                             <div class="instagram rounded-bottom mb-2 pb-2 mx-3 px-2">
-                                <i class="fab fa-instagram"></i> <a href="https://www.instagram.com/{{post.instgram_id|insta_link}}">
+                                <i class="fab fa-instagram"></i> <a
+                                    href="https://www.instagram.com/{{post.instgram_id|insta_link}}">
                                     <span>{{post.instgram_id}}</span></a>
                                 <small>{{post.insta_followers}} followers </small>
                             </div>
                             {% with text=post.content %}
-                            <p  class="px-3" >
-                                {{ text|truncatewords:50}}
+                            <p class="px-3" style="height:300px;overflow-y:auto">
+                                {{ text}}
                             </p>
 
-<!--                             
+                            <!--                             
                             {% if text|wordcount > 56 %}
                             <p class="half-content" id="half-{{ post.pk }}">{{text|safe|linebreaks|truncatewords:50}}<a
                                     data-id="{{ post.pk }}" href="javascript:void();" class="show-hide-btn"><br>Read
@@ -280,7 +287,7 @@
                             {% endif %}
                             {% endwith %} -->
 
-                            
+
 
                             <!-- video place  -->
                             {% if post.videos|get_len_splits == 1 %}
@@ -288,7 +295,8 @@
                                 <!-- "media/297641839_1201083240460272_7933649554156909768_n.mp4" -->
                                 <!-- <source src="{% static 'media\ads-video\video.mp4'%}"
                                     type="video/mp4">   -->
-                                <source src="{{post.videos|video_location}}"  type="video/mp4" onerror="this.onerror=null; this.src='{{post.videos}}'">
+                                <source src="{{post.videos|video_location}}" type="video/mp4"
+                                    onerror="this.onerror=null; this.src='{{post.videos}}'">
                             </video>
 
                             {%else%}
@@ -300,7 +308,8 @@
                                     <div class="swiper-slide">
                                         <video controls style="width:100%">
                                             <!-- to doooo -->
-                                            <source src="{{video|video_location}}"  onerror="this.onerror=null; this.src='{{video}}'" type="video/mp4">
+                                            <source src="{{video|video_location}}"
+                                                onerror="this.onerror=null; this.src='{{video}}'" type="video/mp4">
                                         </video>
                                     </div>
                                     {%endfor %}
@@ -336,40 +345,43 @@
                 </div>
             </div>
         </section>
- 
-  
+
+
     </main>
-           
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-     
-  {% if pages.has_previous %}
-      <li class="page-item"> <a class="page-link" href="?{% param_replace page=1 %}">&laquo First</a></li>
-  
-      <li class="page-item"><a class="page-link" href="?{% param_replace page=pages.previous_page_number %}">Previous</a></li>
-      
-  {% endif %}
-  <li class="page-item"> Page {{pages.number}} of {{pages.paginator.num_pages}} </li>
-  
-  <!--
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+
+            {% if pages.has_previous %}
+            <li class="page-item"> <a class="page-link" href="?{% param_replace page=1 %}">&laquo First</a></li>
+
+            <li class="page-item"><a class="page-link"
+                    href="?{% param_replace page=pages.previous_page_number %}">Previous</a></li>
+
+            {% endif %}
+            <li class="page-item"> Page {{pages.number}} of {{pages.paginator.num_pages}} </li>
+
+            <!--
   <li class="page-item disabled"><a href="#" class="page-link">Page {{ venues.number }} of {{ venues.paginator.num_pages }}</a></li>
   -->
-  
-  <!-- {% for i in nums %}
+
+            <!-- {% for i in nums %}
       <li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
   
   {% endfor %} -->
-  
-  
-  {% if pages.has_next %}
-      <li class="page-item"><a class="page-link" href="?{% param_replace page=pages.next_page_number %}">Next</a></li>
-  
-      <li class="page-item"><a class="page-link" href="?{% param_replace page=pages.paginator.num_pages %}">Last &raquo</a></li>
-  
-  {% endif %}
-  
-   </ul>
-  </nav>
+
+
+            {% if pages.has_next %}
+            <li class="page-item"><a class="page-link" href="?{% param_replace page=pages.next_page_number %}">Next</a>
+            </li>
+
+            <li class="page-item"><a class="page-link" href="?{% param_replace page=pages.paginator.num_pages %}">Last
+                    &raquo</a></li>
+
+            {% endif %}
+
+        </ul>
+    </nav>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
@@ -378,15 +390,6 @@
     <script src="{%static 'script.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $(".show-hide-btn").click(function () {
-                var id = $(this).data("id");
-                $("#half-" + id).toggle();//hide/show..
-                $("#full-" + id).toggle();
-            })
-        })
-    </script>
 </body>
 
 </html>

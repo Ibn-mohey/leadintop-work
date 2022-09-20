@@ -6087,3 +6087,33 @@ end time 2022-09-19 20:14:36
 started the term: 
 no elements , 1
 no elements , 2
+started the term: better
+started the term: better
+777614989984669
+end time 2022-09-20 19:43:04
+
+1688806064835064
+end time 2022-09-20 19:43:20
+
+started the term: ÚØæÑ
+829108128276075
+end time 2022-09-20 19:43:49
+
+867375454284194
+end time 2022-09-20 19:43:54
+
+started the term: ÚØæÑ
+829108128276075
+end time 2022-09-20 19:45:41
+
+867375454284194
+end time 2022-09-20 19:45:45
+
+started the term: better
+777614989984669
+end time 2022-09-20 19:46:15
+
+1688806064835064
+end time 2022-09-20 19:46:32
+
+should be 0, 0,1

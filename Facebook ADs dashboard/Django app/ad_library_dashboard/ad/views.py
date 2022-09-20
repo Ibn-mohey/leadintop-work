@@ -1,8 +1,9 @@
 import re
 from django.shortcuts import render
 from django.http import  HttpResponse
-from .models import Ads
-from .forms import NameForm
+from .models import Ads,search_term
+
+from .forms import search_terms_form
 # Create your views here.
 from django.http import HttpResponseRedirect
 from urllib.parse import urlparse
@@ -48,7 +49,7 @@ advertisers = dict(itertools.islice(sorted_dict.items(), 5))
 
 domains = [ urlparse(i[0]).netloc for i in domains]
 sorted_dict = dict(sorted(Counter(domains).items(), key=lambda item: item[1],reverse=True))
-domains = dict(itertools.islice(sorted_dict.items(), 5))
+domains = dict(itertools.islice(sorted_dict.items(), 100))
 ####
 
 #post request 
@@ -137,6 +138,7 @@ def home(request):
         if req.get('action','All') != 'All':
             ADS = ADS.filter(footer_action__icontains=req['action']).order_by(sort_by)
         if req.get('started_date','') != '':
+
             ADS = ADS.filter(started_date__gte=req['started_date']).order_by('started_date')
         if req.getlist('Advertiser' , []) != []:
             ADS = ADS.filter(reduce(operator.or_, (Q(page_name__icontains=x) for x in req.getlist('Advertiser')))).order_by(sort_by)
@@ -174,3 +176,24 @@ def home(request):
     }
     
     return render(request, 'dashboard/index.html',context)
+
+
+def add_keyword(request):
+    form = search_terms_form()
+    if request.method == 'POST':
+        print(request.POST)
+        if request.POST.get('action','') == 'ADD':
+            form = search_terms_form(request.POST)
+            if form.is_valid():
+                form.save()
+        else:
+            state = search_term.objects.get(id=request.POST.get('switch')).active
+            search_term.objects.filter(id=request.POST.get('switch')).update(active = not(state))
+            # print(search_term.objects.get(id=request.POST.get('switch')).active)
+            # search_term.objects.filter(id=request.POST.get('switch')).update(field1 = 2)
+            pass
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+    terms = search_term.objects.all()
+    return render(request, 'dashboard/search_keys.html', {'form': form,'terms':terms})

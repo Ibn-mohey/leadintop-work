@@ -6,7 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-
+import django.db.models.constraints
 
 class Ads(models.Model):
     ad_id = models.TextField(db_column='AD_ID', primary_key=True, blank=True, null=False)  # Field name made lowercase.
@@ -34,3 +34,15 @@ class Ads(models.Model):
     class Meta:
         managed = False
         db_table = 'ads'
+class search_term(models.Model):
+        
+    choices = [('keyword','keyword'),('page','page')]
+    search_term =  models.TextField(blank=False, null=False)
+    search_type =  models.TextField(blank=False, null=False,choices = choices)
+    active =  models.BooleanField(default=True)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['search_term', 'search_type'], name='only_one_search')
+        ]
+        db_table = 'search_terms'

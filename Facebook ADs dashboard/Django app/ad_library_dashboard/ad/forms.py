@@ -1,4 +1,6 @@
-from django import forms
-
-class NameForm(forms.Form):
-    keyword = forms.CharField(label='keyword', max_length=100)
+from django.forms import ModelForm
+from .models import  search_term
+class search_terms_form(ModelForm):
+    class Meta:
+        model = search_term
+        fields = ['search_term', 'search_type']
