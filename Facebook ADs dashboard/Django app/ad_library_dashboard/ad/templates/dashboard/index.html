@@ -30,7 +30,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
                     <div class="navbar-nav mr-auto">
-                        <a class="nav-item nav-link" href="{% url 'ad-home' %}">Home</a>
+                        <a class="nav-item nav-link" href="{% url 'key-words' %}">keywords</a>
                     </div>
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav">
@@ -102,15 +102,15 @@
 
                 <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">advertisers:</span>
-
-                    {%for key,value in advertisers.items%}
-                    <label class="main">{{key}} <small> ({{value}}) </small>
-                        <!-- checked="checked" -->
-                        <input type="checkbox" name="Advertiser" value="{{key}}">
-                        <span class="geekmark"></span>
-                    </label>
-                    {% endfor%}
-
+                    <div style="max-height:200px;overflow-y:scroll;overflow-x:hidden; word-wrap: break-word;">
+                        {%for key,value in advertisers.items%}
+                        <label class="main">{{key}} <small> ({{value}}) </small>
+                            <!-- checked="checked" -->
+                            <input type="checkbox" name="Advertiser" value="{{key}}">
+                            <span class="geekmark"></span>
+                        </label>
+                        {% endfor%}
+                    </div>
 
                 </div>
 
@@ -216,6 +216,10 @@
         </aside>
 
         <section class="ads py-4 px-2">
+            <div class="px 3">
+            total values found {{valuesss}} on {{pages.paginator.num_pages}} pages
+        </div>
+
             <div class="container">
                 <div class="row">
                     <!-- # first one -->
@@ -338,7 +342,7 @@
                         </div>
                     </div>
                     {% empty %}
-                    <h1> NO ads with this fillters like that </h1>
+                    <h1> NO ads with this fillters like that, try adding keyword or page name at <a href="{% url 'key-words' %}"> keywords</a></h1>
                     {% endfor %}
 
 

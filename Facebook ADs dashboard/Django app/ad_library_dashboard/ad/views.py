@@ -43,13 +43,9 @@ Footer_actions = [i[0] for i in Footer_actions]
 sorted_dict = dict(sorted(Counter(Footer_actions).items(), key=lambda item: item[1],reverse=True))
 Footer_actions = dict(itertools.islice(sorted_dict.items(), 5))
 
-advertisers = [i[0] for i in advertisers]
-sorted_dict = dict(sorted(Counter(advertisers).items(), key=lambda item: item[1],reverse=True))
-advertisers = dict(itertools.islice(sorted_dict.items(), 5))
 
-domains = [ urlparse(i[0]).netloc for i in domains]
-sorted_dict = dict(sorted(Counter(domains).items(), key=lambda item: item[1],reverse=True))
-domains = dict(itertools.islice(sorted_dict.items(), 100))
+
+
 ####
 
 #post request 
@@ -164,7 +160,27 @@ def home(request):
     
     nums = "a" * ADS_list.paginator.num_pages
     
+    #domains 
+    
+    domains = ADS.values_list('links')
+    domains = [ urlparse(i[0]).netloc for i in domains]
+    sorted_dict = dict(sorted(Counter(domains).items(), key=lambda item: item[1],reverse=True))
+    domains = dict(itertools.islice(sorted_dict.items(), 100))
+    domains.pop('', 'key not found')
+    
+    #adv 
+    #favs ones 
+
+    advertisers = ADS.values_list('page_name')
+    advertisers = [i[0] for i in advertisers]
+    sorted_dict = dict(sorted(Counter(advertisers).items(), key=lambda item: item[1],reverse=True))
+    advertisers = dict(itertools.islice(sorted_dict.items(), 5))
+    
+    
+    
+    
     context = {'range':range(3),
+               'valuesss':len(days),
                'pages':ADS_list,
                'ads_data':zip(ADS_list,days),
                'file_name' : 'video',
