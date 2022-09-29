@@ -17,8 +17,32 @@ Nav
 ********************************************/
 
 nav {
-    background-color: #fff;
-    z-index: 3 !important;
+    z-index: 4 !important;
+    background-color: #f7f3f3;
+}
+
+nav a {
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 0 10px;
+    text-decoration: none;
+    transition: .3s;
+    color: #444;
+    font-family: cursive;
+    font-weight: 600;
+}
+
+nav a i {
+    margin-right: 3px;
+}
+
+nav a:hover {
+    color: #09c;
+    text-decoration: none;
+}
+
+nav .active {
+    color: #09c;
 }
 
 input::placeholder {
@@ -409,4 +433,12 @@ aside {
     font-size: 12px;
     background-color: rgba(255, 255, 255, 0.75);
     color: #000;
+}
+
+button:focus {
+    outline: none;
+}
+
+table th, table td {
+    font-size: 14px;
 }

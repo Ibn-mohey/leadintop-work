@@ -6117,3 +6117,51 @@ end time 2022-09-20 19:46:15
 end time 2022-09-20 19:46:32
 
 should be 0, 0,1
+started the term: ÚØæÑ
+869895561060024
+end time 2022-09-21 14:25:48
+
+1265514070655541
+started the term: ÚØæÑ
+869895561060024
+end time 2022-09-21 14:27:10
+
+1265514070655541
+started the term: ÚØæÑ
+869895561060024
+end time 2022-09-21 14:29:03
+
+1265514070655541
+end time 2022-09-21 14:29:07
+
+started the term: ÚØæÑ
+813437816366018
+end time 2022-09-22 15:11:54
+
+674313030694511
+end time 2022-09-22 15:11:59
+
+started the term: ÚØæÑ
+813437816366018
+end time 2022-09-22 15:12:31
+
+started the term: ['ÚØæÑ']
+813437816366018
+end time 2022-09-22 15:20:52
+
+started the term: ÚØæÑ
+813437816366018
+end time 2022-09-22 15:22:04
+
+849941259719742
+end time 2022-09-22 15:22:07
+
+started the term: Dr. Squatch
+1034423650576270
+end time 2022-09-22 15:22:46
+
+612320167213563
+end time 2022-09-22 15:23:01
+
+started the term: ÚØæÑ
+started the term: Dr. Squatch

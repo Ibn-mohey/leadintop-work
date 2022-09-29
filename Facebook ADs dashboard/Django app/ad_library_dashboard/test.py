@@ -37,8 +37,8 @@ def open_link(search_term,country= "ALL",start_date = None,end_date=None,media_t
     driver.get(link)
     time.sleep(2)
     
-def open_page(page_id,country= "ALL",start_date = None,end_date=None):
-    link= f'https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country={country}&view_all_page_id={page_id}&sort_data[direction]=desc&sort_data[mode]=relevancy_monthly_grouped&search_type=page&media_type=video'
+def open_page(page_id,country= "ALL",start_date = None,end_date=None,media_type='video'):
+    link= f'https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country={country}&view_all_page_id={page_id}&sort_data[direction]=desc&sort_data[mode]=relevancy_monthly_grouped&start_date[min]={start_date}&start_date[max]={end_date}&search_type=page&media_type={media_type}'
     driver.get(link)
     time.sleep(2)
     
@@ -132,6 +132,7 @@ def find_ad_videos(element):
         vids = WebDriverWait(element,10).until(EC.presence_of_all_elements_located((By.XPATH,'.//video')))
         videos_links = [a.get_attribute('src') for a in vids ]
         vids_links = []
+        vids_length =[]
         for video in videos_links:
             name = re.findall('\d+_\d+_\d+_n',video)[0] + '.mp4'
             # urllib.request.urlretrieve(video, name)
@@ -140,14 +141,17 @@ def find_ad_videos(element):
             fps = data.get(cv2.CAP_PROP_FPS)
             seconds = round(frames / fps)
             # video_time = datetime.timedelta(seconds=seconds)
-            if seconds < 40:
+            if seconds < 10:
                 urllib.request.urlretrieve(video, f'./media/vids/{name}')
                 vids_links.append(video)
+                vids_length.append(seconds)
                 
 #         "\n".join(names)
-        return "\n".join(vids_links)
+        links = "\n".join(vids_links)
+        lengths = "\n".join(vids_length)
+        return  links, lengths
     except:
-        return "No Videos found"
+        return "No Videos found" , ""
 
 def find_content(element):
     return WebDriverWait(element,10).until(EC.presence_of_element_located((By.XPATH,'./div/div[3]/div/div/div[2]/div'))).text
@@ -239,8 +243,11 @@ def get_page_data(element):
 
 
 
-def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_type='video',limit = 'no limit'):
-    open_link(search_term,country,start_date,end_date,media_type)
+def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_type='video',limit = 'no limit',type='keyword'):
+    if type == 'keyword':
+        open_link(search_term,country,start_date,end_date,media_type)
+    if type =='page':
+        open_page(search_term,country,start_date,end_date,media_type)
     scroll_down(limit)
     count = 0
     # elements = []
@@ -264,7 +271,7 @@ def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_
         Started_date = find_start_date(element)
         
         links = find_links(element)
-        videos = find_ad_videos(element)
+        videos,video_length = find_ad_videos(element)
         content = find_content(element)
         Footer_text , Footer_action = find_footer(element)
         Page_name = find_page_name(element)
@@ -279,12 +286,13 @@ def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_
             # driver.refresh()
             # Facebook_ID, Page_likes,instgram_ID , insta_followers, static_ID, Ads_count  = get_page_data(element)
         #save to database   
+        favorite = False
         try:
         #insert if not exist 
             conn = sqlite3.connect('FaceBoookADS.db')
             c = conn.cursor()
             c.execute('''INSERT INTO ads VALUES 
-            (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'''
+            (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'''
                 ,(AD_ID ,
                 Started_date ,
                 profile_pic ,
@@ -306,7 +314,12 @@ def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_
                 time_now ,
                 1 ,
                 search_term ,
+                video_length,
+                favorite
                 ))
+            c.execute('''INSERT INTO facebook_pages VALUES 
+        (?, ?,?)'''
+                  , (static_ID,Page_name,False))
             conn.commit()
             conn.close()
         except:
@@ -340,20 +353,27 @@ def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_
 
 sqliteConnection = sqlite3.connect('FaceBoookADS.db')
 cursor = sqliteConnection.cursor()
-sqlite_select_query = f"""SELECT search_term FROM search_terms where active = True and search_type = 'keyword'"""
+sqlite_select_query = f"""SELECT search_term,country FROM search_terms where active = True and search_type = 'keyword'"""
 cursor.execute(sqlite_select_query)
-records = cursor.fetchall()
-terms = [i[0] for i in list(set(records))]
+terms_DB = cursor.fetchall()
+terms = [i[0] for i in terms_DB]
+terms_countries =  [i[1] for i in terms_DB]
+# terms_countries = [i[1] for i in terms_DB]
+sqlite_select_query = f"""SELECT search_term,country FROM search_terms where active = True and search_type = 'page'"""
+cursor.execute(sqlite_select_query)
+pages_DB = cursor.fetchall()
+pages = [i[0] for i in pages_DB]
+pages_countries = [i[1] for i in pages_DB]
 cursor.close()
 
-for term in terms:
+for term,country in zip(terms,terms_countries):
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     driver.get('https://www.facebook.com')
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'input[name="email"]'))).send_keys('drazahmed1969@gmail.com')
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'input[name="pass"]'))).send_keys('lordASD4facebook@@' , Keys.ENTER)
     time.sleep(0.5)
     save_log(f"started the term: {term}")
-    page_IDS = start_save(term,limit=2)
+    page_IDS = start_save(term,country=country,limit=0,type= 'keyword')
     sqliteConnection = sqlite3.connect('FaceBoookADS.db')
     cursor = sqliteConnection.cursor()
     for ID in pages_block_list:
@@ -378,30 +398,53 @@ for term in terms:
         conn.close()
     time.sleep(0.5)
     driver.close()
+for page,country in zip(pages,pages_countries):
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    driver.get('https://www.facebook.com')
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'input[name="email"]'))).send_keys('drazahmed1969@gmail.com')
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'input[name="pass"]'))).send_keys('lordASD4facebook@@' , Keys.ENTER)
+    time.sleep(0.5)
+    save_log(f"started the page: {page}")
+    page_IDS = start_save(page,country=country,limit=0,type= 'page')
+    sqliteConnection = sqlite3.connect('FaceBoookADS.db')
+    cursor = sqliteConnection.cursor()
+    for ID in pages_block_list:
+        sqlite_select_query = f"""DELETE FROM ads WHERE static_ID = {ID} """
+        cursor.execute(sqlite_select_query)
+    sqliteConnection.commit()
+    sqliteConnection.close()
+    time.sleep(0.5)
+    driver.close()
     
-
-sqliteConnection = sqlite3.connect('FaceBoookADS.db')
-cursor = sqliteConnection.cursor()
-sqlite_select_query = f"""SELECT static_ID FROM ads where Ads_count = 0 """
-cursor.execute(sqlite_select_query)
-records = cursor.fetchall()
-page_IDS = [i[0] for i in list(set(records))]
-cursor.close()
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-driver.get('https://www.facebook.com')
-for page_ID in page_IDS:
-    open_page(page_ID)
-    Ads_count = get_ads_number()
-    conn = sqlite3.connect('FaceBoookADS.db')
-    c = conn.cursor()
-    c.execute('''UPDATE ads SET 
-    Ads_count =?,
-    cumulative_ads_count = cumulative_ads_count + ?
-    where static_id = ?'''
-    ,(
-    Ads_count ,
-    Ads_count,
-    page_ID))
-    conn.commit()
-    conn.close()
-driver.close()
+try:
+    driver.close()
+    exit()
+except:
+    exit()
+    
+#get all with 0 ads 
+# sqliteConnection = sqlite3.connect('FaceBoookADS.db')
+# cursor = sqliteConnection.cursor()
+# sqlite_select_query = f"""SELECT static_ID FROM ads where Ads_count = 0 """
+# cursor.execute(sqlite_select_query)
+# records = cursor.fetchall()
+# page_IDS = [i[0] for i in list(set(records))]
+# cursor.close()
+# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+# driver.get('https://www.facebook.com')
+# for page_ID in page_IDS:
+#     open_page(page_ID)
+#     Ads_count = get_ads_number()
+#     conn = sqlite3.connect('FaceBoookADS.db')
+#     c = conn.cursor()
+#     c.execute('''UPDATE ads SET 
+#     Ads_count =?,
+#     cumulative_ads_count = cumulative_ads_count + ?
+#     where static_id = ?'''
+#     ,(
+#     Ads_count ,
+#     Ads_count,
+#     page_ID))
+#     conn.commit()
+#     conn.close()
+# driver.close()

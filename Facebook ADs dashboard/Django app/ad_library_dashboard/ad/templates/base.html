@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+{% load helping_functions %}
+<html lang="en">
+{% csrf_token %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AD LIBRARY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+
+        <nav class="fixed-top w-100 d-flex align-items-center justify-content-center p-2 shadow-sm">
+            <a {% if request.resolver_match.url_name == 'ad-home' %} class="active" {% endif %} href="{% url 'ad-home' %}"> <i class="fa fa-home"></i> Home </a>
+            <a {% if request.resolver_match.url_name == 'favorites' %} class="active" {% endif %} href="{% url 'favorites' %}"> <i class="fa fa-star"></i> Fav&Followed </a>
+            <a {% if request.resolver_match.url_name == 'key-words' %} class="active" {% endif %} href="{% url 'key-words' %}"> <i class="fa fa-plus-hexagon"></i> Main </a>
+        </nav>
+
+
+
+    {% block content %}{% endblock content %}
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="{%static 'script.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</body>
+
+</html>

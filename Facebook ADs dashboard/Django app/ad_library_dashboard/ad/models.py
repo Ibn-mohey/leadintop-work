@@ -8,12 +8,14 @@
 from django.db import models
 import django.db.models.constraints
 
+
 class Ads(models.Model):
     ad_id = models.TextField(db_column='AD_ID', primary_key=True, blank=True, null=False)  # Field name made lowercase.
     started_date = models.TextField(db_column='Started_date', blank=True, null=True)  # Field name made lowercase.
     profile_pic = models.TextField(blank=True, null=True)
     links = models.TextField(blank=True, null=True)
     videos = models.TextField(blank=True, null=True)
+    videos_length = models.TextField(blank=True, null=True)
     content = models.TextField(blank=True, null=True)
     footer_text = models.TextField(db_column='Footer_TEXT', blank=True, null=True)  # Field name made lowercase.
     footer_action = models.TextField(db_column='Footer_action', blank=True, null=True)  # Field name made lowercase.
@@ -30,19 +32,54 @@ class Ads(models.Model):
     date = models.TextField(blank=True, null=True)
     hits = models.IntegerField(blank=True, null=True)
     search_term = models.TextField(blank=True, null=True)
+    favourite =  models.BooleanField(default=False)
+    def favorites_status(self):
+        if self.favourite == True:
+            return "fa fa-star fav faved shadow"
+        elif  self.favourite == False:
+            return"fa fa-star fav shadow"
+    def follow_status(self):
+        status = facebook_pages.objects.get(static_ID=self.static_id).favorites 
+        if status == True:
+            return "fa fa-check-double follow followed" , "followed"
+        elif status == False:
+            return "fa fa-check-double follow" ,"follow"
+    
 
     class Meta:
-        managed = False
         db_table = 'ads'
 class search_term(models.Model):
         
-    choices = [('keyword','keyword'),('page','page')]
+    # choices = [('keyword','keyword'),('page','page')]
+    countries = [('ALL','ALL'),('EG','EG')]
     search_term =  models.TextField(blank=False, null=False)
-    search_type =  models.TextField(blank=False, null=False,choices = choices)
+    # search_type =  models.TextField(blank=False, null=False,choices = choices)
+    search_type =  models.TextField(blank=False, null=False,default='keyword')
+    static_ID = models.TextField(blank=False, null=True)
+    country = models.TextField(blank=False, null=False,default='ALL')
     active =  models.BooleanField(default=True)
-    
+    def active_status(self):
+        if self.active == True:
+            return 'badge badge-success'
+        elif  self.active == False:
+            return 'badge badge-danger'
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['search_term', 'search_type'], name='only_one_search')
+            models.UniqueConstraint(fields=['search_term', 'search_type','country'], name='only_one_search')
         ]
         db_table = 'search_terms'
+        
+        
+class facebook_pages(models.Model):
+    static_ID = models.TextField(blank=False, null=False,primary_key=True)
+    page_name = models.TextField(blank=False, null=False)
+    favorites = models.BooleanField(default=False)
+    def favorites_status(self):
+        if self.favorites == True:
+            return "fa fa-check-double follow followed" , "followed"
+        elif  self.favorites == False:
+            return "fa fa-check-double follow" ,"follow"
+        
+    
+    class Meta:
+        db_table = 'facebook_pages'

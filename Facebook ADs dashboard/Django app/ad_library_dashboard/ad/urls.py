@@ -18,7 +18,9 @@ from django.urls import path
 from . import views 
 urlpatterns = [
     path('', views.home, name = 'ad-home'),
-    path('keywords', views.add_keyword,name='key-words')
+    path('keywords', views.add_keyword,name='key-words'),
+    path('favorites', views.favorites,name='favorites')    #favorites
+    
     # path('test/', views.test, name = 'test')
     # path('/register', views.home, name = 'ad-home'),
 ]

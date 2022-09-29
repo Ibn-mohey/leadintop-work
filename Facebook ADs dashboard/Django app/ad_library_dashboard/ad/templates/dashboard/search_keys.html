@@ -1,26 +1,98 @@
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" name="action" value="ADD">
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{% load helping_functions %}
+{% block content %}
 
-    {% csrf_token %}
-</form>
-<form action="" method="post">
-    {% csrf_token %}
+<main>
+    <div class="pt-3 my-5 mx-auto" style="max-width: 600px">
+        <form class="w-100" action="" method="post">
+            {% csrf_token %}
+            <input name="search_type" type="hidden" value="keyword">
+            <div class="container-fluid w-100">
+                <div class="row">
+                    <div class="col-sm-4 col-12 pl-0 pr-1">
+                        <select class="form-control" name="country">
+                            <option disabled selected value="">Country</option>
+                            <option value="ALL" selected="">ALL</option>
+                            <option value="EG">EG</option>
+                            <option value="us">US</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 col-12 px-1">
+                        <input type="text" name="search_term" required="" class="form-control" placeholder="enter keyword">
+                    </div>
+                    <div class="col-sm-4 col-12 pr-0">
+                        <input type="submit" name="action" class="form-control btn btn-primary" value="ADD">
+                        {% if message %}
+                        <p style="color: red;">{{message}}</p>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
-{%for term in terms %}
-<div>
+<table class="table table-dark table-striped my-3 mx-auto" style="max-width: 600px">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Type</th>
+            <th>Content-Text</th>
+            <th>Country</th>
+            <th>Status</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+
+    {%for term in terms %}
+    <tbody>
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{term.search_type}}</td>
+            <td>{{term.search_term}}</td>
+            <th>{{term.country}}</th>
+            <td>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value="id">
+                    <button type="submit" name="switch" value="{{term.id}}"
+                        style="background-color: transparent; border: none; padding: 0; margin: 0;"><span
+                            class="{{ term.active_status }}">active</span></button>
+                        
+                </form>
+            </td>
+            <td>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value="id">
+                    <button type="submit" name="delete" value="{{term.id}}"
+                        style="background-color: transparent; border: none; padding: 0; margin: 0;"><i
+                            class="fa fa-times text-danger"></i></button>
+                </form>
+            </td>
+        </tr>
+        {%endfor %}
+    </tbody>
+</table>
 
 
-    saerch key = {{term.search_term}}
-
-    search_type = {{term.search_type}}
-
-    active_status =  {% if term.active == True %}currently ON {% else %} currently OFF {% endif %}
-    <button type="submit" name="switch" value="{{term.id}}"> {% if term.active == True %}Turn off {% else %} Turn on {% endif %}</button>
 
 
-</div>
-<br>
-{%endfor %}
-</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</main>
+
+{% endblock content %}

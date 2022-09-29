@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{% load helping_functions %}
+{% block content %}
+
+<main main class="d-flex mt-4">
+
+    <!-- side  -->
+    <aside class="py-4 px-2">
+        <strong>Get Your ADs</strong>
+        <form method="GET">
+            <!-- {% csrf_token %} -->
+
+            <div class="form-group my-3">
+                <span class="my-1 d-block mr-3">Search mode:</span>
+                <div class="p-1 border my-1">
+                    <label class="main pl-0 text-capitalize">Keywords
+                    </label>
+                    <div class="form-group mb-0 my-2" style="position: relative">
+                        <input type="text" class="form-control pl-4" name="keywords" placeholder="enter keywords" value="{{request.GET.keywords}}">
+                        <i class="fa fa-search"
+                            style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
+                    </div>
+                </div>
+                <div class="p-1 border my-1">
+                    <label class="main pl-0 text-capitalize">Advertisers
+                    </label>
+                    <div class="form-group mb-0 my-2" style="position: relative">
+                        <input type="text" class="form-control pl-4" name="advertiser" placeholder="enter advertiser" value="{{request.GET.advertiser}}" >
+                        <i class="fa fa-search"
+                            style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
+                    </div>
+                </div>
+                <div class="p-1 border my-1">
+                    <label class="main pl-0 text-capitalize">Domains
+                    </label>
+                    <div class="form-group mb-0 my-2" style="position: relative">
+                        <input type="text" class="form-control pl-4" name="domain" placeholder="enter domain" value="{{request.GET.domain}}">
+                        <i class="fa fa-search"
+                            style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-0 mb-3">
+                <button class="btn btn-primary form-control" style="font-size: 14px; text-transform: capitalize;"
+                    type="submit"><i style="font-size: 12px" class="fa fa-filter mr-1"></i> Apply filters</button>
+            </div>
+            <!-- <div class="form-group my-3">
+                    <span class="my-1 d-block mr-3">platform:</span>
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="platform" value="facebook" checked>
+                        facebook
+                    </label>
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="platform" value="instagram">
+                        instagram
+                    </label>
+                </div> -->
+
+            <div class="form-group my-3">
+                <span class="my-1 d-block mr-3">advertisers:</span>
+                <div style="max-height:200px;overflow-y:scroll;overflow-x:hidden; word-wrap: break-word;">
+                    {%for key,value in advertisers.items%}
+                    <label class="main">{{key}} <small> ({{value}}) </small>
+                        <!-- checked="checked" -->
+                        <input type="checkbox" name="Advertisers" value="{{key}}">
+                        <span class="geekmark"></span>
+                    </label>
+                    {% endfor%}
+                </div>
+
+            </div>
+
+            <div class="form-group my-3">
+                <span class="my-1 d-block mr-3">domains:</span>
+                <div style="max-height:200px;overflow-y:scroll;overflow-x:hidden; word-wrap: break-word;">
+
+                    {%for key,value in domains.items%}
+                    <label class="main">{{key}} <small> ({{value}}) </small>
+                        <input type="checkbox" name="domains" value="{{key}}">
+                        <span class="geekmark"></span>
+                    </label>
+                    {% endfor%}
+                </div>
+            </div>
+            <div class="form-group my-3">
+                <span class="my-1 d-block mr-3">sort by:</span>
+                <!-- for ads -->
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="sort_by" value="-started_date">
+                    newest
+                </label>
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="sort_by" value="-days_running">
+                    running longest
+                </label>
+                <!-- for advertisers -->
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="sort_by" value="likes_followers">
+                    max likes or followers
+                </label>
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="sort_by" value="-page_likes">
+                    likes count
+                </label>
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="sort_by" value="-insta_followers">
+                    followers count
+                </label>
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="sort_by" value="-ads_count">
+                    ads count
+                </label>
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="sort_by" value="-hits">
+                    hits
+                </label>
+            </div>
+            <!-- country ?? -->
+            <!-- <div class="form-group my-3">
+                    <span class="my-1 d-block mr-3">country:</span>
+                    <div class="form-group mb-0 my-2" style="position: relative">
+                        <input type="text" class="form-control pl-4" name="" placeholder="select country">
+                        <i class="fa fa-search"
+                            style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
+                    </div>
+                    <div class="px-2">
+                        <label class="main text-capitalize">US <small>(1,213,212)</small>
+                            <input type="checkbox">
+                            <span class="geekmark"></span>
+                        </label>
+                        <label class="main text-capitalize">Egypt <small>(112,311)</small>
+                            <input type="checkbox">
+                            <span class="geekmark"></span>
+                        </label>
+                        <label class="main text-capitalize">Canada <small>(112,311)</small>
+                            <input type="checkbox">
+                            <span class="geekmark"></span>
+                        </label>
+                        <label class="main text-capitalize">china <small>(112,311)</small>
+                            <input type="checkbox">
+                            <span class="geekmark"></span>
+                        </label>
+                    </div>
+                </div> -->
+
+            <div class="form-group my-3">
+                <span class="my-1 d-block mr-3">CTA:</span>
+                <select class="form-control" name="action">
+                    <option selected="selected" value="All">All</option>
+                    {%for opt,v in Footer_actions.items%}
+                    <option value="{{opt}}">{{opt}}</option>
+                    {% endfor%}
+                </select>
+            </div>
+
+            <div class="form-group my-3">
+                <span class="my-1 d-block mr-3">Days running more than:</span>
+                <input type="number" min="1" name="days" class="form-control">
+
+            </div>
+            <div class="form-group my-3">
+                <div>
+                    <span>started Date:</span>
+                    <input type="date" id="txtDate" name="started_date" class="form-control">
+                </div>
+            </div>
+            <div class="form-group mt-0 mb-3">
+                <button class="btn btn-primary form-control" style="font-size: 14px; text-transform: capitalize;"
+                    type="submit"><i style="font-size: 12px" class="fa fa-filter mr-1"></i> Apply filters</button>
+            </div>
+        </form>
+    </aside>
+
+    <section class="ads py-4 px-2">
+        <div class="container-fluid m-auto" style="width:95%">
+            <div class="row">
+                <div class="p-3 col-12">
+                    total values found {{valuesss}} on {{pages.paginator.num_pages}} pages <br> 
+                   <!-- {{ request.GET}} -->
+                    {%for k,v in last_req.items  %}
+
+                    {%if v|length > 1%}
+                    {{ k }}: {{v}}
+                    {%elif v.0|length > 1%}
+                    {{ k }}: {{v}}
+                    {%endif%}
+                    <!-- [{% for x in v %}{{ x }}], {% endfor %} -->
+                    {%endfor%}
+                   
+                </div>
+                <!-- # first one -->
+                {% for post,day in ads_data %}
+
+                <div
+                    class="ad col-xl-4 col-lg-6 offset-lg-0 col-md-8 offset-md-2 col-sm-10 offset-sm-1 offset-1 col-10">
+                    <div class="mx-2 bg-white rounded border py-3 my-0 px-0">
+                                              <!-- Get star -->
+                                              <form action="?{% param_replace %}" method="post" style="position: absolute;right: 0.85rem;top: 0.5rem; padding:0; margin:0;">
+                                                {% csrf_token %}
+
+                                                <button name="post_id" style="background: transparent; border:none;" type="submit"
+                                                    value="{{post.ad_id}}"> <i class="{{post.favorites_status}}"></i></button>
+                                            </form>
+                    
+                        <div class="px-3">
+                            <span><i class="fa fa-check-circle"></i> Days Running: {{day}} </span>
+                        </div>
+                        <div class="px-3">
+                            <span>Started running on: {{post.started_date}}</span>
+                        </div>
+                        <div class="px-3 plat">
+                            <span>Page Ads Count: {{post.ads_count}}</span>
+                            <!-- <a href="#"><i
+                                        class="fab fa-facebook"></i></a> <a href="#"><i
+                                        class="fab fa-instagram"></i></a> -->
+                        </div>
+                        <div class="px-3">
+                            <a href="{{post.ad_id|ad_link}}"><span>AD ID: {{post.ad_id}}</span> </a>
+                        </div>
+                        <div class="px-3">
+                            <span> hits: {{post.hits}}</span>
+                        </div>
+                        <hr class="my-2 mx-auto" style="width: 92%" />
+                        <div class="profile px-3">
+                            <img id="currentPhoto" width="32" height="32" class="rounded-circle"
+                                src="{{post.profile_pic|profile_pic}}"
+                                onerror="this.onerror=null; this.src='/media/pics/default_image.png'">
+
+                                <span class="px-2">{{post.page_name}}<form method="post">{% csrf_token %}<button name="static_id" style="background: transparent; border:none;" type="submit" value="{{post.static_id}}"><i class="{{post.follow_status.0}}"><small>{{post.follow_status.1}}</small></i></button></form>
+                                </span>
+                        </div>
+                        <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
+                            <span>Static Facebook ID: {{post.static_id}}</span> 
+                            <!-- <a
+                                href="{{post.static_id|page_ads_link}}"> See All Ads </a> -->
+                            <br>
+                            <i class="fab fa-facebook"></i> <a href="https://www.facebook.com/{{post.static_id}}">
+                                <span>{{post.facebook_id}}</span></a>
+                            <small>{{post.page_likes}} likes</small>
+                        </div>
+                        <div class="instagram rounded-bottom mb-2 pb-2 mx-3 px-2">
+                            <i class="fab fa-instagram"></i> <a
+                                href="https://www.instagram.com/{{post.instgram_id|insta_link}}">
+                                <span>{{post.instgram_id}}</span></a>
+                            <small>{{post.insta_followers}} followers </small>
+                        </div>
+
+                        <p class="px-3" style="height:300px;overflow-y:auto">
+                            {{ post.content}}
+                        </p>
+
+
+                        <!-- video place  -->
+                        {% if post.videos|get_len_splits == 1 %}
+                        <video controls style="width:100%" preload="preload">
+                            <!-- "media/297641839_1201083240460272_7933649554156909768_n.mp4" -->
+                            <!-- <source src="{% static 'media\ads-video\video.mp4'%}"
+                                    type="video/mp4">   -->
+                            <source src="{{post.videos|video_location}}" type="video/mp4"
+                                onerror="this.onerror=null; this.src='{{post.videos}}'">
+                        </video>
+
+                        {%else%}
+
+
+                        <div class="swiper mySwiper">
+                            <div class="swiper-wrapper">
+                                {%for video in post.videos|get_all_splits %}
+                                <div class="swiper-slide">
+                                    <video controls style="width:100%">
+                                        <!-- to doooo -->
+                                        <source src="{{video|video_location}}"
+                                            onerror="this.onerror=null; this.src='{{video}}'" type="video/mp4">
+                                    </video>
+                                </div>
+                                {%endfor %}
+                            </div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+                        {%endif%}
+
+                        <div class="footer mt-3 px-3">
+                            <div>
+
+                                <div>
+                                    <a href="{{post.links|last_link}}" style="text-decoration: none; color: #555;">
+                                        <span class="text-capitalize">{{post.footer_text}}</span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="{{post.links|last_link}}" style="text-decoration: none; color: #555;">
+                                        <span class="text-lowercase">{{post.domain}}</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-light">{{post.footer_action}}</button>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <h1> NO ads with this fillters like that, try adding keyword or page name at <a
+                        href="{% url 'key-words' %}"> keywords</a></h1>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </section>
+
+
+</main>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+
+        {% if pages.has_previous %}
+        <li class="page-item"> <a class="page-link" href="?{% param_replace page=1 %}">&laquo First</a></li>
+
+        <li class="page-item"><a class="page-link"
+                href="?{% param_replace page=pages.previous_page_number %}">Previous</a></li>
+
+        {% endif %}
+        <li class="page-item"> Page {{pages.number}} of {{pages.paginator.num_pages}} </li>
+
+
+
+        {% if pages.has_next %}
+        <li class="page-item"><a class="page-link" href="?{% param_replace page=pages.next_page_number %}">Next</a>
+        </li>
+
+        <li class="page-item"><a class="page-link" href="?{% param_replace page=pages.paginator.num_pages %}">Last
+                &raquo</a></li>
+
+        {% endif %}
+
+    </ul>
+</nav>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<script src="{%static 'script.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+{% endblock content %}

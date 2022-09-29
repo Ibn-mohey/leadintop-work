@@ -1,5 +1,6 @@
+from pydoc import doc
 from django import template
-
+from ad.models import facebook_pages
 register = template.Library()
 import re
 from ..models import Ads
@@ -67,8 +68,3 @@ def param_replace(context, **kwargs):
     for k in [k for k, v in d.items() if not v]:
         del d[k]
     return d.urlencode()
-
-
-
-
-
