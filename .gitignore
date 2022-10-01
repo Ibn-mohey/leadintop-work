@@ -9,3 +9,4 @@ Facebook ADs dashboard/Django app/ad_library_dashboard/ad/__pycache__/models.cpy
 *.mp4
 *.pyc
 *.pyc
+*.png
