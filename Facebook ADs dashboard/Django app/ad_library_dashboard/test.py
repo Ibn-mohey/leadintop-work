@@ -19,6 +19,18 @@ from datetime import datetime
 import sqlite3
 import requests
 import cv2
+import sys
+
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--limit", help="enter some quality limit",
+                    nargs='?', default='no limit', const=0)
+args = parser.parse_args()
+# print(args.limit)
+
+# limit = sys.argv[1]
+
+# print(limit)
 
 
 
@@ -395,7 +407,7 @@ for term,country in zip(terms,terms_countries):
     save_log(f"started the term: {term}")
     #Log ooooo 
     ## start save with limit 'no limit'
-    page_IDS = start_save(term,country=country,type= 'keyword',limit='no limit')
+    page_IDS = start_save(term,country=country,type= 'keyword',limit=int(args.limit))
     sqliteConnection = sqlite3.connect('FaceBoookADS.db')
     cursor = sqliteConnection.cursor()
     for ID in pages_block_list:
