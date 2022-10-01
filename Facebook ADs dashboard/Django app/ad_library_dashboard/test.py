@@ -22,13 +22,13 @@ import cv2
 
 
 
-pages_block_list = []
+pages_block_list = [] 
 
 
 # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 def save_log(log):
     print(log)
-    with open('log.txt', 'a+') as my_data_file:
+    with open('log.txt', 'a+', encoding="utf-8") as my_data_file:
         my_data_file.write(f'{log}\n')
 #log in facebook
 
@@ -67,13 +67,15 @@ def scroll_down(limit = 'no limit'):
          #scroll to end 
         # Get scroll height
         last_height = driver.execute_script("return document.body.scrollHeight")
-
-        while True:
+        tries = 0
+        while True and tries <20:
             # Scroll down to bottom
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-
+            time.sleep(1)
+            last_height = driver.execute_script("return document.body.scrollHeight")
             # Wait to load page
-            time.sleep(2)
+            time.sleep(5)
+            tries += 1
 
             # Calculate new scroll height and compare with last scroll height
             new_height = driver.execute_script("return document.body.scrollHeight")
@@ -103,9 +105,11 @@ def find_start_date(element):
     text = WebDriverWait(element, 10).until(EC.presence_of_element_located((By.XPATH,'./div/div[1]/div/div[1]/div[2]/span'))).text#[19:]
     try:
         date = re.findall('\d+ \S+ \d+',text)[0]
+        return datetime.strptime(date,"%d %b %Y").strftime("%Y-%m-%d")
     except:
         date = text
-    return datetime.strptime(date,"%d %b %Y" ).strftime("%Y-%m-%d")
+        return "date_error"
+    # return datetime.strptime(date,"%d %b %Y" ).strftime("%Y-%m-%d")
 
 
 def find_profile_pic(element):
@@ -141,17 +145,24 @@ def find_ad_videos(element):
             fps = data.get(cv2.CAP_PROP_FPS)
             seconds = round(frames / fps)
             # video_time = datetime.timedelta(seconds=seconds)
-            if seconds < 10:
-                urllib.request.urlretrieve(video, f'./media/vids/{name}')
-                vids_links.append(video)
-                vids_length.append(seconds)
+            if seconds < 120:
+                #download videos
+                import os
+                if not os.path.exists(f'./media/vids/{name}'):
+                    # open('file', 'w').close() 
+                    urllib.request.urlretrieve(video, f'./media/vids/{name}')
+                    vids_links.append(video)
+                    vids_length.append(seconds)
+                else:
+                    vids_links.append(video)
+                    vids_length.append(seconds)
                 
-#         "\n".join(names)
+    #         "\n".join(names)
         links = "\n".join(vids_links)
-        lengths = "\n".join(vids_length)
+        lengths = "\n".join(str(n) for n in vids_length)
         return  links, lengths
     except:
-        return "No Videos found" , ""
+        return "" , ""
 
 def find_content(element):
     return WebDriverWait(element,10).until(EC.presence_of_element_located((By.XPATH,'./div/div[3]/div/div/div[2]/div'))).text
@@ -159,8 +170,8 @@ def find_content(element):
 
 def find_footer(element):
     try:
-        footer = WebDriverWait(element, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'div[class="_8jgz _8jg_"]')))
-        action = WebDriverWait(footer, 10).until(EC.presence_of_element_located((By.XPATH,'./div[2]/div/div/span/div/div/div'))).text
+        footer = WebDriverWait(element, 2).until(EC.presence_of_element_located((By.CSS_SELECTOR,'div[class="_8jgz _8jg_"]')))
+        action = WebDriverWait(footer, 2).until(EC.presence_of_element_located((By.XPATH,'./div[2]/div/div/span/div/div/div'))).text
         return footer.text , action
     except:
         return "No Footer" , "No Action"
@@ -188,7 +199,7 @@ def get_page_data(element):
     main_element = click_see_ad_details(element)
 
     #ABOUT THE PAGE ELEMENT
-    about_the_page = WebDriverWait(main_element, 10).until(EC.presence_of_element_located((By.XPATH,'./div[2]/div/div/div/div/div[3]/span/div[2]/div/div')))  
+    
 
     FB_ID = "NO Facebook ID found"
     Insta_ID = "NO insta ID found"
@@ -197,6 +208,7 @@ def get_page_data(element):
 
     try:
         #all pages
+        about_the_page = WebDriverWait(main_element, 10).until(EC.presence_of_element_located((By.XPATH,'./div[2]/div/div/div/div/div[3]/span/div[2]/div/div')))  
         pages = WebDriverWait(about_the_page, 2).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,'div[class="hael596l alzwoclg c61n2bf6 q46jt4gp bq6c9xl4 r9sb4e79"]')))
         for s in pages:    
             text = s.find_element(By.XPATH,'.').text.replace(',','')
@@ -217,7 +229,7 @@ def get_page_data(element):
     # pages_IDS.append(static_ID)
     # save_log(f'page IDS {len(pages_IDS)}')
     try:
-        page_link = WebDriverWait(main_element, 10).until(EC.presence_of_element_located((By.XPATH,'./div[2]/div/div/div/div/div[3]/span/div[2]/div/div/div[1]/div/a'))).get_attribute('href')
+        page_link = WebDriverWait(main_element, 2).until(EC.presence_of_element_located((By.XPATH,'./div[2]/div/div/div/div/div[3]/span/div[2]/div/div/div[1]/div/a'))).get_attribute('href')
         static_ID = re.findall(('view_all_page_id=(\d+)'),page_link)[0]
     #     # Open a new window
     #     driver.execute_script("window.open('');")
@@ -237,7 +249,6 @@ def get_page_data(element):
     time.sleep(0.5)
     webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
     time.sleep(1) 
-#     print(FB_ID, page_likes,Insta_ID,insta_followers, static_ID)
     return FB_ID, page_likes,Insta_ID,insta_followers,static_ID
 
 
@@ -272,6 +283,8 @@ def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_
         
         links = find_links(element)
         videos,video_length = find_ad_videos(element)
+        if len(videos)<1:
+            continue
         content = find_content(element)
         Footer_text , Footer_action = find_footer(element)
         Page_name = find_page_name(element)
@@ -317,13 +330,16 @@ def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_
                 video_length,
                 favorite
                 ))
-            c.execute('''INSERT INTO facebook_pages VALUES 
-        (?, ?,?)'''
-                  , (static_ID,Page_name,False))
+            try:
+                c.execute('''INSERT INTO facebook_pages VALUES 
+            (?, ?,?)'''
+                        , (static_ID,Page_name,False))
+            except:
+                pass
             conn.commit()
             conn.close()
         except:
-            #update the data 
+            #update the data
             conn = sqlite3.connect('FaceBoookADS.db')
             c = conn.cursor()
             c.execute('''UPDATE ads SET 
@@ -372,8 +388,11 @@ for term,country in zip(terms,terms_countries):
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'input[name="email"]'))).send_keys('drazahmed1969@gmail.com')
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'input[name="pass"]'))).send_keys('lordASD4facebook@@' , Keys.ENTER)
     time.sleep(0.5)
+    #Log ooooo 
     save_log(f"started the term: {term}")
-    page_IDS = start_save(term,country=country,limit=0,type= 'keyword')
+    #Log ooooo 
+    ## start save with limit 'no limit'
+    page_IDS = start_save(term,country=country,type= 'keyword',limit='no limit')
     sqliteConnection = sqlite3.connect('FaceBoookADS.db')
     cursor = sqliteConnection.cursor()
     for ID in pages_block_list:
@@ -382,6 +401,7 @@ for term,country in zip(terms,terms_countries):
     sqliteConnection.commit()
     sqliteConnection.close()
     for page_ID in list(set(page_IDS)):
+
         open_page(page_ID)
         Ads_count = get_ads_number()
         conn = sqlite3.connect('FaceBoookADS.db')
@@ -404,8 +424,10 @@ for page,country in zip(pages,pages_countries):
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'input[name="email"]'))).send_keys('drazahmed1969@gmail.com')
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'input[name="pass"]'))).send_keys('lordASD4facebook@@' , Keys.ENTER)
     time.sleep(0.5)
+    #Log ooooo 
     save_log(f"started the page: {page}")
-    page_IDS = start_save(page,country=country,limit=0,type= 'page')
+    #Log ooooo 
+    page_IDS = start_save(page,country=country,type= 'page')
     sqliteConnection = sqlite3.connect('FaceBoookADS.db')
     cursor = sqliteConnection.cursor()
     for ID in pages_block_list:
@@ -418,8 +440,11 @@ for page,country in zip(pages,pages_countries):
     
 try:
     driver.close()
+    #Log ooooo 
+    save_log(f"code finished at : {datetime.now()}")
     exit()
 except:
+    save_log(f"code finished at : {datetime.now()}")
     exit()
     
 #get all with 0 ads 

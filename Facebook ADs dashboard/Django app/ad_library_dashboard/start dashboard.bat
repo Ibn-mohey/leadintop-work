@@ -1,0 +1,1 @@
+python manage.py runserver  10.5.50.222:8500
