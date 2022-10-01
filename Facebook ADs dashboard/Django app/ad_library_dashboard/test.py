@@ -145,6 +145,7 @@ def find_ad_videos(element):
             fps = data.get(cv2.CAP_PROP_FPS)
             seconds = round(frames / fps)
             # video_time = datetime.timedelta(seconds=seconds)
+            save_log(f"video length = {seconds}")
             if seconds < 120:
                 #download videos
                 import os
@@ -160,6 +161,7 @@ def find_ad_videos(element):
     #         "\n".join(names)
         links = "\n".join(vids_links)
         lengths = "\n".join(str(n) for n in vids_length)
+        save_log(f"saved video = {len(vids_links), lengths}")
         return  links, lengths
     except:
         return "" , ""
