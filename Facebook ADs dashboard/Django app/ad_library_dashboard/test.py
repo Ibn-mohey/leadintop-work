@@ -145,39 +145,39 @@ def find_links(element):
     return "\n".join(links)
 
 def find_ad_videos(element):
-    # try:
-    vids = WebDriverWait(element,10).until(EC.presence_of_all_elements_located((By.XPATH,'.//video')))
-    videos_links = [a.get_attribute('src') for a in vids ]
-    vids_links = []
-    vids_length =[]
-    for video in videos_links:
-        name = re.findall('\d+_\d+_\d+_n',video)[0] + '.mp4'
-        # urllib.request.urlretrieve(video, name)
-        data = cv2.VideoCapture(video)
-        frames = data.get(cv2.CAP_PROP_FRAME_COUNT)
-        fps = data.get(cv2.CAP_PROP_FPS)
-        seconds = round(frames / fps)
-        # video_time = datetime.timedelta(seconds=seconds)
-        save_log(f"video length = {seconds}")
-        if seconds < 120:
-            #download videos
-            import os
-            if not os.path.exists(f'./media/vids/{name}'):
-                # open('file', 'w').close() 
-                urllib.request.urlretrieve(video, f'./media/vids/{name}')
-                vids_links.append(video)
-                vids_length.append(seconds)
-            else:
-                vids_links.append(video)
-                vids_length.append(seconds)
-            
-#         "\n".join(names)
-    links = "\n".join(vids_links)
-    lengths = "\n".join(str(n) for n in vids_length)
-    save_log(f"saved video = {len(vids_links), lengths}")
-    return  links, lengths
-    # except:
-    #     return "" , ""
+    try:
+        vids = WebDriverWait(element,10).until(EC.presence_of_all_elements_located((By.XPATH,'.//video')))
+        videos_links = [a.get_attribute('src') for a in vids ]
+        vids_links = []
+        vids_length =[]
+        for video in videos_links:
+            name = re.findall('\d+_\d+_\d+_n',video)[0] + '.mp4'
+            # urllib.request.urlretrieve(video, name)
+            data = cv2.VideoCapture(video)
+            frames = data.get(cv2.CAP_PROP_FRAME_COUNT)
+            fps = data.get(cv2.CAP_PROP_FPS)
+            seconds = round(frames / fps)
+            # video_time = datetime.timedelta(seconds=seconds)
+            save_log(f"video length = {seconds}")
+            if seconds < 120:
+                #download videos
+                import os
+                if not os.path.exists(f'./media/vids/{name}'):
+                    # open('file', 'w').close() 
+                    urllib.request.urlretrieve(video, f'./media/vids/{name}')
+                    vids_links.append(video)
+                    vids_length.append(seconds)
+                else:
+                    vids_links.append(video)
+                    vids_length.append(seconds)
+                
+    #         "\n".join(names)
+        links = "\n".join(vids_links)
+        lengths = "\n".join(str(n) for n in vids_length)
+        save_log(f"saved video = {len(vids_links), lengths}")
+        return  links, lengths
+    except:
+        return "" , ""
 
 def find_content(element):
     return WebDriverWait(element,10).until(EC.presence_of_element_located((By.XPATH,'./div/div[3]/div/div/div[2]/div'))).text
