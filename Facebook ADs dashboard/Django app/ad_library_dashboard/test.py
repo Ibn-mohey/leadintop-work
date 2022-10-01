@@ -100,7 +100,7 @@ def scroll_down(limit = 'no limit'):
     else:
         ads = driver.find_elements(By.CSS_SELECTOR, value = 'div[class="_99s5"]')
         temp_ads = 0
-        while (len(ads) < limit and temp_ads < len(ads)):
+        while (len(ads) < int(limit) and temp_ads < len(ads)):
             temp_ads = len(ads)
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(3)
@@ -288,6 +288,8 @@ def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_
     page_IDS = []
     if limit == "no limit":
         limit = len(elements)+1
+    else:
+        limit = int(limit)
     for element in elements[0:limit]:
         count =+ 1
         time_now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -407,7 +409,7 @@ for term,country in zip(terms,terms_countries):
     save_log(f"started the term: {term}")
     #Log ooooo 
     ## start save with limit 'no limit'
-    page_IDS = start_save(term,country=country,type= 'keyword',limit=int(args.limit))
+    page_IDS = start_save(term,country=country,type= 'keyword',limit=args.limit)
     sqliteConnection = sqlite3.connect('FaceBoookADS.db')
     cursor = sqliteConnection.cursor()
     for ID in pages_block_list:
