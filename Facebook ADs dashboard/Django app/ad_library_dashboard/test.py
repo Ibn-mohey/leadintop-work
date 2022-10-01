@@ -79,6 +79,7 @@ def scroll_down(limit = 'no limit'):
 
             # Calculate new scroll height and compare with last scroll height
             new_height = driver.execute_script("return document.body.scrollHeight")
+            print(new_height- last_height)
             if new_height == last_height:
                 break
             last_height = new_height
