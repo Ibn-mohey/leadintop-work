@@ -44,7 +44,7 @@ def video_location(text):
 def poster_location(text):
     try:
         name = re.findall('\d+_\d+_\d+_n',text)[0] + '.jpg'
-        return f'/media/vids/{name}'
+        return f'/media/pics/{name}'
     except:
         return ""
     
