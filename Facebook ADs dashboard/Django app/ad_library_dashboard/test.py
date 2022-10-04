@@ -178,7 +178,7 @@ def find_ad_videos(element):
     #         "\n".join(names)
         links = "\n".join(vids_links)
         lengths = "\n".join(str(n) for n in vids_length)
-        posters_links =  "\n".join(str(n) for n in poster)
+        posters_links =  "\n".join(final_posters)
         save_log(f"saved video = {len(vids_links), lengths}")
         return  links, lengths,posters_links 
     except:
