@@ -148,9 +148,11 @@ def find_ad_videos(element):
     try:
         vids = WebDriverWait(element,10).until(EC.presence_of_all_elements_located((By.XPATH,'.//video')))
         videos_links = [a.get_attribute('src') for a in vids ]
+        posters = [a.get_attribute('poster') for a in vids ]
         vids_links = []
         vids_length =[]
-        for video in videos_links:
+        final_posters = []
+        for video,poster in zip(videos_links,posters):
             name = re.findall('\d+_\d+_\d+_n',video)[0] + '.mp4'
             # urllib.request.urlretrieve(video, name)
             data = cv2.VideoCapture(video)
@@ -167,15 +169,18 @@ def find_ad_videos(element):
                     urllib.request.urlretrieve(video, f'./media/vids/{name}')
                     vids_links.append(video)
                     vids_length.append(seconds)
+                    final_posters.append(poster)
                 else:
                     vids_links.append(video)
                     vids_length.append(seconds)
+                    final_posters.append(poster)
                 
     #         "\n".join(names)
         links = "\n".join(vids_links)
         lengths = "\n".join(str(n) for n in vids_length)
+        posters_links =  "\n".join(str(n) for n in poster)
         save_log(f"saved video = {len(vids_links), lengths}")
-        return  links, lengths
+        return  links, lengths,posters_links 
     except:
         return "" , ""
 
@@ -299,7 +304,7 @@ def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_
         Started_date = find_start_date(element)
         
         links = find_links(element)
-        videos,video_length = find_ad_videos(element)
+        videos,video_length,posters = find_ad_videos(element)
         if len(videos)<1:
             continue
         content = find_content(element)
@@ -322,7 +327,7 @@ def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_
             conn = sqlite3.connect('FaceBoookADS.db')
             c = conn.cursor()
             c.execute('''INSERT INTO ads VALUES 
-            (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'''
+            (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'''
                 ,(AD_ID ,
                 Started_date ,
                 profile_pic ,
@@ -345,7 +350,8 @@ def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_
                 1 ,
                 search_term ,
                 video_length,
-                favorite
+                favorite,
+                posters
                 ))
             try:
                 c.execute('''INSERT INTO facebook_pages VALUES 
