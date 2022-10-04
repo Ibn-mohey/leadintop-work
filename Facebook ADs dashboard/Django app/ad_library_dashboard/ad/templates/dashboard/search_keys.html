@@ -20,61 +20,71 @@
                         </select>
                     </div>
                     <div class="col-sm-4 col-12 px-1">
-                        <input type="text" name="search_term" required="" class="form-control" placeholder="enter keyword">
+                        <input type="text" name="search_term" required="" class="form-control"
+                            placeholder="enter keyword">
                     </div>
                     <div class="col-sm-4 col-12 pr-0">
                         <input type="submit" name="action" class="form-control btn btn-primary" value="ADD">
                         {% if message %}
                         <p style="color: red;">{{message}}</p>
-                    {% endif %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </form>
     </div>
 
-<table class="table table-dark table-striped my-3 mx-auto" style="max-width: 600px">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Type</th>
-            <th>Content-Text</th>
-            <th>Country</th>
-            <th>Status</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
+    <table class="table table-dark table-striped my-3 mx-auto" style="max-width: 600px">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Type</th>
+                <th>Content-Text</th>
+                <th>Country</th>
+                <th>Status</th>
+                {%if user.is_superuser %}
+                <th>Delete</th>
+                {%endif%}
+            </tr>
+        </thead>
 
-    {%for term in terms %}
-    <tbody>
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{term.search_type}}</td>
-            <td>{{term.search_term}}</td>
-            <th>{{term.country}}</th>
-            <td>
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" value="id">
-                    <button type="submit" name="switch" value="{{term.id}}"
-                        style="background-color: transparent; border: none; padding: 0; margin: 0;"><span
-                            class="{{ term.active_status }}">active</span></button>
-                        
-                </form>
-            </td>
-            <td>
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" value="id">
-                    <button type="submit" name="delete" value="{{term.id}}"
-                        style="background-color: transparent; border: none; padding: 0; margin: 0;"><i
-                            class="fa fa-times text-danger"></i></button>
-                </form>
-            </td>
-        </tr>
-        {%endfor %}
-    </tbody>
-</table>
+        {%for term in terms %}
+        <tbody>
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{term.search_type}}</td>
+                <td>{{term.search_term}}</td>
+                <th>{{term.country}}</th>
+                <td>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {%if user.is_superuser %}
+                        <input type="hidden" value="id">
+                        <button type="submit" name="switch" value="{{term.id}}"
+                            style="background-color: transparent; border: none; padding: 0; margin: 0;"><span
+                                class="{{ term.active_status.0 }}">{{term.active_status.1 }}</span></button>
+                                
+                    </form>
+                    {%else%}
+                                <span
+                                class="{{ term.active_status.0 }}">{{term.active_status.1 }}</span>
+                                {%endif%}
+                </td>
+                {%if user.is_superuser %}
+                <td>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" value="id">
+                        <button type="submit" name="delete" value="{{term.id}}"
+                            style="background-color: transparent; border: none; padding: 0; margin: 0;"><i
+                                class="fa fa-times text-danger"></i></button>
+                    </form>
+                </td>
+                {%endif%}
+            </tr>
+            {%endfor %}
+        </tbody>
+    </table>
 
 
 

@@ -17,12 +17,15 @@ edit views to the HTML u want
 # HTML codes 
 create templates folder withing the app dir
 
+python manage.py migrate --fake users zero
 
 #admin
 python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser
 admin
+leadintopadmin@leadintop.com
+Leadintop123@@
 admin@leadintop.com
 admin
 http://127.0.0.1:8000/admin/
@@ -31,7 +34,9 @@ create user
 #database
 
 app/modles.py
-
+delete all makemigrations
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc"  -delete
 
 # this your existing db 
     'vo': { 

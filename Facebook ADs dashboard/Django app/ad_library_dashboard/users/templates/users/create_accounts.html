@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+{% load helping_functions %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css" />
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+</head>
+
+<body>
+
+
+
+    <main>
+        <!-- {% load crispy_forms_tags %}
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Join Today</legend>
+
+                    {{ form |crispy}}
+
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Sign Up</button>
+                </div>
+            </form> -->
+
+        <section class="content py-5 d-flex align-items-center justify-content-center" style="min-height: 100vh">
+
+            <div class="page-content" style="min-height: auto; min-width: 600px ;width: 85%;">
+                <span class="d-block text-center my-3" style="font-family: fantasy; font-size: 24px;">CREATE ACCOUNT
+                </span>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {% if done %}
+                    <div class="alert alert-success">
+                        account with <strong>{{done}} </strong> created
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" required="" placeholder="Name">
+
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control" required="" placeholder="Email">
+                        {% if form.email.errors %}
+                        <div class="alert alert-danger form-control d-flex align-items-center mt-1">
+
+                            {{form.email.errors.0}}
+                        </div>
+                        {% endif %}
+
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password1" class="form-control" required="" placeholder="Password">
+
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password2" class="form-control" required="" placeholder="Password">
+                        {% if form.password2.errors %}
+                        <div class="alert alert-danger form-control d-flex align-items-center mt-1">
+                            {{form.password2.errors.0}}
+                        </div>
+                        {% endif %}
+                    </div>
+
+
+                    {% if user.is_superuser %}
+                    <div class="form-group d-flex align-items-center justify-content-left" style="font-size: 14px;">
+                        <input type="checkbox" class="mx-2" name="is_staff" style="visibility: visible;">
+                        admin status
+                    </div>
+                    {% endif %}
+
+
+
+                    <!-- <select name="type" class="select form-control" id="id_type"> 
+                        <option value="regular" selected="">regular</option>
+                         <option value="moderator">moderator</option>
+
+                    </select> -->
+                    <div class="form-group">
+                        <input type="submit" style="font-weight: 600" name="" class="form-control btn btn-primary"
+                            value="CREATE ACCOUNT">
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- FOR Edit ACCOUNT -->
+
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="js/script2.js"></script>
+</body>
+
+{% endblock content %}

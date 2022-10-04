@@ -50,8 +50,4 @@ $(document).ready(function () {
       prevEl: ".swiper-button-prev",
     },
   });
-
-  // updateTextInput = function(val) {
-  //   document.getElementById("rangeContent").innerHTML = val;
-  // }
 });

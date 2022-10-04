@@ -40,6 +40,13 @@ def video_location(text):
         return f'/media/vids/{name}'
     except:
         return ""
+@register.filter('poster_location')
+def poster_location(text):
+    try:
+        name = re.findall('\d+_\d+_\d+_n',text)[0] + '.jpg'
+        return f'/media/vids/{name}'
+    except:
+        return ""
     
 @register.simple_tag(takes_context=True)
 def param_replace(context, **kwargs):

@@ -33,6 +33,10 @@ class Ads(models.Model):
     hits = models.IntegerField(blank=True, null=True)
     search_term = models.TextField(blank=True, null=True)
     favourite =  models.BooleanField(default=False)
+    poster =  models.TextField(blank=True, null=True)
+    
+        
+        
     def favorites_status(self):
         if self.favourite == True:
             return "fa fa-star fav faved shadow"
@@ -60,9 +64,9 @@ class search_term(models.Model):
     active =  models.BooleanField(default=True)
     def active_status(self):
         if self.active == True:
-            return 'badge badge-success'
+            return 'badge badge-success','active'
         elif  self.active == False:
-            return 'badge badge-danger'
+            return 'badge badge-danger','inactive'
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['search_term', 'search_type','country'], name='only_one_search')

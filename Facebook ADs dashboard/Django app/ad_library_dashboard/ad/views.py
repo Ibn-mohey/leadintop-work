@@ -22,7 +22,7 @@ from itertools import compress
 from django.db.models.functions import Greatest
 from django.core.paginator import Paginator
 from django.db import IntegrityError
-
+from django.contrib.auth.decorators import login_required
 
 # get website data 
 sqliteConnection = sqlite3.connect('FaceBoookADS.db')
@@ -50,7 +50,7 @@ Footer_actions = dict(itertools.islice(sorted_dict.items(), 5))
 
 ####
 
-
+@login_required(login_url='login')
 def home(request):
     if request.method == 'POST':
         req = request.POST
@@ -182,6 +182,7 @@ def home(request):
 def get_static_id(link):
     return re.findall(('view_all_page_id=(\d+)'),link)[0]
 
+@login_required(login_url='login')
 def add_keyword(request):
     form = search_terms_form()
     terms = search_term.objects.all().order_by('search_term')
@@ -209,14 +210,13 @@ def add_keyword(request):
               ### make the id like the switch one 
             if current_element.search_type == 'page':
                  facebook_pages.objects.filter(static_ID=current_element.static_ID).update(favorites = False)
-        
             search_term.objects.get(id=request.POST.get('delete')).delete()
 
     
     return render(request, 'dashboard/search_keys.html', {'form': form,'terms':terms})
 
 
-
+@login_required(login_url='login')
 def favorites(request):
     if request.method == 'POST':
         req = request.POST

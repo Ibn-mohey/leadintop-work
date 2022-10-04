@@ -10,3 +10,8 @@ Facebook ADs dashboard/Django app/ad_library_dashboard/ad/__pycache__/models.cpy
 *.pyc
 *.pyc
 *.png
+*.pyc
+Facebook ADs dashboard/Django app/ad_library_dashboard/ad/__pycache__/models.cpython-39.pyc
+Facebook ADs dashboard/Django app/ad_library_dashboard/ad/__pycache__/views.cpython-39.pyc
+Facebook ADs dashboard/Django app/ad_library_dashboard/ad/migrations/0001_initial.py
+Facebook ADs dashboard/Django app/ad_library_dashboard/ad/migrations/0002_facebook_pages.py

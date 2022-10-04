@@ -254,7 +254,7 @@
 
                         <!-- video place  -->
                         {% if post.videos|get_len_splits == 1 %}
-                        <video controls style="width:100%" preload="none">
+                        <video controls style="width:100%"  preload="none" poster="{{post.poster|poster_location}}" >
                             <!-- "media/297641839_1201083240460272_7933649554156909768_n.mp4" -->
                             <!-- <source src="{% static 'media\ads-video\video.mp4'%}"
                                     type="video/mp4">   -->
@@ -269,7 +269,7 @@
                             <div class="swiper-wrapper">
                                 {%for video in post.videos|get_all_splits %}
                                 <div class="swiper-slide">
-                                    <video controls style="width:100%">
+                                    <video controls style="width:100%" preload="none" poster="{{post.poster|poster_location}}">
                                         <!-- to doooo -->
                                         <source src="{{video|video_location}}"
                                             onerror="this.onerror=null; this.src='{{video}}'" type="video/mp4">

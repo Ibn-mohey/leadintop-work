@@ -170,11 +170,20 @@ def find_ad_videos(element):
                     vids_links.append(video)
                     vids_length.append(seconds)
                     final_posters.append(poster)
+                    #poster download
+                    poster_name = re.findall('\d+_\d+_\d+_n',poster)[0] + '.jpg'
+                    #download
+                    img_data = requests.get(poster).content
+                    with open(f'./media/pics/{poster_name}', 'wb') as handler:
+                        handler.write(img_data)
                 else:
                     vids_links.append(video)
                     vids_length.append(seconds)
                     final_posters.append(poster)
-                
+                    poster_name = re.findall('\d+_\d+_\d+_n',poster)[0] + '.jpg'
+                    img_data = requests.get(poster).content
+                    with open(f'./media/pics/{poster_name}', 'wb') as handler:
+                        handler.write(img_data)
     #         "\n".join(names)
         links = "\n".join(vids_links)
         lengths = "\n".join(str(n) for n in vids_length)

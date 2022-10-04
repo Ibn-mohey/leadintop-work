@@ -14,3 +14,4 @@ from django.core.asgi import get_asgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ad_library_dashboard.settings')
 
 application = get_asgi_application()
+AUTH_PASSWORD_VALIDATORS = []

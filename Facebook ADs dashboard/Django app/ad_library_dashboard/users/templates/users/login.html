@@ -1,72 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
-
+{% extends "base.html" %}
+{% load static %}
+{% load helping_functions %}
+{% block content %}
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AD LIBRARY</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <title>Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css" />
-    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
 </head>
 
 <body>
 
-    <main role="main" class="container">
-        <div class="row">
+    <!-- {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %} 
+           <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+           </div>
+        {% endfor %}
+    {% endfor %}
+ {% endif %} -->
 
-            {% load crispy_forms_tags %}
+    <main class="d-flex align-items-center justify-content-center w-100" style="height: 100vh;">
 
-            <div class="content-section">
-                <form method="POST">
-                    {% csrf_token %}
-                    <fieldset class="form-group">
-                        <legend class="border-bottom mb-4">login Today</legend>
-
-                        {{ form |crispy}}
-
-                    </fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-outline-info" type="submit">login</button>
-                    </div>
-                </form>
-                <div class="border-top pt-3">
-                    <small class="text-muted">
-                        Create Acount <a class="ml-2" href="{% url 'register' %}">Sign Up</a>
-                    </small>
-                </div>
+        <form style="max-width: 600px; width: 85%;" action="" method="post">
+            {% csrf_token %}
+            <span class="py-3"
+                style="display: block; font-size: 24px; text-align: center; font-family: fantasy; color: #444;"><i
+                    class="fa fa-paper-plane mr-2" style="font-size: 22px; color: #007bff;"></i> <span
+                    style="color: #007bff">LeadInTop</span>
+                Library</span>
+            {%if messege %}
+            <div class="alert alert-danger" style="font-size:14px;">
+                {{messege}}
             </div>
-        </div>
-
-        <!-- <div class="col-md-4">
-            <div class="content-section">
-              <h3>Our Sidebar</h3>
-              <p class='text-muted'>You can put any information here you'd like.
-                <ul class="list-group">
-                  <li class="list-group-item list-group-item-light">Latest Posts</li>
-                  <li class="list-group-item list-group-item-light">Announcements</li>
-                  <li class="list-group-item list-group-item-light">Calendars</li>
-                  <li class="list-group-item list-group-item-light">etc</li>
-                </ul>
-              </p>
+            {%endif %}
+            <div class=" form-group">
+                <input type="text" name="email" class="form-control" placeholder="Enter your email">
             </div>
-          </div> -->
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" placeholder="Enter your password">
+            </div>
+            <div class="form-group">
+                <input type="submit" style="font-weight: 600; font-size: 16px;" class="form-control btn btn-primary"
+                    value="LOGIN">
+            </div>
 
+
+
+        </form>
     </main>
-
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script src="js/script.js"></script>
 </body>
 
-</html>
+{% endblock content %}
