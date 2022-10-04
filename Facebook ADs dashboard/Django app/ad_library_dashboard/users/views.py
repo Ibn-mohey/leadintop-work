@@ -14,7 +14,6 @@ from django.contrib.auth import authenticate, login
 from .models import  CustomUser
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from rest_framework.response import Response
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.decorators import login_required
 
