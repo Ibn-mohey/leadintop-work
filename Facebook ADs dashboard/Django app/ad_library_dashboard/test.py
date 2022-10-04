@@ -182,7 +182,7 @@ def find_ad_videos(element):
         save_log(f"saved video = {len(vids_links), lengths}")
         return  links, lengths,posters_links 
     except:
-        return "" , ""
+        return "" , "" , ""
 
 def find_content(element):
     return WebDriverWait(element,10).until(EC.presence_of_element_located((By.XPATH,'./div/div[3]/div/div/div[2]/div'))).text
