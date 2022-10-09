@@ -23,6 +23,9 @@ from django.db.models.functions import Greatest
 from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
+import json
+
+
 
 # get website data 
 sqliteConnection = sqlite3.connect('FaceBoookADS.db')
@@ -47,8 +50,12 @@ Footer_actions = dict(itertools.islice(sorted_dict.items(), 5))
 
 
 
-
+with open('countries.json') as f:
+    countries = json.load(f)
+del countries["EG"]
+del countries["SA"]
 ####
+
 
 @login_required(login_url='login')
 def home(request):
@@ -213,7 +220,7 @@ def add_keyword(request):
             search_term.objects.get(id=request.POST.get('delete')).delete()
 
     
-    return render(request, 'dashboard/search_keys.html', {'form': form,'terms':terms})
+    return render(request, 'dashboard/search_keys.html', {'form': form,'terms':terms,'countries':countries})
 
 
 @login_required(login_url='login')

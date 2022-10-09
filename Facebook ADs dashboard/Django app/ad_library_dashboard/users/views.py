@@ -18,6 +18,8 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.decorators import login_required
 
 
+# print(data)
+
 
 @staff_member_required(login_url='login')
 def register(request):
@@ -77,7 +79,7 @@ def all_users(request):
             CustomUser.objects.get(id=request.POST.get('delete')).delete()
             
 
-     users = CustomUser.objects.all()
+     users = CustomUser.objects.all().filter(is_superuser=False)
      return render(request, 'users/accounts.html',{'users':users})
     
         # Return an 'invalid login' error message.
@@ -87,7 +89,7 @@ def change_profile(request,email):
     print(request.POST)
     
     try:
-        my_user = CustomUser.objects.get(email=email)
+        my_user = CustomUser.objects.get(email=email).filter(is_superuser=False)
         
         print(email)
     except:

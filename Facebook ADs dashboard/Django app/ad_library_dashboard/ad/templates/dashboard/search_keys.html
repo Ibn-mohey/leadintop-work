@@ -15,8 +15,13 @@
                         <select class="form-control" name="country">
                             <option disabled selected value="">Country</option>
                             <option value="ALL" selected="">ALL</option>
-                            <option value="EG">EG</option>
-                            <option value="us">US</option>
+                            <option value="EG">EGYPT</option>
+                            <option value="SA">Saudi Arabia</option>
+                            
+                            {%for key,value in countries.items %} 
+                            <option value="{{key}}">{{value}}</option>
+                            {% endfor %}
+                       
                         </select>
                     </div>
                     <div class="col-sm-4 col-12 px-1">

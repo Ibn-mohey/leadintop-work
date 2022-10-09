@@ -28,7 +28,7 @@ def save_log(log):
     with open('log.txt', 'a+') as my_data_file:
         my_data_file.write(f'{log}\n')
         
-def open_page(page_id,country= "EG",start_date = None,end_date=None):
+def open_page(page_id,country= "ALL",start_date = None,end_date=None):
     link= f'https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country={country}&view_all_page_id={page_id}&sort_data[direction]=desc&sort_data[mode]=relevancy_monthly_grouped&search_type=page&media_type=video'
     driver.get(link)
     time.sleep(2)
