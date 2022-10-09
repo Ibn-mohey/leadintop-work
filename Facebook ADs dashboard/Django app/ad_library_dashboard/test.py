@@ -291,14 +291,14 @@ def start_save(search_term,country= "ALL",start_date = None,end_date=None,media_
     scroll_down(limit)
     count = 0
     # elements = []
-    elements = driver.find_elements(By.CSS_SELECTOR, value = 'div[class="_99s5"]')
+    elements = driver.find_elements(By.CSS_SELECTOR, value = 'div[class="xh8yej3"]')
     tries = 0
     while len(elements)==0 and tries < 2:
         tries += 1
         save_log(f"no elements , {tries}")
         time.sleep(300)
         driver.refresh()
-        elements = driver.find_elements(By.CSS_SELECTOR, value = 'div[class="_99s5"]')
+        elements = driver.find_elements(By.CSS_SELECTOR, value = 'div[class="xh8yej3"]')
     page_IDS = []
     if limit == "no limit":
         limit = len(elements)+1
