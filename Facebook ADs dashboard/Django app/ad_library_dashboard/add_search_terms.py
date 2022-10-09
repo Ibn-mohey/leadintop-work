@@ -42,16 +42,17 @@ Tired of
 get rid
 you need""".split('\n')
 for term in terms:
-    try:
-        conn = sqlite3.connect('FaceBoookADS.db')
-        c = conn.cursor()
-        c.execute('''INSERT INTO search_terms(search_term,search_type,active,country) VALUES (?,?,?,?)
-        ;'''
-        ,(term.trim(),'keyword',True,'ALL'))
-        conn.commit()
-        conn.close()
-    except:
-        pass
+    print(term.strip())
+    # try:
+    #     conn = sqlite3.connect('FaceBoookADS.db')
+    #     c = conn.cursor()
+    #     c.execute('''INSERT INTO search_terms(search_term,search_type,active,country) VALUES (?,?,?,?)
+    #     ;'''
+    #     ,(term.trim(),'keyword',True,'ALL'))
+    #     conn.commit()
+    #     conn.close()
+    # except:
+    #     pass
     
 # 	text	NO		
 # id	integer	NO		
