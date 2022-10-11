@@ -9057,3 +9057,165 @@ end time 2022-10-01 07:34:45
 end time 2022-10-01 07:34:48
 
 1021690815166058
+started the term: perfume
+video length = 52
+saved video = (1, '52')
+video length = 12
+saved video = (1, '12')
+video length = 240
+saved video = (0, '')
+video length = 36
+saved video = (1, '36')
+video length = 3
+saved video = (1, '3')
+video length = 14
+saved video = (1, '14')
+video length = 38
+saved video = (1, '38')
+video length = 29
+saved video = (1, '29')
+video length = 23
+saved video = (1, '23')
+video length = 21
+saved video = (1, '21')
+video length = 21
+saved video = (1, '21')
+video length = 640
+saved video = (0, '')
+video length = 85
+saved video = (1, '85')
+video length = 60
+saved video = (1, '60')
+video length = 5
+saved video = (1, '5')
+video length = 60
+saved video = (1, '60')
+video length = 34
+saved video = (1, '34')
+video length = 14
+saved video = (1, '14')
+video length = 13
+saved video = (1, '13')
+video length = 2
+saved video = (1, '2')
+started the term: perfume
+started the term: perfume
+started the term: perfume
+started the term: perfume
+started the term: perfume
+started the term: perfume
+567273821948122
+video length = 15
+saved video = (1, '15')
+started the term: perfume
+567273821948122
+video length = 15
+saved video = (1, '15')
+started the term: perfume
+567273821948122
+video length = 15
+saved video = (1, '15')
+started the term: perfume
+567273821948122
+video length = 15
+saved video = (1, '15')
+started the term: perfume
+567273821948122
+video length = 15
+saved video = (1, '15')
+end time 2022-10-11 13:45:14
+
+852508742437394
+video length = 15
+saved video = (1, '15')
+end time 2022-10-11 13:45:21
+
+821907592320278
+video length = 15
+saved video = (1, '15')
+end time 2022-10-11 13:45:26
+
+467157062013568
+video length = 15
+saved video = (1, '15')
+end time 2022-10-11 13:45:31
+
+537987804755685
+video length = 15
+saved video = (1, '15')
+end time 2022-10-11 13:45:37
+
+1538689423232411
+video length = 13
+saved video = (1, '13')
+end time 2022-10-11 13:45:42
+
+471877148292767
+video length = 6
+saved video = (1, '6')
+end time 2022-10-11 13:45:49
+
+1154430892091765
+video length = 15
+saved video = (1, '15')
+end time 2022-10-11 13:46:04
+
+1741195546239273
+video length = 34
+saved video = (1, '34')
+end time 2022-10-11 13:46:11
+
+867792831051692
+video length = 29
+saved video = (1, '29')
+started the term: perfume
+567273821948122
+video length = 15
+saved video = (1, '15')
+end time 2022-10-11 14:51:35
+
+821907592320278
+video length = 15
+saved video = (1, '15')
+end time 2022-10-11 14:51:40
+
+started the term: skin
+no elements , 1
+started the term: perfume
+no elements , 1
+started the term: perfume
+567273821948122
+video length = 15
+saved video = (1, '15')
+end time 2022-10-11 15:05:44
+
+852508742437394
+video length = 15
+saved video = (1, '15')
+end time 2022-10-11 15:05:49
+
+started the term: skin
+no elements , 1
+started the term: perfume
+567273821948122
+video length = 15
+saved video = (1, '15')
+end time 2022-10-11 15:07:04
+
+852508742437394
+video length = 15
+saved video = (1, '15')
+end time 2022-10-11 15:07:09
+
+started the term: skin
+514883013815783
+video length = 15
+saved video = (1, '15')
+end time 2022-10-11 15:07:28
+
+624093536030623
+video length = 18
+saved video = (1, '18')
+end time 2022-10-11 15:07:34
+
+started the term: better
