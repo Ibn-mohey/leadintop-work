@@ -70,7 +70,9 @@ def get_ads_number(driver):
                 break
             save_log(f"should be 0, {ADS_count},{tries}")
             time.sleep(300)
-    except:
+    except Exception as e:
+        # error = str(e)
+        # save_log(f'on function get_ads_number the error for getting the number  \n {error}')
         ADS_count = 0
     return int(ADS_count)
 def find_all_elements(driver):
@@ -121,7 +123,7 @@ def find_start_date(element):
         date = re.findall('\d+ \S+ \d+',text)[0]
         return datetime.strptime(date,"%d %b %Y").strftime("%Y-%m-%d")
     except Exception as e:
-        
+        save_log(f'on function find_start_date the error for date \n {e}')
         date = text
         return "date_error"
     # return datetime.strptime(date,"%d %b %Y" ).strftime("%Y-%m-%d")
@@ -134,8 +136,8 @@ def find_profile_pic(element):
         #download
         img_data = requests.get(link).content
 
-        # with open(f'./media/pics/{name}', 'wb') as handler:
-        #     handler.write(img_data)
+        with open(f'./media/pics/{name}', 'wb') as handler:
+            handler.write(img_data)
         return link
     except:
         return  ""  #'84702798_579370612644419_4516628711310622720_n.png'
@@ -169,7 +171,7 @@ def find_ad_videos(element):
                 import os
                 if not os.path.exists(f'./media/vids/{name}'):
                     # open('file', 'w').close() 
-                    # urllib.request.urlretrieve(video, f'./media/vids/{name}')
+                    urllib.request.urlretrieve(video, f'./media/vids/{name}')
                     vids_links.append(video)
                     vids_length.append(seconds)
                     final_posters.append(poster)
@@ -177,8 +179,8 @@ def find_ad_videos(element):
                     poster_name = re.findall('\d+_\d+_\d+_n',poster)[0] + '.jpg'
                     #download
                     img_data = requests.get(poster).content
-                    # with open(f'./media/pics/{poster_name}', 'wb') as handler:
-                    #     handler.write(img_data)
+                    with open(f'./media/pics/{poster_name}', 'wb') as handler:
+                        handler.write(img_data)
                 else:
                     vids_links.append(video)
                     vids_length.append(seconds)
@@ -277,7 +279,8 @@ def get_page_data(element,driver):
         #         Insta_ID = s.find_element(By.XPATH,'./div[2]/div[1]').text
         #         insta_followers = int(re.findall('(\d+) follower' , text)[0])
     except Exception as e:
-        save_log(f'on function get_page_data the error for numbers \n {e}')
+        error = str(e)
+        save_log(f'on function get_page_data the error for FB and insta nums \n {error}')
     
     
     #static ID 
@@ -289,7 +292,8 @@ def get_page_data(element,driver):
         page_link = WebDriverWait(main_element, 2).until(EC.presence_of_element_located((By.XPATH,'./div[2]/div/div/div/div/div[3]/span/div[2]/div/div/div[1]/div/a'))).get_attribute('href')
         static_ID = re.findall(('view_all_page_id=(\d+)'),page_link)[0]
     except Exception as e:
-        save_log(f'on function get_page_data the error for static ID  \n {e}')
+        error = str(e)
+        save_log(f'on function get_page_data the error for static ID  \n {error}')
     #     # Open a new window
     #     driver.execute_script("window.open('');")
 

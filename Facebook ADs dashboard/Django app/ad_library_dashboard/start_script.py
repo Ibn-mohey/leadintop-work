@@ -56,7 +56,7 @@ cursor.close()
 for term,country in zip(terms,terms_countries):
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     #log in 
-    # log_in(driver)  ##reapply
+    log_in(driver)  ##reapply
     
     #Log ooooo 
     save_log(f"started the term: {term}")
