@@ -87,8 +87,8 @@ for term,country in zip(terms,terms_countries):
         #insert page into facebook_pages
         c.execute(f"""
         update facebook_pages set 
-        Ads_count = ?,
-        where static_id = ?
+        Ads_count = ?
+        where static_ID = ?
         """,(Ads_count,page_ID))
         conn.commit()
         conn.close()
