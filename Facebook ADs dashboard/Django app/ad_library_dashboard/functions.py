@@ -412,7 +412,7 @@ def start_save(driver,search_term,country= "ALL",start_date = None,end_date=None
                           Page_likes = ?,
                           profile_pic = ?,
                           page_name = ?,
-                          country = country || ',' || ? ,
+                          country = country || ',' || ? 
                           where static_id = ?
                           """,(Facebook_ID,insta_followers,instgram_ID,Page_likes,profile_pic,Page_name,country,static_ID))
             conn.commit()
