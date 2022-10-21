@@ -4,6 +4,15 @@
 {% load helping_functions %}
 {% block content %}
 
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+
 <main main class="d-flex mt-4">
 
     <!-- side  -->
@@ -116,9 +125,10 @@
                     <input type="radio" class="form-check-input" name="sort_by" value="-hits">
                     hits
                 </label>
+                
             </div>
             <!-- country ?? -->
-            <!-- <div class="form-group my-3">
+            <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">country:</span>
                     <div class="form-group mb-0 my-2" style="position: relative">
                         <input type="text" class="form-control pl-4" name="" placeholder="select country">
@@ -143,14 +153,14 @@
                             <span class="geekmark"></span>
                         </label>
                     </div>
-                </div> -->
+                </div>
 
             <div class="form-group my-3">
                 <span class="my-1 d-block mr-3">CTA:</span>
                 <select class="form-control" name="action">
                     <option selected="selected" value="All">All</option>
                     {%for opt,v in Footer_actions.items%}
-                    <option value="{{opt}}">{{opt}}</option>
+                    <option value="{{opt}}">{{opt}} <small> ({{v}}) </small> </option>
                     {% endfor%}
                 </select>
             </div>
@@ -221,6 +231,9 @@
                         </div>
                         <div class="px-3">
                             <span> hits: {{post.hits}}</span>
+                        </div>
+                        <div class="px-3">
+                            <span> search_terms: {{post.get_search_terms}}</span>
                         </div>
                         <hr class="my-2 mx-auto" style="width: 92%" />
                         <div class="profile px-3">
@@ -343,7 +356,8 @@
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-<script src="{%static 'script.js' %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{%static 'script.js' %}"></script>
+
 
 {% endblock content %}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{% load helping_functions %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+    <main class="d-flex mt-4">
+        <aside class="py-4 px-2">
+            <strong>Get Your Advertiser</strong>
+            <form  method="GET">
+
+                 <div class="form-group my-3">
+                <span class="my-1 d-block mr-3">values on page:</span>
+            <select class="form-control" name="ads_in_page" onchange="if(this.value != {{request.GET.ads_in_page}}) { this.form.submit(); }">
+                        
+                <option selected value="{{request.GET.ads_in_page}}">{{request.GET.ads_in_page}}</option>
+                <option value='10'>10</option>
+                <option value='50'>50</option>
+                <option value='100'>100</option>
+                <option value='200'>200</option>
+           </select>
+        </div>
+                <div class="form-group my-3">
+                    <div class="p-1 border my-1">
+                        <label class="main pl-0 text-capitalize">Advertisers
+                        </label>
+                        <div class="form-group mb-0 my-2" style="position: relative">
+                            <input type="text" class="form-control pl-4" name="advertiser" placeholder="enter advertisers" value="{{request.GET.advertiser}}">
+                            <i class="fa fa-search"
+                                style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group my-3">
+                    <span class="my-1 d-block mr-3">sort by:</span>
+                    <!-- for ads -->
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort_by" value="likes_followers">
+                        max like & followers
+                    </label>
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort_by" value="-insta_followers">
+                        followers count
+                    </label>
+                    <!-- for advertisers -->
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort_by" value="-page_likes">
+                        likes count
+                    </label>
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort_by" value="-ads_count">
+                        ads count
+                    </label>
+                </div>
+
+                <div class="form-group mt-0 mb-3">
+                    <button class="btn btn-primary form-control" style="font-size: 14px; text-transform: capitalize;"
+                        type="submit"><i style="font-size: 12px" class="fa fa-filter mr-1"></i> Apply filters</button>
+                </div>
+            </form>
+        </aside>
+
+        
+        <section class="ads py-4 px-2">
+            <div class="container">
+                <div class="row">
+                    
+    
+                    <div class="p-3 col-12">
+                        {{request.GET.ads_in_page}} shown of 
+                    total {{valuesss}} found on {{pages.paginator.num_pages}} pages <br> 
+                       <!-- {{ request.GET}} -->
+                        {%for k,v in last_req.items  %}
+    
+                        {%if v|length > 1%}
+                        {{ k }}: {{v}}
+                        {%elif v.0|length > 1%}
+                        {{ k }}: {{v}}
+                        {%endif%}
+                        <!-- [{% for x in v %}{{ x }}], {% endfor %} -->
+                        {%endfor%}
+    
+                    </div>
+
+                    {%for page in pages %}
+
+                    <div
+                        class="ad col-xl-4 col-lg-6 offset-lg-0 col-md-8 offset-md-2 col-sm-10 offset-sm-1 offset-1 col-10">
+                        <div class="mx-2 bg-white rounded border py-3 px-0">
+                            <div class="profile px-3">
+                                <img width="32" height="32" class="rounded-circle"
+                                    src="media/298605744_2663001687166553_2581789905054249179_n.jpg">
+                                <span class="px-2">{{page.page_name}}</span>
+                            </div>
+                            <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
+                                <i class="fab fa-facebook"></i> <a href="#">
+                                    <span>{{page.facebook_id}}</span></a>
+                                <small>{{page.page_likes}}</small>
+                            </div>
+                            <div class="instagram rounded-bottom mb-2 pb-2 mx-3 px-2">
+                                <i class="fab fa-instagram"></i> <a href="#">
+                                    <span>{{page.instgram_id}}</span></a>
+                                <small>{{page.insta_followers}}</small>
+                            </div>
+                            <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
+                                ads_count: {{page.ads_count}}
+                            </div>
+                            <div class="px-3">
+                                <div class="w-100 py-1">
+                                    <a href="{{page.find_domain.0}}" class="btn btn-white form-control shadow">{{page.find_domain.1}}</a>
+                                </div>
+                                <div class="d-flex py-1">
+                                    <div class="w-50 mr-1"><form method="post">{% csrf_token %}
+                                        <button name="follow" type="submit" value="{{page.static_ID}}" class="btn btn-primary form-control" {{page.follow_status.0}}>
+                                            {{page.follow_status.1}}</button>
+                                        </form>
+                                    </div>
+                                    <div class="w-50 ml-1"><form method="post">{% csrf_token %}
+                                        <button name="block" type="submit"  value="{{page.static_ID}}" class="btn btn-danger form-control" {{page.blocked_status.0}}>
+                                             {{page.blocked_status.1}}</button>
+                                    </form>
+                                    </div>
+                                </div>
+                                <div class="w-100 py-1">
+                                    <a href="/?search_page={{page.static_ID}}" class="btn btn-secondary form-control">Show Advertiser
+                                        ADs</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {%endfor%}
+                
+                </div>
+            </div>
+        </section>
+    </main>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+
+        {% if pages.has_previous %}
+        <li class="page-item"> <a class="page-link" href="?{% param_replace page=1 %}">&laquo First</a></li>
+
+        <li class="page-item"><a class="page-link"
+            href="?{% param_replace page=pages.previous_page_number %}">Previous</a></li>
+        {% endif %}
+        
+        {% for i in pages.paginator.page_range %}
+            {% if pages.number == i %}
+            <!-- active  -->
+            <span class="page-link">
+                Page {{pages.number}}  of {{pages.paginator.num_pages}} 
+            </span>
+
+            {% elif i > pages.number|add:'-10' and i < pages.number|add:'10' %}
+        <!-- in active  -->
+                <li class="page-item"><a class="page-link" href="?{% param_replace page=i %}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+        
+        <!-- {% if pages.paginator.num_pages > pages.number|add:'4' %}
+            <li><a href="?page={{ pages.number|add:'5' }}">&hellip;</a></li>
+        {% endif %} -->
+        
+        {% if pages.has_next %}
+        <li class="page-item"><a class="page-link" href="?{% param_replace page=pages.next_page_number %}">Next</a>
+        </li>
+    
+        <li class="page-item"><a class="page-link" href="?{% param_replace page=pages.paginator.num_pages %}">Last
+                &raquo</a></li>
+    
+        {% endif %}
+        
+        </ul>
+    </nav>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'script.js' %}"></script>
+
+
+{% endblock content %}

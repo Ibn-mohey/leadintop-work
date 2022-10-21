@@ -84,6 +84,12 @@ for term,country in zip(terms,terms_countries):
             Ads_count ,
             Ads_count,
             page_ID))
+        #insert page into facebook_pages
+        c.execute(f"""
+        update facebook_pages set 
+        Ads_count = ?,
+        where static_id = ?
+        """,(Ads_count,page_ID))
         conn.commit()
         conn.close()
     time.sleep(0.5)

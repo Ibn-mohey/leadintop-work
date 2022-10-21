@@ -3,6 +3,10 @@
 {% load static %}
 {% load helping_functions %}
 {% block content %}
+<!-- 
+<link rel="stylesheet" href="css/style2.css"> -->
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/style2.css' %}">
 
 <head>
     <meta charset="UTF-8">
@@ -12,9 +16,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
     <link rel="stylesheet" href="{% static 'css/style2.css' %}">
 </head>
+
 
 <body>
 
@@ -28,7 +32,14 @@
                         <button type="button" class="btn btn-outline-primary px-5 py-2"
                             style="font-size: 14px; font-weight: 600;" action="/register/">CREATE ACCOUNT</button>
                         </a>
+                        {%if user.is_superuser%}
+                        <a href="/user/leadintopadmin@leadintop.com/">
+                            <button type="button" class="btn btn-outline-primary px-5 py-2"
+                                style="font-size: 14px; font-weight: 600;" action="/register/">Change Admin password</button>
+                            </a>
+                            {%endif%}
                     </div>
+                    
                     <div class="col-12 my-2 data-table">
                         <table id="example" class="table table-striped table-bordered" style="width:100%">
                             <thead>
@@ -38,13 +49,12 @@
                                     <th>Email</th>
                                     <th>Type</th>
                                     <th>Status</th>
-                                    
                                     <th>Actions</th>
-                         
                                 </tr>
                             </thead>
-
                             <tbody>
+                                
+
                                 {%for profile in users %}
                                 <tr>
                                     <th>{{ forloop.counter }}</th>
@@ -53,7 +63,7 @@
                                     <td>{{ profile.type }}</td>
                                     <td>
                                         <!-- Swittch active and not active  -->
-                                        {%if user.is_superuser %}
+                                        {%if user.is_superuser and not profile.is_superuser %}
                                         <form action="" method="post">
                                             {% csrf_token %}
                                             
@@ -78,6 +88,7 @@
                                     
                                     <td>
                                        
+                                        {%if user.is_staff and not profile.is_staff %}
                                         <form class="d-inline" action="/user/{{profile.email}}/" method="post">
 
                                             {% csrf_token %}
@@ -85,10 +96,26 @@
                                                 <a class="pen"><i class="fa fa-edit"></i></a>
                                             </button>
                                         </form>
-                                        
+                                        {% elif user.is_superuser and not profile.is_staff %}
+                                        <form class="d-inline" action="/user/{{profile.email}}/" method="post">
+
+                                            {% csrf_token %}
+                                            <button style="background-color: transparent; border: none;">
+                                                <a class="pen"><i class="fa fa-edit"></i></a>
+                                            </button>
+                                        </form>
+                                        {% endif %}
 
                                         <!-- #delete -->
-                                        {%if user.is_superuser %}
+                                        {%if user.is_superuser and not profile.is_superuser %}
+                                        <form class="d-inline" action="" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" name="delete" value="{{profile.id}}"
+                                                style="background-color: transparent; border: none;">
+                                                <a class="cancel"><i class="fa fa-times"></i></a>
+                                            </button>
+                                        </form>
+                                        {% elif user.is_staff and not profile.is_staff %}
                                         <form class="d-inline" action="" method="post">
                                             {% csrf_token %}
                                             <button type="submit" name="delete" value="{{profile.id}}"
@@ -115,7 +142,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     <script src="{%static 'script2.js' %}"></script>
     
 </body>

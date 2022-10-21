@@ -47,7 +47,7 @@ def poster_location(text):
         return f'/media/pics/{name}'
     except:
         return ""
-    
+
 @register.simple_tag(takes_context=True)
 def param_replace(context, **kwargs):
     """

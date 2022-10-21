@@ -19,7 +19,12 @@ from . import views
 urlpatterns = [
     path('', views.home, name = 'ad-home'),
     path('keywords', views.add_keyword,name='key-words'),
-    path('favorites', views.favorites,name='favorites')    #favorites
+    path('favorites', views.favorites,name='favorites'),
+    path('pages', views.pages,name='pages'),
+    path('Blocked_Advertiser', views.Blocked_Advertiser,name='Blocked_Advertiser'),
+    # path('load_main/', views.load_more_main, name='load_more_main'),
+    # path('load_favs/', views.load_more_favs, name='load_more_favs'),
+    #favorites
     
     # path('test/', views.test, name = 'test')
     # path('/register', views.home, name = 'ad-home'),

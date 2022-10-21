@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AD LIBRARY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <nav class="fixed-top w-100 d-flex align-items-center justify-content-center p-2 shadow-sm">
+        <a class="active" href="home.html"><i class="fa fa-home"></i> Home</a>
+        <a href="fav.html"><i class="fa fa-star"></i> Fav&Followed</a>
+        <a href="main.html"><i class="fa fa-plus-hexagon"></i> Main</a>
+        <a href="block.html"><i class="fa fa-lock"></i> Blacklist</a>
+    </nav>
+
+    <main class="d-flex mt-4">
+        <aside class="py-4 px-2">
+            <strong>Get Your ADs</strong>
+            <form action="#" method="post">
+                <div class="form-group my-3">
+                    <span class="my-1 d-block mr-3">Search mode:</span>
+                    <div class="p-1 border my-1">
+                        <label class="main pl-0 text-capitalize">Keywords
+                        </label>
+                        <div class="form-group mb-0 my-2" style="position: relative">
+                            <input type="text" class="form-control pl-4" name="" placeholder="enter keywords">
+                            <i class="fa fa-search"
+                                style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
+                        </div>
+                    </div>
+                    <div class="p-1 border my-1">
+                        <label class="main pl-0 text-capitalize">Advertisers
+                        </label>
+                        <div class="form-group mb-0 my-2" style="position: relative">
+                            <input type="text" class="form-control pl-4" name="" placeholder="enter advertisers">
+                            <i class="fa fa-search"
+                                style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
+                        </div>
+                    </div>
+                    <div class="p-1 border my-1">
+                        <label class="main pl-0 text-capitalize">Domains
+                        </label>
+                        <div class="form-group mb-0 my-2" style="position: relative">
+                            <input type="text" class="form-control pl-4" name="" placeholder="enter domain">
+                            <i class="fa fa-search"
+                                style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mt-0 mb-3">
+                    <button class="btn btn-primary form-control" style="font-size: 14px; text-transform: capitalize;"
+                        type="submit"><i style="font-size: 12px" class="fa fa-filter mr-1"></i> Apply filters</button>
+                </div>
+                <div class="form-group my-3">
+                    <span class="my-1 d-block mr-3">platform:</span>
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="platform" value="facebook" checked>
+                        facebook
+                    </label>
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="platform" value="instagram">
+                        instagram
+                    </label>
+                </div>
+                <div class="form-group my-3">
+                    <span class="my-1 d-block mr-3">advertisers:</span>
+                    <label class="main">dr.squatch <small>(122)</small>
+                        <input type="checkbox" checked="checked">
+                        <span class="geekmark"></span>
+                    </label>
+
+                    <label class="main">perfumer lovers <small>(52)</small>
+                        <input type="checkbox">
+                        <span class="geekmark"></span>
+                    </label>
+
+                    <label class="main">acacia <small>(26)</small>
+                        <input type="checkbox">
+                        <span class="geekmark"></span>
+                    </label>
+                </div>
+                <div class="form-group my-3">
+                    <span class="my-1 d-block mr-3">domains:</span>
+                    <label class="main">asdw.com <small>(122)</small>
+                        <input type="checkbox" checked="checked">
+                        <span class="geekmark"></span>
+                    </label>
+
+                    <label class="main">love.net <small>(52)</small>
+                        <input type="checkbox">
+                        <span class="geekmark"></span>
+                    </label>
+
+                    <label class="main">qweo.org <small>(26)</small>
+                        <input type="checkbox">
+                        <span class="geekmark"></span>
+                    </label>
+                </div>
+                <div class="form-group my-3">
+                    <span class="my-1 d-block mr-3">sort by:</span>
+                    <!-- for ads -->
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort" value="">
+                        newest
+                    </label>
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort" value="">
+                        running longest
+                    </label>
+                    <!-- for advertisers -->
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort" value="">
+                        likes count
+                    </label>
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort" value="">
+                        ads count
+                    </label>
+                </div>
+                <div class="form-group my-3">
+                    <span class="my-1 d-block mr-3">country:</span>
+                    <div class="form-group mb-0 my-2" style="position: relative">
+                        <input type="text" class="form-control pl-4" name="" placeholder="select country">
+                        <i class="fa fa-search"
+                            style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
+                    </div>
+                    <div class="px-2">
+                        <label class="main text-capitalize">US <small>(1,213,212)</small>
+                            <input type="checkbox">
+                            <span class="geekmark"></span>
+                        </label>
+                        <label class="main text-capitalize">Egypt <small>(112,311)</small>
+                            <input type="checkbox">
+                            <span class="geekmark"></span>
+                        </label>
+                        <label class="main text-capitalize">Canada <small>(112,311)</small>
+                            <input type="checkbox">
+                            <span class="geekmark"></span>
+                        </label>
+                        <label class="main text-capitalize">china <small>(112,311)</small>
+                            <input type="checkbox">
+                            <span class="geekmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group my-3">
+                    <span class="my-1 d-block mr-3">CTA:</span>
+                    <select class="form-control" name="">
+                        <option value="learn more">learn more</option>
+                        <option value="buy now">buy now</option>
+                        <option value="get it now">get it now</option>
+                    </select>
+                </div>
+                <div class="form-group my-3">
+                    <span class="my-1 d-block mr-3">Days running:</span>
+                    <input type="number" min="1" value="1" name="" class="form-control">
+                    <!-- <input value="1" id="range" name="rangeInput" type="range" class="w-100" min="1" max="100" step="1"
+                        onchange="updateTextInput(this.value);" />
+                    <div id="rangeContent" class="rangeContent border shadow-sm">1</div> -->
+                </div>
+                <div class="form-group my-3">
+                    <div>
+                        <span>From</span>
+                        <input type="date" id="txtDate1" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group mt-0 mb-3">
+                    <button class="btn btn-primary form-control" style="font-size: 14px; text-transform: capitalize;"
+                        type="submit"><i style="font-size: 12px" class="fa fa-filter mr-1"></i> Apply filters</button>
+                </div>
+            </form>
+        </aside>
+
+        <section class="ads py-4 px-2">
+            <div class="container">
+                <div class="row">
+
+                    <div
+                        class="ad col-xl-4 col-lg-6 offset-lg-0 col-md-8 offset-md-2 col-sm-10 offset-sm-1 offset-1 col-10">
+                        <div class="mx-2 bg-white rounded border py-3 px-0">
+                            <i class="fa fa-star fav faved shadow"></i>
+                            <div class="px-3">
+                                <span><i class="fa fa-check-circle"></i> Active</span>
+                            </div class="px-3">
+                            <div class="px-3">
+                                <span>Started running on Aug 16, 2022</span>
+                            </div>
+                            <div class="px-3 plat">
+                                <span>Platforms</span> <a href="#"><i class="fab fa-facebook"></i></a> <a href="#"><i
+                                        class="fab fa-instagram"></i></a>
+                            </div>
+                            <div class="px-3">
+                                <span>ID: 231321321412</span>
+                            </div>
+                            <hr class="my-2 mx-auto" style="width: 92%" />
+                            <div class="profile px-3">
+                                <img width="32" height="32" class="rounded-circle"
+                                    src="media/298605744_2663001687166553_2581789905054249179_n.jpg">
+                                <span class="px-2">McQueen Car Perfume <i
+                                        class="fa fa-check-double follow"><small>follow</small></i></span>
+                                <form class="d-inline" action=""> <button
+                                        style="border: none; background-color: transparent;" type="submit"><i
+                                            class="fa fa-ban ban"><small>Block</i></button></form>
+                            </div>
+                            <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
+                                <i class="fab fa-facebook"></i> <a href="#">
+                                    <span>@iloveperfumepuertorico</span></a>
+                                <small>25,540 likes • Beauty, cosmetic & personal care</small>
+                            </div>
+                            <div class="instagram rounded-bottom mb-2 pb-2 mx-3 px-2">
+                                <i class="fab fa-instagram"></i> <a href="#">
+                                    <span>@iloveperfumepuertorico</span></a>
+                                <small>25,200 likes • Beauty & cosmetic</small>
+                            </div>
+                            <p class="px-3">
+                                ‼️BUY 4 TAKE 1 PROMO #carperfume
+                                MCQUEEN CAR PERFUME | HANGING DIFFUSER
+
+                                ONLY FOR 150.00 PHP/10ml bottle.. 🚕 🚕
+
+                                💗Trio BEST-SELLERS
+                                ≠==================≠
+                                🏯 Shangrila
+                                🎍 Fresh Bamboo
+                                🌊Sea Breeze
+
+                                🍪SWEET/CALMING SCENTS
+                                ≠========================≠
+
+                                ☕Coffee Bean
+                                🌸Lavander
+                                🥒Cucumber Melon
+                                🍃Eucalyptus
+                                🍋Lemon Squash
+
+                                #promo #aromatherapy #smellgoodfeelgood
+                                #mcqueencarperfume #carscents #honda #TOYOTA #hyundai #Mazda #Mitsubishi #suzuki #ford
+                                #Kia
+                            </p>
+                            <video controls style="width:100%">
+                                <source src="media/297641839_1201083240460272_7933649554156909768_n.mp4"
+                                    type="video/mp4">
+                            </video>
+                            <div class="footer mt-3 px-3">
+                                <div>
+                                    <div>
+                                        <a href="#" style="text-decoration: none; color: #555;">
+                                            <span class="text-capitalize">Best t-shirts ever</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href="#" style="text-decoration: none; color: #555;">
+                                            <span class="text-lowercase">leadintop.com</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-light">Send Message</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="ad col-xl-4 col-lg-6 offset-lg-0 col-md-8 offset-md-2 col-sm-10 offset-sm-1 offset-1 col-10">
+                        <div class="mx-2 bg-white rounded border py-3 px-0">
+                            <i class="fa fa-star fav shadow"></i>
+                            <div class="px-3">
+                                <span><i class="fa fa-check-circle"></i> Active</span>
+                            </div class="px-3">
+                            <div class="px-3">
+                                <span>Started running on Aug 16, 2022</span>
+                            </div>
+                            <div class="px-3 plat">
+                                <span>Platforms</span> <a href="#"><i class="fab fa-facebook"></i></a> <a href="#"><i
+                                        class="fab fa-instagram"></i></a>
+                            </div>
+                            <div class="px-3">
+                                <span>ID: 231321321412</span>
+                            </div>
+                            <hr class="my-2 mx-auto" style="width: 92%" />
+                            <div class="profile px-3">
+                                <img width="32" height="32" class="rounded-circle"
+                                    src="media/298605744_2663001687166553_2581789905054249179_n.jpg">
+                                <span class="px-2">McQueen Car Perfume <i
+                                        class="fa fa-check-double follow followed"><small>followed</small></i></span>
+                            </div>
+                            <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
+                                <i class="fab fa-facebook"></i> <a href="#">
+                                    <span>@iloveperfumepuertorico</span></a>
+                                <small>25,540 likes • Beauty, cosmetic & personal care</small>
+                            </div>
+                            <div class="instagram rounded-bottom mb-2 pb-2 mx-3 px-2">
+                                <i class="fab fa-instagram"></i> <a href="#">
+                                    <span>@iloveperfumepuertorico</span></a>
+                                <small>25,200 likes • Beauty & cosmetic</small>
+                            </div>
+                            <p class="px-3">
+                                ‼️BUY 4 TAKE 1 PROMO #carperfume
+                                MCQUEEN CAR PERFUME | HANGING DIFFUSER
+
+                                ONLY FOR 150.00 PHP/10ml bottle.. 🚕 🚕
+
+                                💗Trio BEST-SELLERS
+                                ≠==================≠
+                                🏯 Shangrila
+                                🎍 Fresh Bamboo
+                                🌊Sea Breeze
+
+                                🍪SWEET/CALMING SCENTS
+                                ≠========================≠
+
+                                ☕Coffee Bean
+                                🌸Lavander
+                                🥒Cucumber Melon
+                                🍃Eucalyptus
+                                🍋Lemon Squash
+
+                                #promo #aromatherapy #smellgoodfeelgood
+                                #mcqueencarperfume #carscents #honda #TOYOTA #hyundai #Mazda #Mitsubishi #suzuki #ford
+                                #Kia
+                            </p>
+                            <div class="swiper mySwiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <video controls style="width:100%">
+                                            <source src="media/297641839_1201083240460272_7933649554156909768_n.mp4"
+                                                type="video/mp4">
+                                        </video>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <video controls style="width:100%">
+                                            <source src="media/297641839_1201083240460272_7933649554156909768_n.mp4"
+                                                type="video/mp4">
+                                        </video>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <video controls style="width:100%">
+                                            <source src="media/297641839_1201083240460272_7933649554156909768_n.mp4"
+                                                type="video/mp4">
+                                        </video>
+                                    </div>
+                                </div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-button-next"></div>
+                            </div>
+                            <div class="footer mt-3 px-3">
+                                <div>
+                                    <div>
+                                        <a href="#" style="text-decoration: none; color: #555;">
+                                            <span class="text-capitalize">Best t-shirts ever</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href="#" style="text-decoration: none; color: #555;">
+                                            <span class="text-lowercase">leadintop.com</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-light">Send Message</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

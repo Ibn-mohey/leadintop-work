@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AD LIBRARY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <nav class="fixed-top w-100 d-flex align-items-center justify-content-center p-2 shadow-sm">
+        <a class="active" href="home.html"><i class="fa fa-home"></i> Home</a>
+        <a href="fav.html"><i class="fa fa-star"></i> Fav&Followed</a>
+        <a href="main.html"><i class="fa fa-plus-hexagon"></i> Main</a>
+        <a href="block.html"><i class="fa fa-lock"></i> Blacklist</a>
+    </nav>
+
+    <main class="d-flex mt-4">
+        <aside class="py-4 px-2">
+            <strong>Get Your Advertiser</strong>
+            <form action="#" method="post">
+                <div class="form-group my-3">
+                    <div class="p-1 border my-1">
+                        <label class="main pl-0 text-capitalize">Advertisers
+                        </label>
+                        <div class="form-group mb-0 my-2" style="position: relative">
+                            <input type="text" class="form-control pl-4" name="" placeholder="enter advertisers">
+                            <i class="fa fa-search"
+                                style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group my-3">
+                    <span class="my-1 d-block mr-3">sort by:</span>
+                    <!-- for ads -->
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort" value="">
+                        max like & followers
+                    </label>
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort" value="">
+                        followers count
+                    </label>
+                    <!-- for advertisers -->
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort" value="">
+                        likes count
+                    </label>
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="sort" value="">
+                        ads count
+                    </label>
+                </div>
+                <div class="form-group my-3">
+                    <span class="my-1 d-block mr-3">country:</span>
+                    <div class="form-group mb-0 my-2" style="position: relative">
+                        <input type="text" class="form-control pl-4" name="" placeholder="select country">
+                        <i class="fa fa-search"
+                            style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
+                    </div>
+                    <div class="px-2">
+                        <label class="main text-capitalize">US <small>(1,213,212)</small>
+                            <input type="checkbox">
+                            <span class="geekmark"></span>
+                        </label>
+                        <label class="main text-capitalize">Egypt <small>(112,311)</small>
+                            <input type="checkbox">
+                            <span class="geekmark"></span>
+                        </label>
+                        <label class="main text-capitalize">Canada <small>(112,311)</small>
+                            <input type="checkbox">
+                            <span class="geekmark"></span>
+                        </label>
+                        <label class="main text-capitalize">china <small>(112,311)</small>
+                            <input type="checkbox">
+                            <span class="geekmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group mt-0 mb-3">
+                    <button class="btn btn-primary form-control" style="font-size: 14px; text-transform: capitalize;"
+                        type="submit"><i style="font-size: 12px" class="fa fa-filter mr-1"></i> Apply filters</button>
+                </div>
+            </form>
+        </aside>
+
+        <section class="ads py-4 px-2">
+            <div class="container">
+                <div class="row">
+
+                    <div
+                        class="ad col-xl-4 col-lg-6 offset-lg-0 col-md-8 offset-md-2 col-sm-10 offset-sm-1 offset-1 col-10">
+                        <div class="mx-2 bg-white rounded border py-3 px-0">
+                            <div class="profile px-3">
+                                <img width="32" height="32" class="rounded-circle"
+                                    src="media/298605744_2663001687166553_2581789905054249179_n.jpg">
+                                <span class="px-2">McQueen Car Perfume</span>
+                            </div>
+                            <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
+                                <i class="fab fa-facebook"></i> <a href="#">
+                                    <span>@iloveperfumepuertorico</span></a>
+                                <small>25,540 likes • Beauty, cosmetic & personal care</small>
+                            </div>
+                            <div class="instagram rounded-bottom mb-2 pb-2 mx-3 px-2">
+                                <i class="fab fa-instagram"></i> <a href="#">
+                                    <span>@iloveperfumepuertorico</span></a>
+                                <small>25,200 likes • Beauty & cosmetic</small>
+                            </div>
+                            <div class="px-3">
+                                <div class="w-100 py-1">
+                                    <a href="leadintop.com" class="btn btn-white form-control shadow">leadintop.com</a>
+                                </div>
+                                <div class="d-flex py-1">
+                                    <div class="w-50 mr-1">
+                                        <button type="button" class="btn btn-primary form-control">Follow</button>
+                                    </div>
+                                    <div class="w-50 ml-1">
+                                        <button type="button" class="btn btn-danger form-control">Block</button>
+                                    </div>
+                                </div>
+                                <div class="w-100 py-1">
+                                    <a href="leadintop.com" class="btn btn-secondary form-control">Show Advertiser
+                                        ADs</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="ad col-xl-4 col-lg-6 offset-lg-0 col-md-8 offset-md-2 col-sm-10 offset-sm-1 offset-1 col-10">
+                        <div class="mx-2 bg-white rounded border py-3 px-0">
+                            <div class="profile px-3">
+                                <img width="32" height="32" class="rounded-circle"
+                                    src="media/298605744_2663001687166553_2581789905054249179_n.jpg">
+                                <span class="px-2">McQueen Car Perfume</span>
+                            </div>
+                            <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
+                                <i class="fab fa-facebook"></i> <a href="#">
+                                    <span>@iloveperfumepuertorico</span></a>
+                                <small>25,540 likes • Beauty, cosmetic & personal care</small>
+                            </div>
+                            <div class="instagram rounded-bottom mb-2 pb-2 mx-3 px-2">
+                                <i class="fab fa-instagram"></i> <a href="#">
+                                    <span>@iloveperfumepuertorico</span></a>
+                                <small>25,200 likes • Beauty & cosmetic</small>
+                            </div>
+                            <div class="px-3">
+                                <div class="w-100 py-1">
+                                    <a href="leadintop.com" class="btn btn-white form-control shadow">leadintop.com</a>
+                                </div>
+                                <div class="d-flex py-1">
+                                    <div class="w-50 mr-1">
+                                        <button type="button" class="btn btn-primary form-control"
+                                            disabled>Followed</button>
+                                    </div>
+                                    <div class="w-50 ml-1">
+                                        <button type="button" class="btn btn-danger form-control"
+                                            disabled>Blocked</button>
+                                    </div>
+                                </div>
+                                <a href="leadintop.com" class="btn btn-secondary form-control">Show Advertiser
+                                    ADs</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

@@ -17,6 +17,8 @@ $(document).ready(function () {
     $(".popup").removeClass("d-none");
   });
 
+ 
+
   $("#close").click(function () {
     $(".popup").addClass("d-none");
   });
@@ -50,8 +52,6 @@ $(document).ready(function () {
       prevEl: ".swiper-button-prev",
     },
   });
-
-  // updateTextInput = function(val) {
-  //   document.getElementById("rangeContent").innerHTML = val;
-  // }
 });
+
+

@@ -4,31 +4,48 @@
 {% load helping_functions %}
 {% block content %}
 
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Main</title>
+</head>
 <main>
-    <div class="pt-3 my-5 mx-auto" style="max-width: 600px">
+
+    <div class="pt-3 my-5 mx-auto" style="max-width: 700px">
         <form class="w-100" action="" method="post">
             {% csrf_token %}
-            <input name="search_type" type="hidden" value="keyword">
+            <!-- <input name="search_type" type="hidden" value="keyword"> -->
             <div class="container-fluid w-100">
                 <div class="row">
+                    <div class="col-sm-4 col-12 pl-0 pr-1 pl-0">
+                        <select class="form-control" name="search_type">
+                            <!-- <option disabled selected value="">Type</option> -->
+                            <option value="Keyword" selected>Keyword</option>
+                            <option value="Advertiser">Advertiser</option>
+                        </select>
+                    </div>
+
                     <div class="col-sm-4 col-12 pl-0 pr-1">
                         <select class="form-control" name="country">
                             <option disabled selected value="">Country</option>
                             <option value="ALL" selected="">ALL</option>
                             <option value="EG">EGYPT</option>
                             <option value="SA">Saudi Arabia</option>
-                            
-                            {%for key,value in countries.items %} 
+
+                            {%for key,value in countries.items %}
                             <option value="{{key}}">{{value}}</option>
                             {% endfor %}
-                       
+
                         </select>
                     </div>
-                    <div class="col-sm-4 col-12 px-1">
+
+                    <div class="col-sm-4 col-12 pl-1 pr-0">
                         <input type="text" name="search_term" required="" class="form-control"
                             placeholder="enter keyword">
                     </div>
-                    <div class="col-sm-4 col-12 pr-0">
+                    <div class="col-sm-4 offset-sm-8 offset-0 col-12 pt-2 pl-1 pr-0">
                         <input type="submit" name="action" class="form-control btn btn-primary" value="ADD">
                         {% if message %}
                         <p style="color: red;">{{message}}</p>
@@ -38,28 +55,31 @@
             </div>
         </form>
     </div>
+    <div class="mx-auto" style="max-width: 700px">
 
-    <table class="table table-dark table-striped my-3 mx-auto" style="max-width: 600px">
+   
+    <table id="example2" class="table table-striped table-bordered mx-auto" style="max-width: 700px">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Type</th>
                 <th>Content-Text</th>
                 <th>Country</th>
+                <th>Result Count</th>
                 <th>Status</th>
                 {%if user.is_superuser %}
                 <th>Delete</th>
                 {%endif%}
             </tr>
         </thead>
-
-        {%for term in terms %}
         <tbody>
+            {%for term in terms %}
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{term.search_type}}</td>
                 <td>{{term.search_term}}</td>
                 <th>{{term.country}}</th>
+                <th>{{term.result_count}}</th>
                 <td>
                     <form action="" method="post">
                         {% csrf_token %}
@@ -68,12 +88,11 @@
                         <button type="submit" name="switch" value="{{term.id}}"
                             style="background-color: transparent; border: none; padding: 0; margin: 0;"><span
                                 class="{{ term.active_status.0 }}">{{term.active_status.1 }}</span></button>
-                                
+
                     </form>
                     {%else%}
-                                <span
-                                class="{{ term.active_status.0 }}">{{term.active_status.1 }}</span>
-                                {%endif%}
+                    <span class="{{ term.active_status.0 }}">{{term.active_status.1 }}</span>
+                    {%endif%}
                 </td>
                 {%if user.is_superuser %}
                 <td>
@@ -89,25 +108,23 @@
             </tr>
             {%endfor %}
         </tbody>
+
     </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div>
 
 
 </main>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#example2").DataTable();
+    });
+</script>
 
 {% endblock content %}

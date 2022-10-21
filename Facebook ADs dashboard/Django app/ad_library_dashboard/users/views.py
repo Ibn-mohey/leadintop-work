@@ -1,3 +1,4 @@
+import re
 from urllib.request import Request
 from django.shortcuts import render
 from django.contrib.auth import logout
@@ -79,20 +80,29 @@ def all_users(request):
             CustomUser.objects.get(id=request.POST.get('delete')).delete()
             
 
-     users = CustomUser.objects.all().filter(is_superuser=False)
+     users = CustomUser.objects.all() #.filter(is_superuser=False)
      return render(request, 'users/accounts.html',{'users':users})
     
         # Return an 'invalid login' error message.
+        
 @staff_member_required(login_url='login')
 def change_profile(request,email):
-    error = None
-    print(request.POST)
+    print("check", request.user.is_superuser)
+    print("check",email ,email == 'Leadintopadmin@Leadintop.Com')
     
+    if (email == 'leadintopadmin@leadintop.com' ) and (request.user.is_superuser == False):
+        print("here")
+        return redirect('logout')
+    error = None
+    # print(request.POST)
+    # print(email)
+    # print(CustomUser.objects.filter(is_superuser=False).get(email=email))
     try:
-        my_user = CustomUser.objects.get(email=email).filter(is_superuser=False)
-        
-        print(email)
+        my_user = CustomUser.objects.get(email=email)
+        # print(my_user)
+        # print(email)
     except:
+        # pass
         return redirect('users_page')
     if request.method == "POST":
         # name CustomUser.objects.filter(email=email).update(name = request.POST.get('name'))
@@ -114,7 +124,7 @@ def change_profile(request,email):
             return redirect('users_page')
         if request.POST.get('name' , '') != '':
             my_user.name = request.POST.get('name')
-        if request.POST.get('email' , '') != '':
+        if request.POST.get('email' , '') not in ['',email]:
             new_email = request.POST.get('email')
             qs = CustomUser.objects.filter(email=new_email)  
             if qs.exists():  

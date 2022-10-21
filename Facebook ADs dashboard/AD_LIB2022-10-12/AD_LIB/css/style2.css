@@ -1,0 +1,135 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #0000000D;
+}
+
+.form-control {
+    font-size: 14px;
+}
+
+/**************************************************
+Content
+**************************************************/
+
+main .content {
+    max-width: 700px;
+    margin: auto;
+}
+
+main .content .page-content {
+    min-height: calc(100vh);
+}
+
+main .content .page-content b {
+    font-size: 24px;
+}
+
+main .content .page-content .span-header {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+main .content .page-content .box {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 1rem 1.5rem;
+    background-color: white;
+    border-radius: 10px;
+}
+
+main .content .page-content .box .icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #6366f1;
+    color: #fff;
+    border-radius: 7px;
+    font-size: 20px;
+}
+
+main .content .page-content .box .data {
+    padding: .3rem .75rem;
+}
+
+main .content .page-content .box .data span {
+    display: block;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+main .content .page-content .box .data b {
+    font-size: 20px;
+    color: #333;
+}
+
+main table i {
+    font-size: 16px;
+}
+
+main table .badge {
+    cursor: pointer;
+}
+
+main .eye-link {
+    text-decoration: none;
+    color: #374151;
+    transition: .3s;
+}
+
+main .cancel {
+    text-decoration: none;
+    color: #374151;
+    transition: .3s;
+}
+
+main .cancel:hover {
+    color: red;
+}
+
+main .pen {
+    text-decoration: none;
+    color: #374151;
+    transition: .3s;
+    margin: 0 5px;
+}
+
+main .pen:hover {
+    color: #f90;
+}
+
+main .eye-link:hover {
+    color: #6366f1;
+}
+
+main th {
+    text-transform: capitalize;
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+}
+
+main td {
+    text-transform: capitalize;
+    font-size: 14px;
+}
+
+.data-table {
+    font-size: 14px;
+}
+
+button:focus {
+    outline: none;
+}

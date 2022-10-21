@@ -3,7 +3,11 @@
 {% load static %}
 {% load helping_functions %}
 {% block content %}
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 <main class="d-flex mt-4">
 
     <!-- side  -->
@@ -11,7 +15,17 @@
         <strong>Get Your ADs</strong>
         <form method="GET">
             <!-- {% csrf_token %} -->
-
+            <div class="form-group my-3">
+                <span class="my-1 d-block mr-3">values on page:</span>
+            <select class="form-control" name="ads_in_page" onchange="if(this.value != {{request.GET.ads_in_page}}) { this.form.submit(); }">
+                        
+                <option selected value="{{request.GET.ads_in_page}}">{{request.GET.ads_in_page}}</option>
+                <option value='10'>10</option>
+                <option value='50'>50</option>
+                <option value='100'>100</option>
+                <option value='200'>200</option>
+           </select>
+        </div>
             <div class="form-group my-3">
                 <span class="my-1 d-block mr-3">Search mode:</span>
                 <div class="p-1 border my-1">
@@ -32,6 +46,7 @@
                             style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
                     </div>
                 </div>
+                <input hidden type="text" class="form-control pl-4" name="search_page" placeholder="enter domain" value="{{request.GET.search_page}}">
                 <div class="p-1 border my-1">
                     <label class="main pl-0 text-capitalize">Domains
                     </label>
@@ -118,43 +133,42 @@
                 </label>
             </div>
             <!-- country ?? -->
-            <!-- <div class="form-group my-3">
+            <div class="form-group my-3">
                     <span class="my-1 d-block mr-3">country:</span>
                     <div class="form-group mb-0 my-2" style="position: relative">
-                        <input type="text" class="form-control pl-4" name="" placeholder="select country">
+                        <input type="text" class="form-control pl-4" name="country" placeholder="select country">
                         <i class="fa fa-search"
                             style="position: absolute; font-size: 12px; left: .5rem; top: 50%; transform: translateY(-50%);"></i>
                     </div>
-                    <div class="px-2">
-                        <label class="main text-capitalize">US <small>(1,213,212)</small>
-                            <input type="checkbox">
+                    <div style="max-height:200px;overflow-y:scroll;overflow-x:hidden; word-wrap: break-word;">
+                        <!-- <small>(1,213,212)</small> -->
+                        <label class="main text-capitalize" >Egypt 
+                            <input name="countries" value="EG" type="checkbox">
                             <span class="geekmark"></span>
                         </label>
-                        <label class="main text-capitalize">Egypt <small>(112,311)</small>
-                            <input type="checkbox">
+                        <label class="main text-capitalize" value="SA">Saudi Arabia 
+                            <input name="countries" value="EG" type="checkbox">
                             <span class="geekmark"></span>
                         </label>
-                        <label class="main text-capitalize">Canada <small>(112,311)</small>
-                            <input type="checkbox">
+                    {%for key,value in countries.items %}
+                        <label class="main text-capitalize" > {{value}}
+                            <input name="countries" value="{{key}}" type="checkbox">
                             <span class="geekmark"></span>
                         </label>
-                        <label class="main text-capitalize">china <small>(112,311)</small>
-                            <input type="checkbox">
-                            <span class="geekmark"></span>
-                        </label>
+                    {% endfor %}
                     </div>
-                </div> -->
+                </div>
 
             <div class="form-group my-3">
                 <span class="my-1 d-block mr-3">CTA:</span>
                 <select class="form-control" name="action">
                     <option selected="selected" value="All">All</option>
                     {%for opt,v in Footer_actions.items%}
-                    <option value="{{opt}}">{{opt}}</option>
+                    <option value="{{opt}}">{{opt}}  <small> ({{v}}) </small> </option>
                     {% endfor%}
                 </select>
             </div>
-
+           
             <div class="form-group my-3">
                 <span class="my-1 d-block mr-3">Days running more than:</span>
                 <input type="number" min="1" name="days" class="form-control">
@@ -176,8 +190,11 @@
     <section class="ads py-4 px-2">
         <div class="container-fluid m-auto" style="width:95%">
             <div class="row">
+             
+
                 <div class="p-3 col-12">
-                    total values found {{valuesss}} on {{pages.paginator.num_pages}} pages <br> 
+                    {{request.GET.ads_in_page}} shown of 
+                    total {{valuesss}} found on {{pages.paginator.num_pages}} pages <br> 
                    <!-- {{ request.GET}} -->
                     {%for k,v in last_req.items  %}
 
@@ -202,6 +219,7 @@
 
                             <button name="post_id" style="background: transparent; border:none;" type="submit"
                                 value="{{post.ad_id}}"> <i class="{{post.favorites_status}}"></i></button>
+            
                         </form>
                         <div class="px-3">
                             <span><i class="fa fa-check-circle"></i> Days Running: {{day}} </span>
@@ -219,14 +237,20 @@
                         <div class="px-3">
                             <span> hits: {{post.hits}}</span>
                         </div>
+                        <div class="px-3">
+                            <span> search_terms: {{post.get_search_terms}}</span>
+                        </div>
                         <hr class="my-2 mx-auto" style="width: 92%" />
                         <div class="profile px-3">
                             <img id="currentPhoto" width="32" height="32" class="rounded-circle"
                                 src="{{post.profile_pic|profile_pic}}"
                                 onerror="this.onerror=null; this.src='/media/pics/default_image.png'">
 
-                            <span class="px-2">{{post.page_name}}<form method="post">{% csrf_token %}<button name="static_id" style="background: transparent; border:none;" type="submit" value="{{post.static_id}}"><i class="{{post.follow_status.0}}"><small>{{post.follow_status.1}}</small></i></button></form>
-                                </span>
+                           <a href="/?search_page={{post.static_id}}"> <span class="px-2">{{post.page_name}}<form method="post">{% csrf_token %}<button {%if not user.is_superuser %} disabled {%else%}  {%endif%} 
+                                name="static_id" style="background: transparent; border:none;" type="submit" value="{{post.static_id}}"><i 
+                                class="{{post.follow_status.0}}"><small>{{post.follow_status.1}}</small></i></button>    <button name="block"  value="{{post.static_id}}" style="border: none; background-color: transparent;" type="submit" {%if not user.is_superuser %} disabled {%else%}  {%endif%}><i class="{{post.block_status.0}}"><small>{{post.block_status.1}}</small></i></button>
+                            </form> 
+                                </span></a>
 
                                 
                         </div>
@@ -312,6 +336,7 @@
 
 
 </main>
+<!-- <a href="#" id="loadMore">Load More</a> -->
 
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
@@ -320,38 +345,45 @@
         <li class="page-item"> <a class="page-link" href="?{% param_replace page=1 %}">&laquo First</a></li>
 
         <li class="page-item"><a class="page-link"
-                href="?{% param_replace page=pages.previous_page_number %}">Previous</a></li>
-
+            href="?{% param_replace page=pages.previous_page_number %}">Previous</a></li>
         {% endif %}
-        <li class="page-item"> Page {{pages.number}} of {{pages.paginator.num_pages}} </li>
+        
+        {% for i in pages.paginator.page_range %}
+            {% if pages.number == i %}
+            <!-- active  -->
+            <span class="page-link">
+                Page {{pages.number}}  of {{pages.paginator.num_pages}} 
+            </span>
 
-        <!--
-  <li class="page-item disabled"><a href="#" class="page-link">Page {{ venues.number }} of {{ venues.paginator.num_pages }}</a></li>
-  -->
-
-        <!-- {% for i in nums %}
-      <li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
-  
-  {% endfor %} -->
-
-
+            {% elif i > pages.number|add:'-10' and i < pages.number|add:'10' %}
+        <!-- in active  -->
+                <li class="page-item"><a class="page-link" href="?{% param_replace page=i %}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+        
+        <!-- {% if pages.paginator.num_pages > pages.number|add:'4' %}
+            <li><a href="?page={{ pages.number|add:'5' }}">&hellip;</a></li>
+        {% endif %} -->
+        
         {% if pages.has_next %}
         <li class="page-item"><a class="page-link" href="?{% param_replace page=pages.next_page_number %}">Next</a>
         </li>
-
+    
         <li class="page-item"><a class="page-link" href="?{% param_replace page=pages.paginator.num_pages %}">Last
                 &raquo</a></li>
-
+    
         {% endif %}
-
-    </ul>
-</nav>
-
+        
+        </ul>
+    </nav>
+     
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-<script src="{%static 'script.js' %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{%static 'script.js' %}"></script>
+
+
 
 {% endblock content %}

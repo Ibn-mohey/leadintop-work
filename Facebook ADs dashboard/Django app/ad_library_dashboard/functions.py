@@ -370,7 +370,7 @@ def start_save(driver,search_term,country= "ALL",start_date = None,end_date=None
             conn = sqlite3.connect('FaceBoookADS.db')
             c = conn.cursor()
             c.execute('''INSERT INTO ads VALUES 
-            (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'''
+            (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'''
                 ,(AD_ID ,
                 Started_date ,
                 profile_pic ,
@@ -394,14 +394,27 @@ def start_save(driver,search_term,country= "ALL",start_date = None,end_date=None
                 search_term ,
                 video_length,
                 favorite,
-                posters
+                posters,
+                country
                 ))
+            
+            #old add page ( new with Page IDS )
             try:
-                c.execute('''INSERT INTO facebook_pages VALUES 
-            (?, ?,?)'''
-                        , (static_ID,Page_name,False))
+                c.execute("""insert into 
+                          facebook_pages(static_ID,Facebook_ID,insta_followers,instgram_ID,Page_likes,profile_pic,page_name,favorites,block,country)
+                          VALUES (?,?,?,?,?,?,?,0,0,?)""",(static_ID,Facebook_ID,insta_followers,instgram_ID,Page_likes,profile_pic,Page_name,country))
             except:
-                pass
+                c.execute("""
+                          update facebook_pages set 
+                          Facebook_ID = ?,
+                          insta_followers = ?,
+                          instgram_ID = ?,
+                          Page_likes = ?,
+                          profile_pic = ?,
+                          page_name = ?,
+                          country = country || ',' || ? ,
+                          where static_id = ?
+                          """,(Facebook_ID,insta_followers,instgram_ID,Page_likes,profile_pic,Page_name,country,static_ID))
             conn.commit()
             conn.close()
         except:
@@ -417,7 +430,8 @@ def start_save(driver,search_term,country= "ALL",start_date = None,end_date=None
             date = ? || ',' || date ,
             days = ?  || ',' || days ,
             hits = hits + 1 , 
-            search_term = search_term || ',' || ?   
+            search_term = search_term || ',' || ? ,
+            country =  country || ',' || ? ,
             where AD_ID = ?'''
               ,(AD_occurance ,
                 Page_likes ,
@@ -427,6 +441,7 @@ def start_save(driver,search_term,country= "ALL",start_date = None,end_date=None
                 time_now,
                 days,
                 search_term,
+                country,
                AD_ID))
             conn.commit()
             conn.close()
