@@ -421,7 +421,7 @@ def start_save(driver,search_term,country= "ALL",start_date = None,end_date=None
             #update the data
             conn = sqlite3.connect('FaceBoookADS.db')
             c = conn.cursor()
-            c.execute('''UPDATE ads SET 
+            c.execute('''UPDATE ads SET
             AD_occurance =?,
             Page_likes =?,
             insta_followers =?,
@@ -431,7 +431,7 @@ def start_save(driver,search_term,country= "ALL",start_date = None,end_date=None
             days = ?  || ',' || days ,
             hits = hits + 1 , 
             search_term = search_term || ',' || ? ,
-            country =  country || ',' || ? ,
+            country =  country || ',' || ? 
             where AD_ID = ?'''
               ,(AD_occurance ,
                 Page_likes ,
