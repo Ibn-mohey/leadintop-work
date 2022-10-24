@@ -75,6 +75,7 @@ class search_term(models.Model):
     static_ID = models.TextField(blank=False, null=True)
     country = models.TextField(blank=False, null=False,default='ALL')
     active =  models.BooleanField(default=True)
+    last_visited = models.TextField(blank=True, null=True)
     # def clean_search_term(self):
     #     if self.search_type == 'advertiser':
             

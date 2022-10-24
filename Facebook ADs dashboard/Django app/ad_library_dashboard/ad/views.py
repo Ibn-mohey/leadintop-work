@@ -368,6 +368,8 @@ def favorites(request):
     Footer_actions = [link.footer_action for link in ADS]
     sorted_dict = dict(sorted(Counter(Footer_actions).items(), key=lambda item: item[1],reverse=True))
     Footer_actions = dict(sorted_dict.items())
+    Footer_actions.pop('', 'key not found')
+    
         
     
     context = {'valuesss':len(days),
@@ -418,14 +420,14 @@ def pages(request):
     req = request.GET
     # print("the request", request.GET)
     sort_by = req.get("sort_by", "-ads_count")
-    pages = facebook_pages.objects.all().order_by('-ads_count')
+    pages = facebook_pages.objects.all().filter(block=False).order_by('-ads_count')
     if sort_by == 'likes_followers':
         sort_by = '-latest_activity_at'
         pages = facebook_pages.objects.annotate(latest_activity_at=Greatest('page_likes', 'insta_followers')).order_by(sort_by)
     elif sort_by == '-days_running':
         sort_by = "-ads_count"
     else:
-        pages = facebook_pages.objects.all().order_by(sort_by)
+        pages = facebook_pages.objects.all().filter(block=False).order_by(sort_by)
     if req.get('advertiser','') != '':
         print("here")
         pages = pages.filter(page_name__icontains=req['advertiser']).order_by(sort_by)

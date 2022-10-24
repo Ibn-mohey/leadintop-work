@@ -38,19 +38,23 @@ args = parser.parse_args()
 # connect to databsae to get the search terms
 sqliteConnection = sqlite3.connect('FaceBoookADS.db')
 cursor = sqliteConnection.cursor()
-sqlite_select_query = f"""SELECT search_term,country FROM search_terms where active = True and search_type = 'keyword'"""
+sqlite_select_query = f"""SELECT search_term,country FROM search_terms where active = True and search_type = 'keyword' order by last_visited"""
 cursor.execute(sqlite_select_query)
 terms_DB = cursor.fetchall()
 terms = [i[0] for i in terms_DB]
 terms_countries =  [i[1] for i in terms_DB]
+
 # terms_countries = [i[1] for i in terms_DB]
-sqlite_select_query = f"""SELECT search_term,country FROM search_terms where active = True and search_type = 'page'"""
+sqlite_select_query = f"""SELECT search_term,country FROM search_terms where active = True and search_type = 'page' order by last_visited"""
 cursor.execute(sqlite_select_query)
 pages_DB = cursor.fetchall()
 pages = [i[0] for i in pages_DB]
 pages_countries = [i[1] for i in pages_DB]
 cursor.close()
 
+
+# terms = ['perfume']
+# terms_countries = ['all']
 #start search for the terms 
 
 for term,country in zip(terms,terms_countries):
@@ -68,6 +72,8 @@ for term,country in zip(terms,terms_countries):
     for ID in pages_block_list:
         sqlite_select_query = f"""DELETE FROM ads WHERE static_ID = {ID} """
         cursor.execute(sqlite_select_query)
+    sqlite_select_query = f"""update search_terms set last_visited =? WHERE search_term =? and country = ?"""
+    cursor.execute(sqlite_select_query,(datetime.now(),term,country))
     sqliteConnection.commit()
     sqliteConnection.close()
     for page_ID in list(set(page_IDS)):

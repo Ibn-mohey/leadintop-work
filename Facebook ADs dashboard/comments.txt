@@ -30,6 +30,7 @@ edit views to the HTML u want
 create templates folder withing the app dir
 
 python manage.py migrate --fake users zero
+python manage.py migrate --fake ad zero
 
 #admin
 python manage.py makemigrations
@@ -62,7 +63,7 @@ find . -path "*/migrations/*.pyc"  -delete
 	
 	
 python manage.py inspectdb --database=databasename > app/models.py
-
+python manage.py inspectdb --database=databasename > app/models.py
 ## create user form
 
 python manage.py sqlclear users
@@ -72,5 +73,19 @@ python manage.py sqlclear users
 
 ## profile pic 
 ep 8
+
+my SQL
+pip install mysqlclient 
+django.db.backends.mysql
+
+
+DB instance identifier : database-1
+Master username : admin
+Master password:AWS$2020
+Database port: 3306
+Initial database name : Demo
+Initial database name : facebook_ads
+database-1.cclpp8z8lgmz.us-east-1.rds.amazonaws.com
+
 
 

@@ -95,10 +95,10 @@
                     <div
                         class="ad col-xl-4 col-lg-6 offset-lg-0 col-md-8 offset-md-2 col-sm-10 offset-sm-1 offset-1 col-10">
                         <div class="mx-2 bg-white rounded border py-3 px-0">
-                            <div class="profile px-3">
+                            <div class="profile px-3 d-flex align-items-center">
                                 <img width="32" height="32" class="rounded-circle"
                                     src="media/298605744_2663001687166553_2581789905054249179_n.jpg">
-                                <span class="px-2">{{page.page_name}}</span>
+                                <span class="px-2 d-flex">{{page.page_name}} <small> ({{page.ads_count}})</small> </span>
                             </div>
                             <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
                                 <i class="fab fa-facebook"></i> <a href="#">
@@ -110,9 +110,7 @@
                                     <span>{{page.instgram_id}}</span></a>
                                 <small>{{page.insta_followers}}</small>
                             </div>
-                            <div class="facebook rounded-top pt-2 mt-2 mx-3 px-2">
-                                ads_count: {{page.ads_count}}
-                            </div>
+
                             <div class="px-3">
                                 <div class="w-100 py-1">
                                     <a href="{{page.find_domain.0}}" class="btn btn-white form-control shadow">{{page.find_domain.1}}</a>

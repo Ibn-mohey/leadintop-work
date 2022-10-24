@@ -369,13 +369,17 @@ def start_save(driver,search_term,country= "ALL",start_date = None,end_date=None
         #insert if not exist 
             conn = sqlite3.connect('FaceBoookADS.db')
             c = conn.cursor()
-            c.execute('''INSERT INTO ads VALUES 
+            c.execute('''INSERT INTO 
+            ads(AD_ID ,Started_date ,profile_pic ,links ,videos ,videos_length,content ,Footer_text ,Footer_action ,Page_name ,AD_occurance ,Facebook_ID ,Page_likes 
+            ,instgram_ID ,insta_followers ,static_ID ,Ads_count ,cumulative_ads_count ,days,date ,hits ,search_term ,favorite,poster,country)    
+            VALUES 
             (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'''
                 ,(AD_ID ,
                 Started_date ,
                 profile_pic ,
                 links ,
                 videos ,
+                video_length,
                 content ,
                 Footer_text ,
                 Footer_action ,
@@ -392,7 +396,6 @@ def start_save(driver,search_term,country= "ALL",start_date = None,end_date=None
                 time_now ,
                 1 ,
                 search_term ,
-                video_length,
                 favorite,
                 posters,
                 country

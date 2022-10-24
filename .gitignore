@@ -17,3 +17,4 @@ Facebook ADs dashboard/Django app/ad_library_dashboard/ad/migrations/0001_initia
 Facebook ADs dashboard/Django app/ad_library_dashboard/ad/migrations/0002_facebook_pages.py
 *.jpg
 Facebook ADs dashboard/Django app/ad_library_dashboard/.ipynb_checkpoints/Untitled-Copy1-checkpoint.ipynb
+Facebook ADs dashboard/Django app/ad_library_dashboard/ad/migrations/0007_search_term_last_visited.py
