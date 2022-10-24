@@ -77,7 +77,7 @@
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{term.search_type}}</td>
-                <td>{{term.search_term}}</td>
+                <td><a href="/?&keywords={{term.search_term}}"> {{term.search_term}}</a> </td>
                 <th>{{term.country}}</th>
                 <th>{{term.result_count}}</th>
                 <td>
