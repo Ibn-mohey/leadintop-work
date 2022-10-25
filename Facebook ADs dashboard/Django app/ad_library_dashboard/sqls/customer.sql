@@ -1,0 +1,13 @@
+INSERT INTO "users_customuser" ("id", "password", "last_login", "is_superuser", "is_staff", "is_active", "date_joined", "email", "name") VALUES
+(1, 'pbkdf2_sha256$320000$tfMqXOetBfAD6cGD7ykzLS$VoSBvU3u9tX1pCJw7/lHaHi/jh5fEhoV4+5ISPR8Ayk=', '2022-10-20 17:11:19.050044', '1', '1', '1', '2022-10-03 13:27:32.185525', 'leadintopadmin@leadintop.com', 'admin'),
+(2, 'pbkdf2_sha256$320000$xoDFDlbIcvpTZpCF0zoJ14$r2GOAcWK/p3uPfaxqHWnN02ng/bv5loAgFKD6HD6ek0=', '2022-10-20 16:54:48.957567', '0', '1', '1', '2022-10-03 13:29:03.435113', 'test1@laedintop.com', 'mmm'),
+(10, 'pbkdf2_sha256$320000$NjcKHSDLU1qQk8WCI9TJLR$VWyiRfIR5cQepLBYs3jH1SGhLLljDpC6x6Ih2XGG42g=', NULL, '0', '0', '1', '2022-10-03 17:50:24.873630', 'test123@test.com', 'mmm'),
+(11, 'pbkdf2_sha256$320000$1ZByf1s0gIqeZcTbP1JohG$KKSWTmouhdhpAHkcAyv8tApGZ6hoWUBoNmthTPc1PyQ=', '2022-10-17 12:17:09.201216', '0', '0', '1', '2022-10-03 17:51:13.821209', 'test6@laedintop.com', 'mmm'),
+(12, 'pbkdf2_sha256$320000$6MfswDa8x9pAeVfHEgTwQA$3w1Dr30IIo8KAvBtrZ+ZN60ZSqyNbbmEWRc9WfCwETs=', '2022-10-04 11:46:24.576367', '0', '0', '1', '2022-10-03 17:51:44.194430', 'test7@laedintop.com', 'mmmaa'),
+(13, 'pbkdf2_sha256$320000$P3atvCxwoR6agb7DJu731t$U/WmKQi0N73LQOQFycVT0Xi5AuxPryqDqoI8InCD3zw=', NULL, '0', '0', '1', '2022-10-03 19:02:21.587661', 'test5@laedintop.com', 'mmm'),
+(14, 'pbkdf2_sha256$320000$EAU0adLDo4K28eKqrDDs7W$2bFWYCWC2Z3PenC77MBoPbch3/yKXLzSrtmo8ufeHXk=', NULL, '0', '0', '0', '2022-10-04 10:53:47.708289', 'test10@laedintop.com', 'mmm'),
+(15, 'pbkdf2_sha256$320000$UFzKopwR0BQXDwga3oRXmE$SzjWiMw6N5jeQPUUuLpF3PjWWTZWdGqpgX300WdKyfc=', NULL, '0', '1', '1', '2022-10-04 11:19:13.523474', 'test8@laedintop.com', 'mmm'),
+(16, 'pbkdf2_sha256$320000$a0tGU9hUIM6E5evJrV90jO$MhOHioPoh0h005iOQape399UUGI2Edjlm7VpeBx2sUI=', NULL, '0', '1', '1', '2022-10-04 11:19:59.076399', 'test9@laedintop.com', 'mmm'),
+(18, 'pbkdf2_sha256$320000$mSsHP2X2dMqGUh8HR0jWFp$N8m1bCR8av4osyfE36PQGUE7bVEmJdyjekleSsOIjRY=', NULL, '0', '0', '1', '2022-10-04 11:22:40.566816', 'test12@laedintop.com', 'mmm'),
+(19, 'pbkdf2_sha256$320000$ds5kEOngauRpx9tE4EXGkz$tFFp26io7Dn9rWm4K0Bug/y7ef6/tU8VfHz6MwpDJUs=', NULL, '0', '0', '1', '2022-10-04 11:24:10.081426', 'test13@laedintop.com', 'mmm'),
+(20, 'pbkdf2_sha256$390000$mFfa0uRhIMqOImmymlSh9h$ep694VQU3Z1tioMaBJe+vtOpX2rzEYj15BypDhvsLPs=', '2022-10-13 11:25:43.243909', '0', '1', '1', '2022-10-13 11:17:13.854414', 'nourhan@leadintop.com', 'Nourhan');

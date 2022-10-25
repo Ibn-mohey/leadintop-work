@@ -39,6 +39,7 @@ python manage.py createsuperuser
 admin
 leadintopadmin@leadintop.com
 Leadintop123@@
+
 admin@leadintop.com
 admin
 http://127.0.0.1:8000/admin/

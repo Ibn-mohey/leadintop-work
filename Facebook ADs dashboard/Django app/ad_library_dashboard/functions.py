@@ -138,6 +138,7 @@ def find_profile_pic(element):
 
         with open(f'./media/pics/{name}', 'wb') as handler:
             handler.write(img_data)
+            
         return link
     except:
         return  ""  #'84702798_579370612644419_4516628711310622720_n.png'
@@ -371,7 +372,7 @@ def start_save(driver,search_term,country= "ALL",start_date = None,end_date=None
             c = conn.cursor()
             c.execute('''INSERT INTO 
             ads(AD_ID ,Started_date ,profile_pic ,links ,videos ,videos_length,content ,Footer_text ,Footer_action ,Page_name ,AD_occurance ,Facebook_ID ,Page_likes 
-            ,instgram_ID ,insta_followers ,static_ID ,Ads_count ,cumulative_ads_count ,days,date ,hits ,search_term ,favorite,poster,country)    
+            ,instgram_ID ,insta_followers ,static_ID ,Ads_count ,cumulative_ads_count ,days,date ,hits ,search_term ,favourite,poster,country)    
             VALUES 
             (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'''
                 ,(AD_ID ,
@@ -420,7 +421,8 @@ def start_save(driver,search_term,country= "ALL",start_date = None,end_date=None
                           """,(Facebook_ID,insta_followers,instgram_ID,Page_likes,profile_pic,Page_name,country,static_ID))
             conn.commit()
             conn.close()
-        except:
+        except Exception as e:
+            print(e)
             #update the data
             conn = sqlite3.connect('FaceBoookADS.db')
             c = conn.cursor()
