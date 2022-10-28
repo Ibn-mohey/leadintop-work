@@ -30,6 +30,8 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("--limit", help="enter some quality limit",
                     nargs='?', default='no limit', const=0)
+parser.add_argument("--login", help="enter some quality limit",
+                    nargs='?', default='yes', const=0)
 args = parser.parse_args()
 
 
@@ -70,7 +72,8 @@ mycursor.close()
 for term,country in zip(terms,terms_countries):
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     #log in 
-    log_in(driver)  ##reapply
+    if args.login != 'no':
+        log_in(driver)  ##reapply
     
     #Log ooooo 
     save_log(f"started the term: {term}")

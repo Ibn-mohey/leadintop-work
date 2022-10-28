@@ -222,10 +222,13 @@ def find_ads_occurence(element):
         return '1'
 
 def click_see_ad_details(element,driver):
-    click = WebDriverWait(element, 20).until(EC.element_to_be_clickable((By.XPATH,'./div[2]/div/span/div/div/div')))
-    driver.execute_script("arguments[0].click();", click)
-    time.sleep(0.5)
-    return WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'div[class="_5aat _4-hy uiLayer _3qw"]')))
+    try:
+        click = WebDriverWait(element, 20).until(EC.element_to_be_clickable((By.XPATH,'./div[2]/div/span/div/div/div')))
+        driver.execute_script("arguments[0].click();", click)
+        time.sleep(0.5)
+        return WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'div[class="_5aat _4-hy uiLayer _3qw"]')))
+    except:
+        return 'breakout'
 
 def value_to_int(x):
     if 'K' in x:
@@ -254,7 +257,8 @@ def get_page_data(element,driver):
     Insta_ID = "NO insta ID found"
     page_likes = 0
     insta_followers = 0
-
+    if main_element == 'breakout':
+        return 'breakout' , 'breakout' ,'breakout' ,'breakout' ,'breakout'
     try:
         #all pages
         # about_the_page = WebDriverWait(main_element, 10).until(EC.presence_of_element_located((By.XPATH,'./div[2]/div/div/div/div/div[3]/span/div[2]/div/div')))  old 
@@ -357,6 +361,8 @@ def start_save(driver,search_term,country= "ALL",start_date = None,end_date=None
         AD_occurance = find_ads_occurence(element)
 #         FB_ID, page_likes,Insta_ID,insta_followers, static_ID,ADS_count
         Facebook_ID, Page_likes,instgram_ID , insta_followers, static_ID  = get_page_data(element,driver)
+        if Facebook_ID == 'breakout':
+            continue
         profile_pic = find_profile_pic(element) #save with static id ??
         page_IDS.append(static_ID)
         save_log(f'end time {time_now}\n')
