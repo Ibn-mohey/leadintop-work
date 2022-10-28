@@ -95,7 +95,7 @@ for term,country in zip(terms,terms_countries):
         sqlite_select_query = f"""DELETE FROM ads WHERE static_ID = {ID} """
         mycursor.execute(sqlite_select_query)
     if len(page_IDS)>2:
-        sqlite_select_query = f"""update search_terms set last_visited =%s WHERE search_term =%s search_type = %s and country = %s"""
+        sqlite_select_query = f"""update search_terms set last_visited =%s WHERE search_term =%s and search_type = %s and country = %s"""
         mycursor.execute(sqlite_select_query,(datetime.now(),term,'keyword',country))
         mydb.commit()
         mydb.close()
