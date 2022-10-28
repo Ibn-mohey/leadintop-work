@@ -22,7 +22,7 @@ import requests
 import cv2
 import sys
 import argparse
-
+import mysql.connector
 from functions import *
 
 
@@ -70,7 +70,7 @@ mycursor.close()
 for term,country in zip(terms,terms_countries):
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     #log in 
-    # log_in(driver)  ##reapply
+    log_in(driver)  ##reapply
     
     #Log ooooo 
     save_log(f"started the term: {term}")
@@ -91,10 +91,11 @@ for term,country in zip(terms,terms_countries):
     for ID in pages_block_list:
         sqlite_select_query = f"""DELETE FROM ads WHERE static_ID = {ID} """
         mycursor.execute(sqlite_select_query)
-    sqlite_select_query = f"""update search_terms set last_visited =%s WHERE search_term =%s and country = %s"""
-    mycursor.execute(sqlite_select_query,(datetime.now(),term,country))
-    mydb.commit()
-    mydb.close()
+    if len(page_IDS)>2:
+        sqlite_select_query = f"""update search_terms set last_visited =%s WHERE search_term =%s search_type = %s and country = %s"""
+        mycursor.execute(sqlite_select_query,(datetime.now(),term,country,'keyword'))
+        mydb.commit()
+        mydb.close()
     for page_ID in list(set(page_IDS)):
 
         open_page(driver,page_ID)
