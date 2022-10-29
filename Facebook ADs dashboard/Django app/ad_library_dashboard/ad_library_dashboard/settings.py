@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-mh%#k%lg9v2qun_kf#=yv0)^9mrvvlxj8!xy$sa!h63#eugg^_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.5.50.222','192.168.1.2','192.168.1.100', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['10.5.50.220','10.5.50.222','192.168.1.2','192.168.1.100', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -86,9 +86,20 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # },
+    # 'default' : {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME':  BASE_DIR / 'FaceBoookADS.db'
+        
+    # }
     'default' : {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME':  BASE_DIR / 'FaceBoookADS.db'
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME':  'facebook_ads',
+        "USER": 'admin',
+        "PASSWORD" : 'AWS$2020',
+        'HOST' : 'database-1.cclpp8z8lgmz.us-east-1.rds.amazonaws.com',
+        'PORT':3306
+        
+        
         
     }
     

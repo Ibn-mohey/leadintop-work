@@ -11,7 +11,7 @@ from urllib.parse import urlparse
 from collections import Counter
 import re
 class Ads(models.Model):
-    ad_id = models.TextField(db_column='AD_ID', primary_key=True, blank=True, null=False)  # Field name made lowercase.
+    ad_id = models.CharField(db_column='AD_ID', primary_key=True,max_length=80)  # Field name made lowercase.
     started_date = models.TextField(db_column='Started_date', blank=True, null=True)  # Field name made lowercase.
     links = models.TextField(blank=True, null=True)
     videos = models.TextField(blank=True, null=True)
@@ -39,6 +39,7 @@ class Ads(models.Model):
     search_term = models.TextField(blank=True, null=True)
     favourite =  models.BooleanField(default=False)
     poster =  models.TextField(blank=True, null=True)
+    state = models.TextField(blank=True, null=True) #state of the file downlaod local or not downloaded or online downloaded 
     
     def get_search_terms(self):
         return " - ".join(list(set(self.search_term.split(','))))
@@ -69,11 +70,11 @@ class search_term(models.Model):
         
     # choices = [('keyword','keyword'),('page','page')]
     countries = [('ALL','ALL'),('EG','EG')]
-    search_term =  models.TextField(blank=False, null=False)
+    search_term =  models.CharField(max_length=80,blank=False, null=False)
     # search_type =  models.TextField(blank=False, null=False,choices = choices)
-    search_type =  models.TextField(blank=False, null=False,default='keyword')
-    static_ID = models.TextField(blank=False, null=True)
-    country = models.TextField(blank=False, null=False,default='ALL')
+    search_type =  models.CharField(blank=False, null=False,default='keyword',max_length=80)
+    static_ID = models.CharField(blank=True, null=True,max_length=80)
+    country = models.CharField(blank=False, null=False,default='ALL',max_length=80)
     active =  models.BooleanField(default=True)
     last_visited = models.TextField(blank=True, null=True)
     # def clean_search_term(self):
@@ -98,11 +99,11 @@ class search_term(models.Model):
         
         
 class facebook_pages(models.Model):
-    static_ID = models.TextField(blank=False, null=False,primary_key=True)
+    static_ID = models.CharField(primary_key=True,max_length=80)
     page_name = models.TextField(blank=False, null=False)
     favorites = models.BooleanField(default=False)
     #new 
-    country = models.TextField(blank=True, null=True)
+    country = models.CharField(blank=True, null=True,max_length=80)
     block = models.BooleanField(default=False)
     profile_pic = models.TextField(blank=True, null=True)
     facebook_id = models.TextField(db_column='Facebook_ID', blank=True, null=True)  # Field name made lowercase.
@@ -120,7 +121,7 @@ class facebook_pages(models.Model):
         # all_domains  = [ urlparse(i).scheme+"://"+urlparse(i).netloc for i in flat_list]
         all_domains  = [ i for i in flat_list]
         all_domains = dict(sorted(Counter(all_domains).items(), key=lambda item: item[1],reverse=True))
-        max_key = max(all_domains, key=all_domains.get)
+        max_key = max(all_domains, key=all_domains.get, default=0)
         if max_key == '://':
             return "no value"
         return max_key , urlparse(max_key).netloc
