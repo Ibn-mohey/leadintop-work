@@ -29,7 +29,6 @@ ALLOWED_HOSTS = ['10.5.50.220','10.5.50.222','192.168.1.2','192.168.1.100', 'loc
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'ad.apps.AdConfig',
     'crispy_forms',

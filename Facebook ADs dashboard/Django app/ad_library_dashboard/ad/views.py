@@ -62,7 +62,7 @@ del countries["SA"]
 ####
 
 ### normal ads
-@login_required(login_url='login')
+# @login_required(login_url='login')
 def home(request):
     if request.method == 'POST':
         req = request.POST

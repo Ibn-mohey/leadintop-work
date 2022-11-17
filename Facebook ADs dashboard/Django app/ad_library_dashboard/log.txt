@@ -9294,3 +9294,78 @@ saved video = (1, '11')
 end time 2022-10-24 18:03:07
 
 code finished at : 2022-10-24 18:03:37.448075
+started the term: perfume
+started the term: perfume
+1218107492378490
+video length = 16
+saved video = (1, '16')
+end time 2022-10-25 12:57:48
+
+630242475233658
+video length = 11
+saved video = (1, '11')
+end time 2022-10-25 12:58:03
+
+973503670710014
+video length = 7
+saved video = (1, '7')
+end time 2022-10-25 12:58:17
+
+1360811718058691
+video length = 9
+saved video = (1, '9')
+end time 2022-10-25 12:58:23
+
+started the term: perfume
+1218107492378490
+video length = 16
+saved video = (1, '16')
+end time 2022-10-25 12:59:18
+
+630242475233658
+video length = 11
+saved video = (1, '11')
+end time 2022-10-25 12:59:32
+
+973503670710014
+video length = 7
+saved video = (1, '7')
+end time 2022-10-25 12:59:46
+
+1360811718058691
+video length = 9
+saved video = (1, '9')
+end time 2022-10-25 12:59:52
+
+471877148292767
+video length = 6
+saved video = (1, '6')
+end time 2022-10-25 12:59:57
+
+started the term: perfume
+1218107492378490
+video length = 16
+saved video = (1, '16')
+end time 2022-10-25 13:01:31
+
+started the term: perfume
+1218107492378490
+video length = 16
+saved video = (1, '16')
+end time 2022-10-25 13:02:51
+
+630242475233658
+video length = 11
+saved video = (1, '11')
+end time 2022-10-25 13:03:05
+
+973503670710014
+video length = 7
+saved video = (1, '7')
+end time 2022-10-25 13:03:19
+
+1360811718058691
+video length = 9
+saved video = (1, '9')
+end time 2022-10-25 13:03:25
+

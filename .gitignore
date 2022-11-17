@@ -33,3 +33,5 @@ Facebook ADs dashboard/Django app/ad_library_dashboard/file1.txt
 *.pyc
 Facebook ADs dashboard/Django app/ad_library_dashboard/.ipynb_checkpoints/SQL tasks-checkpoint.ipynb
 *.pyc
+*.pyc
+*.png
